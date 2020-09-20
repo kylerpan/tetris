@@ -22,6 +22,14 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	// score
 	int score = 0;
 	
+	block block = new block();
+	tetrimino I = new tetrimino('I');
+	tetrimino O = new tetrimino('O');
+	tetrimino T = new tetrimino('T');
+	tetrimino J = new tetrimino('J');
+	tetrimino L = new tetrimino('L');
+	tetrimino S = new tetrimino('S');
+	tetrimino Z = new tetrimino('Z');
 	
 	// Painting Stuff
 	public void paint(Graphics g) {
@@ -41,7 +49,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		g.fillRect(250, 80, playing_width, playing_height); // playing
 		g.fillRect(45, 120, hold_next_side, hold_next_side); // hold
 		g.fillRect(695, 120, hold_next_side, hold_next_side); // next
-        
 
         // playing vertical & horizontal grid lines
         g1.setStroke(new java.awt.BasicStroke(2));
@@ -51,14 +58,24 @@ public class driver extends JPanel implements ActionListener, KeyListener {
         }
         for(int j = 40; j < playing_height; j += 40){
             g1.drawLine(250, 80 + j, playing_width + 250, 80 + j);
-        }
+		}
+		
+		// tetriminos
+		I.draw(g);
+		O.draw(g);
+		T.draw(g);
+		J.draw(g);
+		L.draw(g);
+		S.draw(g);
+		Z.draw(g);
         
-        // playing border lines
+        // border lines
         g1.setStroke(new java.awt.BasicStroke(3));
         g1.setColor(Color.black);
 		g1.drawRect(250, 80, playing_width, playing_height); // playing	
 		g1.drawRect(45, 120, hold_next_side, hold_next_side); // hold
 		g1.drawRect(695, 120, hold_next_side, hold_next_side); // next
+
 	}// end of paint
 	
 	// Update Stuff 
