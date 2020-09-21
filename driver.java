@@ -18,11 +18,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
     int playing_height = 800;
 	int playing_width = 400;
 	int hold_next_side = 160;
+	int v = 40;
     
 	// score
 	int score = 0;
 	
-	block block = new block();
+	//tetriminos
 	tetrimino I = new tetrimino('I');
 	tetrimino O = new tetrimino('O');
 	tetrimino T = new tetrimino('T');
@@ -30,6 +31,16 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	tetrimino L = new tetrimino('L');
 	tetrimino S = new tetrimino('S');
 	tetrimino Z = new tetrimino('Z');
+	tetrimino[] tetriminos = new tetrimino[]{I, O, T, J, L, S, Z};
+
+	int lastTime;
+	boolean down;
+	private final long startTime = System.currentTimeMillis();
+    public int getSeconds() {
+		long time = System.currentTimeMillis();
+        return (int)((time - startTime) / 1000);
+	}
+	
 	
 	// Painting Stuff
 	public void paint(Graphics g) {
@@ -62,12 +73,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		
 		// tetriminos
 		I.draw(g);
-		O.draw(g);
-		T.draw(g);
-		J.draw(g);
-		L.draw(g);
-		S.draw(g);
-		Z.draw(g);
+		// O.draw(g);
+		// T.draw(g);
+		// J.draw(g);
+		// L.draw(g);
+		// S.draw(g);
+		// Z.draw(g);
         
         // border lines
         g1.setStroke(new java.awt.BasicStroke(3));
@@ -80,7 +91,43 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	
 	// Update Stuff 
 	public void update() {
-	
+		// falling
+		if (lastTime - getSeconds() == 0) {
+			down = false;
+		} else if (getSeconds() % 1 == 0) {
+			down = true;
+			lastTime = getSeconds();
+		}
+		if (down) {
+			System.out.println(getSeconds());
+			for (int i = 0; i < tetriminos.length; i++) {
+				tetriminos[i].setY(tetriminos[i].getY() + 40);
+			}
+			down = false;
+		}
+
+		// bounds
+		for (int i = 0; i < tetriminos.length; i++) {
+			if (tetriminos[i].getType() == 'I') {
+				if (tetriminos[i].getY() >= 840) {
+					tetriminos[i].setY(840);
+					tetriminos[i].setMoving(false);
+				} // bottom
+			} else {
+				if (tetriminos[i].getY() >= 800) {
+					tetriminos[i].setY(800);
+					tetriminos[i].setMoving(false);
+				}
+			}
+			if (tetriminos[i].getX() <= 250) {
+				tetriminos[i].setX(250);
+			}
+			if (tetriminos[i].getX() + tetriminos[i].getW() >= 650) {
+				tetriminos[i].setX(650 - tetriminos[i].getW());
+			}
+		}
+
+
 	}// end of update
 	
 	@Override
@@ -112,23 +159,23 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		/* if(arg0.getKeyCode()==32){
-			int random= (int)((Math.random()*6)+5);
-			int direction = (int)((Math.random()*4)+1);
-			if (direction == 1){
-				b_vx=random;
-				b_vy=random;
-			} else if (direction == 2){
-				b_vx=random * -1;
-				b_vy=random;
-			} else if (direction == 2){
-				b_vx=random * -1;
-				b_vy=random * -1;
-			} else {
-				b_vx=random;
-				b_vy=random * -1;
+		if(arg0.getKeyCode() == 39){
+			if (I.getMoving()) {
+				I.moveRight();
 			}
-        } */
+		} 
+
+		if(arg0.getKeyCode() == 37){
+			if (I.getMoving()) {
+				I.moveLeft();
+			}
+		} 
+
+		if(arg0.getKeyCode() == 40){
+			if (I.getMoving()) {
+				I.moveDown();
+			}
+        } 
 	}
 
 	@Override

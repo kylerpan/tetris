@@ -1,29 +1,34 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class tetrimino {
+public class tetrimino{
 
-    int x, y;
+    int x, y, w;
     char type;
+    boolean moving;
     block block1 = new block();
     block block2 = new block();
     block block3 = new block();
     block block4 = new block();
     block[] blocks = new block[]{block1, block2, block3, block4};
-    
+
     public tetrimino(char type) {
+        x = 370;
+        y = 80;
+        moving = true;
         this.type = type;
+        placing();
+    }
+
+    private void placing() {
         if (type == 'I'){
-            x = 250;
-            y = 80;
             for (int i = 0; i < 4; i++){
                 blocks[i].setX(x + i * 40);
                 blocks[i].setY(y);
             }
+            w = 160;
         }
         if (type == 'O'){
-            x = 450;
-            y = 80;
             for (int i = 0; i < 2; i++){
                 blocks[i].setX(x + i * 40);
                 blocks[i].setY(y);
@@ -32,43 +37,36 @@ public class tetrimino {
                 blocks[i].setX(x + (i - 2) * 40);
                 blocks[i].setY(y + 40);
             }
+            w = 80;
         }
         if (type == 'T'){
-            x = 250;
-            y = 160;
             blocks[0].setX(x + 40);
             blocks[0].setY(y);
             for (int i = 1; i < 4; i++){
                 blocks[i].setX(x + (i - 1) * 40);
                 blocks[i].setY(y + 40);
             }
-            
+            w = 120;
         }
         if (type == 'J'){
-            x = 250;
-            y = 280;
             blocks[0].setX(x);
             blocks[0].setY(y);
             for (int i = 1; i < 4; i++){
                 blocks[i].setX(x + (i - 1) * 40);
                 blocks[i].setY(y + 40);
             }
-            
+            w = 120;
         }
         if (type == 'L'){
-            x = 250;
-            y = 400;
             blocks[0].setX(x + 80);
             blocks[0].setY(y);
             for (int i = 1; i < 4; i++){
                 blocks[i].setX(x + (i - 1) * 40);
                 blocks[i].setY(y + 40);
             }
-            
+            w = 120;
         }
         if (type == 'S'){
-            x = 250;
-            y = 520;
             for (int i = 0; i < 2; i++){
                 blocks[i].setX(x + (i + 1) * 40);
                 blocks[i].setY(y);
@@ -77,10 +75,9 @@ public class tetrimino {
                 blocks[i].setX(x + (i - 2) * 40);
                 blocks[i].setY(y + 40);
             }
+            w = 120;
         }
         if (type == 'Z'){
-            x = 250;
-            y = 640;
             for (int i = 0; i < 2; i++){
                 blocks[i].setX(x + (i) * 40);
                 blocks[i].setY(y);
@@ -89,6 +86,7 @@ public class tetrimino {
                 blocks[i].setX(x + (i - 1) * 40);
                 blocks[i].setY(y + 40);
             }
+            w = 120;
         }
     }
 
@@ -117,7 +115,6 @@ public class tetrimino {
             g.setColor(new Color(170, 2, 0));
         }
 
-
         for (int i = 0; i < 4; i++){
             g.fillRect(blocks[i].getX(), blocks[i].getY(), blocks[i].getSize(), blocks[i].getSize());
             g1.setStroke(new java.awt.BasicStroke(2));
@@ -125,5 +122,54 @@ public class tetrimino {
             g1.drawRect(blocks[i].getX(), blocks[i].getY(), blocks[i].getSize(), blocks[i].getSize());
         }
         
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public char getType() {
+        return type;
+    }
+
+    public boolean getMoving() {
+        return moving;
+    }
+
+    public void setX(int newx) {
+        x = newx;
+        placing();
+    }
+
+    public void setY(int newy) {
+        y = newy;
+        placing();
+    }
+
+    public void setMoving(boolean newMoving) {
+        moving = newMoving;
+    }
+
+    public void moveRight() {
+        x += 40;
+        placing();
+    }
+
+    public void moveLeft() {
+        x -= 40;
+        placing();
+    }
+
+    public void moveDown() {
+        y += 40;
+        placing();
     }
 }
