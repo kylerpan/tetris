@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,20 +20,31 @@ public class driver extends JPanel implements ActionListener, KeyListener {
     int playing_height = 800;
 	int playing_width = 400;
 	int hold_next_side = 160;
-	int v = 40;
     
 	// score
 	int score = 0;
 	
 	//tetriminos
-	tetrimino I = new tetrimino('I');
-	tetrimino O = new tetrimino('O');
-	tetrimino T = new tetrimino('T');
-	tetrimino J = new tetrimino('J');
-	tetrimino L = new tetrimino('L');
-	tetrimino S = new tetrimino('S');
-	tetrimino Z = new tetrimino('Z');
-	tetrimino[] tetriminos = new tetrimino[]{I, O, T, J, L, S, Z};
+	int counter = 0;
+	Map<String, tetrimino> map = new HashMap<String, tetrimino>();
+	public void newTetrimino() {
+		char newBlock;
+		int num = (int)(Math.random()* 6);
+
+		if (num == 0) newBlock = 'I'; 
+		else if (num == 1) newBlock = 'O'; 
+		else if (num == 2) newBlock = 'T'; 
+		else if (num == 3) newBlock = 'J'; 
+		else if (num == 4) newBlock = 'L'; 
+		else if (num == 5) newBlock = 'S'; 
+		else newBlock = 'Z';
+		
+		String name = String.format("block%d", counter);
+		System.out.println(name);
+		System.out.println(newBlock);
+		map.put(name, new tetrimino(newBlock));
+		counter++;
+	}
 
 	int lastTime;
 	boolean down;
@@ -72,13 +85,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		// tetriminos
-		I.draw(g);
-		// O.draw(g);
-		// T.draw(g);
-		// J.draw(g);
-		// L.draw(g);
-		// S.draw(g);
-		// Z.draw(g);
+		for (tetrimino value : map.values()) {
+			value.draw(g);
+		}
         
         // border lines
         g1.setStroke(new java.awt.BasicStroke(3));
@@ -91,6 +100,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	
 	// Update Stuff 
 	public void update() {
+
+		// first tetrimino
+		if (map.size() == 0) {
+			newTetrimino();
+		}
+
 		// falling
 		if (lastTime - getSeconds() == 0) {
 			down = false;
@@ -99,33 +114,40 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			lastTime = getSeconds();
 		}
 		if (down) {
-			System.out.println(getSeconds());
-			for (int i = 0; i < tetriminos.length; i++) {
-				tetriminos[i].setY(tetriminos[i].getY() + 40);
+			// System.out.println(getSeconds());
+			for (tetrimino value : map.values()) {
+				value.setY(value.getY() + 40);
 			}
 			down = false;
 		}
 
 		// bounds
-		for (int i = 0; i < tetriminos.length; i++) {
-			if (tetriminos[i].getType() == 'I') {
-				if (tetriminos[i].getY() >= 840) {
-					tetriminos[i].setY(840);
-					tetriminos[i].setMoving(false);
+		for (tetrimino value : map.values()) {
+			if (value.getType() == 'I') {
+				if (value.getY() >= 840) {
+					value.setY(840);
+					value.setMoving(false);
 				} // bottom
 			} else {
-				if (tetriminos[i].getY() >= 800) {
-					tetriminos[i].setY(800);
-					tetriminos[i].setMoving(false);
+				if (value.getY() >= 800) {
+					value.setY(800);
+					value.setMoving(false);
 				}
 			}
-			if (tetriminos[i].getX() <= 250) {
-				tetriminos[i].setX(250);
+			if (value.getX() <= 250) {
+				value.setX(250);
 			}
-			if (tetriminos[i].getX() + tetriminos[i].getW() >= 650) {
-				tetriminos[i].setX(650 - tetriminos[i].getW());
+			if (value.getX() + value.getW() >= 650) {
+				value.setX(650 - value.getW());
 			}
 		}
+
+		// new tetrimino
+		int movingCounter = 0;
+		for (tetrimino value : map.values()) {
+			if (value.getMoving()) movingCounter++; 
+		}
+		if (movingCounter == 0) newTetrimino();
 
 
 	}// end of update
@@ -160,20 +182,26 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode() == 39){
-			if (I.getMoving()) {
-				I.moveRight();
+			for (tetrimino value : map.values()) {
+				if (value.getMoving()) {
+					value.moveRight();
+				}
 			}
 		} 
 
 		if(arg0.getKeyCode() == 37){
-			if (I.getMoving()) {
-				I.moveLeft();
+			for (tetrimino value : map.values()) {
+				if (value.getMoving()) {
+					value.moveLeft();
+				}
 			}
 		} 
 
 		if(arg0.getKeyCode() == 40){
-			if (I.getMoving()) {
-				I.moveDown();
+			for (tetrimino value : map.values()) {
+				if (value.getMoving()) {
+					value.moveDown();
+				}
 			}
         } 
 	}
