@@ -4,8 +4,9 @@ import java.awt.Graphics;
 public class tetrimino{
 
     int x, y, w;
+    // static final int yFinal;
     char type;
-    boolean moving;
+    boolean moving, Rbound, Lbound, Dbound;
     block block1 = new block();
     block block2 = new block();
     block block3 = new block();
@@ -15,7 +16,11 @@ public class tetrimino{
     public tetrimino(char type) {
         x = 370;
         y = 80;
+        // yFinal;
         moving = true;
+        Rbound = false;
+        Lbound = false;
+        Dbound = false;
         this.type = type;
         placing();
     }
@@ -132,6 +137,14 @@ public class tetrimino{
         return y;
     }
 
+    public int getBlockX(int number) {
+        return blocks[number].getX();
+    }
+
+    public int getBlockY(int number) {
+        return blocks[number].getY();
+    }
+
     public int getW() {
         return w;
     }
@@ -142,6 +155,18 @@ public class tetrimino{
 
     public boolean getMoving() {
         return moving;
+    }
+
+    public boolean getRbound() {
+        return Rbound;
+    }
+
+    public boolean getLbound() {
+        return Lbound;
+    }
+
+    public boolean getDbound() {
+        return Dbound;
     }
 
     public void setX(int newx) {
@@ -156,6 +181,18 @@ public class tetrimino{
 
     public void setMoving(boolean newMoving) {
         moving = newMoving;
+    }
+    
+    public void setRbound(boolean newRbound) {
+        Rbound = newRbound;
+    }
+
+    public void setLbound(boolean newLbound) {
+        Lbound = newLbound;
+    }
+
+    public void setDbound(boolean newDbound) {
+        Dbound = newDbound;
     }
 
     public void moveRight() {

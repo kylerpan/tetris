@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,12 +26,13 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	// score
 	int score = 0;
 	
-	//tetriminos
+	// new tetriminos
+	Set<String> coordinates = new HashSet<String>();
 	int counter = 0;
 	Map<String, tetrimino> map = new HashMap<String, tetrimino>();
 	public void newTetrimino() {
 		char newBlock;
-		int num = (int)(Math.random()* 6);
+		int num = (int)(Math.random() * 7);
 
 		if (num == 0) newBlock = 'I'; 
 		else if (num == 1) newBlock = 'O'; 
@@ -40,12 +43,19 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		else newBlock = 'Z';
 		
 		String name = String.format("block%d", counter);
-		System.out.println(name);
-		System.out.println(newBlock);
+		// System.out.println(name);
+		// System.out.println(newBlock);
 		map.put(name, new tetrimino(newBlock));
 		counter++;
 	}
 
+	// change coords to string
+	public String getCoords(int x, int y) {
+		String coord = String.format("(%d, %d)", x, y);
+		return coord;
+	}
+
+	// getting time
 	int lastTime;
 	boolean down;
 	private final long startTime = System.currentTimeMillis();
@@ -106,6 +116,48 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			newTetrimino();
 		}
 
+		// block bounds
+		for (tetrimino value : map.values()) {
+			if (value.getMoving()) {
+				value.setRbound(false);
+				value.setLbound(false);
+				value.setDbound(false);
+				for (int i = 0; i < 4; i++) {
+					String FRblockCoords = getCoords(value.getBlockX(i) + 40, value.getBlockY(i));
+					String FLblockCoords = getCoords(value.getBlockX(i) - 40, value.getBlockY(i));
+					String FDblockCoords = getCoords(value.getBlockX(i), value.getBlockY(i) + 40);
+					for (String coords : coordinates) {
+						if (FRblockCoords.equals(coords)) {
+							value.setRbound(true);
+							// System.out.println("right ran"); 
+							// System.out.printf("Rbound: %b%n", value.getRbound());
+						} 
+						
+						if (FLblockCoords.equals(coords)) {
+							value.setLbound(true);
+							// System.out.println("left ran");
+							// System.out.printf("Lbound: %b%n", value.getLbound());
+						} 
+						
+						if (FDblockCoords.equals(coords)) {
+							value.setDbound(true);
+							// System.out.println("down ran");
+							// System.out.printf("Dbound: %b%n", value.getDbound());
+							if (value.getDbound()) {
+								value.setY(value.getY());
+								value.setMoving(false);
+								for (int j = 0; j < 4; j++) {
+									String coordinate = String.format("(%d, %d)", value.getBlockX(j), value.getBlockY(j));
+									coordinates.add(coordinate);
+								}
+								break;
+							}
+						} 
+					}
+				}
+			}
+		}
+
 		// falling
 		if (lastTime - getSeconds() == 0) {
 			down = false;
@@ -116,22 +168,35 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		if (down) {
 			// System.out.println(getSeconds());
 			for (tetrimino value : map.values()) {
-				value.setY(value.getY() + 40);
+				if (value.getMoving()){
+					// System.out.printf("Rbound: %b%n", value.getRbound());
+					// System.out.printf("Lbound: %b%n", value.getLbound());
+					// System.out.printf("Dbound: %b%n", value.getDbound());
+					value.setY(value.getY() + 40);
+				}
 			}
 			down = false;
 		}
 
-		// bounds
+		// game bounds
 		for (tetrimino value : map.values()) {
 			if (value.getType() == 'I') {
 				if (value.getY() >= 840) {
 					value.setY(840);
 					value.setMoving(false);
+					for (int i = 0; i < 4; i++) {
+						String coordinate = String.format("(%d, %d)", value.getBlockX(i), value.getBlockY(i));
+						coordinates.add(coordinate);
+					}
 				} // bottom
 			} else {
 				if (value.getY() >= 800) {
 					value.setY(800);
 					value.setMoving(false);
+					for (int i = 0; i < 4; i++) {
+						String coordinate = String.format("(%d, %d)", value.getBlockX(i), value.getBlockY(i));
+						coordinates.add(coordinate);
+					}
 				}
 			}
 			if (value.getX() <= 250) {
@@ -140,6 +205,10 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			if (value.getX() + value.getW() >= 650) {
 				value.setX(650 - value.getW());
 			}
+			// if (value.getDbound()) {
+			// 	value.setY(value.getY());
+			// 	value.setMoving(false);
+			// }
 		}
 
 		// new tetrimino
@@ -183,7 +252,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode() == 39){
 			for (tetrimino value : map.values()) {
-				if (value.getMoving()) {
+				System.out.printf("Rbound: %b%n", value.getRbound());
+				if (value.getMoving() && !value.getRbound()) {
 					value.moveRight();
 				}
 			}
@@ -191,7 +261,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		if(arg0.getKeyCode() == 37){
 			for (tetrimino value : map.values()) {
-				if (value.getMoving()) {
+				System.out.printf("Lbound: %b%n", value.getLbound());
+				if (value.getMoving() && !value.getLbound()) {
 					value.moveLeft();
 				}
 			}
@@ -199,7 +270,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		if(arg0.getKeyCode() == 40){
 			for (tetrimino value : map.values()) {
-				if (value.getMoving()) {
+				System.out.printf("Dbound: %b%n", value.getDbound());
+				if (value.getMoving() && !value.getDbound()) {
 					value.moveDown();
 				}
 			}
