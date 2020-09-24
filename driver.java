@@ -116,26 +116,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			newTetrimino();
 		}
 
-		// falling
-		if (lastTime - getSeconds() == 0) {
-			down = false;
-		} else if (getSeconds() % 1 == 0) {
-			down = true;
-			lastTime = getSeconds();
-		}
-		if (down) {
-			// System.out.println(getSeconds());
-			for (tetrimino value : map.values()) {
-				if (value.getMoving()){
-					// System.out.printf("Rbound: %b%n", value.getRbound());
-					// System.out.printf("Lbound: %b%n", value.getLbound());
-					// System.out.printf("Dbound: %b%n", value.getDbound());
-					value.setY(value.getY() + 40);
-				}
-			}
-			down = false;
-		}
-
 		// bounds
 		for (tetrimino value : map.values()) {
 			if (value.getMoving()) {
@@ -159,15 +139,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					}
 					if (FYDblockCoords >= 880) {
 						value.setDbound(true);
-						if (value.getDbound()) {
-							value.setY(value.getY());
-							value.setMoving(false);
-							for (int j = 0; j < 4; j++) {
-								String coordinate = String.format("(%d, %d)", value.getBlockX(j), value.getBlockY(j));
-								coordinates.add(coordinate);
-							}
-							break;
-						}
 					}
 
 					// block bounds
@@ -188,19 +159,39 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 							value.setDbound(true);
 							// System.out.println("down ran");
 							// System.out.printf("Dbound: %b%n", value.getDbound());
-							if (value.getDbound()) {
-								value.setY(value.getY());
-								value.setMoving(false);
-								for (int j = 0; j < 4; j++) {
-									String coordinate = String.format("(%d, %d)", value.getBlockX(j), value.getBlockY(j));
-									coordinates.add(coordinate);
-								}
-								break;
-							}
 						} 
 					}
 				}
 			}
+		}
+
+		// falling
+		if (lastTime - getSeconds() == 0) {
+			down = false;
+		} else if (getSeconds() % 1 == 0) {
+			down = true;
+			lastTime = getSeconds();
+		}
+		if (down) {
+			// System.out.println(getSeconds());
+			for (tetrimino value : map.values()) {
+				if (value.getMoving()){
+					// System.out.printf("Rbound: %b%n", value.getRbound());
+					// System.out.printf("Lbound: %b%n", value.getLbound());
+					// System.out.printf("Dbound: %b%n", value.getDbound());
+					if (value.getDbound()) {
+						value.setY(value.getY());
+						value.setMoving(false);
+						for (int j = 0; j < 4; j++) {
+							String coordinate = String.format("(%d, %d)", value.getBlockX(j), value.getBlockY(j));
+							coordinates.add(coordinate);
+						}
+						break;
+					}
+					value.setY(value.getY() + 40);
+				}
+			}
+			down = false;
 		}
 
 		// new tetrimino

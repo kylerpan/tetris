@@ -272,7 +272,7 @@ public class tetrimino{
             }
             if (type == 'L'){
                 blocks[0].setX(x);
-                blocks[0].setY(y + 80);
+                blocks[0].setY(y);
                 for (int i = 1; i < 4; i++){
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
