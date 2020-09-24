@@ -4,8 +4,8 @@ import java.awt.Graphics;
 public class tetrimino{
 
     int x, y, w;
-    // static final int yFinal;
     char type;
+    int orientation;
     boolean moving, Rbound, Lbound, Dbound;
     block block1 = new block();
     block block2 = new block();
@@ -13,85 +13,294 @@ public class tetrimino{
     block block4 = new block();
     block[] blocks = new block[]{block1, block2, block3, block4};
 
-    public tetrimino(char type) {
+    public tetrimino(char type, int orientation) {
         x = 370;
         y = 80;
-        // yFinal;
         moving = true;
         Rbound = false;
         Lbound = false;
         Dbound = false;
         this.type = type;
+        this.orientation = orientation;
         placing();
     }
 
     private void placing() {
-        if (type == 'I'){
-            for (int i = 0; i < 4; i++){
-                blocks[i].setX(x + i * 40);
-                blocks[i].setY(y);
+        if (orientation == 1){
+            if (type == 'I'){
+                for (int i = 0; i < 4; i++){
+                    blocks[i].setX(x + i * 40);
+                    blocks[i].setY(y);
+                }
+                w = 160;
             }
-            w = 160;
+            if (type == 'O'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + i * 40);
+                    blocks[i].setY(y);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 2) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 80;
+            }
+            if (type == 'T'){
+                blocks[0].setX(x + 40);
+                blocks[0].setY(y);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
+            if (type == 'J'){
+                blocks[0].setX(x);
+                blocks[0].setY(y);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
+            if (type == 'L'){
+                blocks[0].setX(x + 80);
+                blocks[0].setY(y);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
+            if (type == 'S'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + (i + 1) * 40);
+                    blocks[i].setY(y);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 2) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
+            if (type == 'Z'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + (i) * 40);
+                    blocks[i].setY(y);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
         }
-        if (type == 'O'){
-            for (int i = 0; i < 2; i++){
-                blocks[i].setX(x + i * 40);
-                blocks[i].setY(y);
+        if (orientation == 2) {
+            if (type == 'I'){
+                for (int i = 0; i < 4; i++){
+                    blocks[i].setX(x + 80);
+                    blocks[i].setY(y - 40 + (i) * 40);
+                }
+                w = 40;
             }
-            for (int i = 2; i < 4; i++){
-                blocks[i].setX(x + (i - 2) * 40);
-                blocks[i].setY(y + 40);
+            if (type == 'O'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + (i) * 40);
+                    blocks[i].setY(y);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 2) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 80;
             }
-            w = 80;
+            if (type == 'T'){
+                blocks[0].setX(x + 80);
+                blocks[0].setY(y + 40);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
+            }
+            if (type == 'J'){
+                blocks[0].setX(x + 80);
+                blocks[0].setY(y);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
+            }
+            if (type == 'L'){
+                blocks[0].setX(x + 80);
+                blocks[0].setY(y + 80);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
+            }
+            if (type == 'S'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i) * 40);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + 80);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
+            }
+            if (type == 'Z'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + 80);
+                    blocks[i].setY(y + (i) * 40);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
+            }
         }
-        if (type == 'T'){
-            blocks[0].setX(x + 40);
-            blocks[0].setY(y);
-            for (int i = 1; i < 4; i++){
-                blocks[i].setX(x + (i - 1) * 40);
-                blocks[i].setY(y + 40);
+        if (orientation == 3) {
+            if (type == 'I'){
+                for (int i = 0; i < 4; i++){
+                    blocks[i].setX(x + i * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 160;
             }
-            w = 120;
+            if (type == 'O'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + i * 40);
+                    blocks[i].setY(y);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 2) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 80;
+            }
+            if (type == 'T'){
+                blocks[0].setX(x + 40);
+                blocks[0].setY(y + 80);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
+            if (type == 'J'){
+                blocks[0].setX(x + 80);
+                blocks[0].setY(y + 80);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
+            if (type == 'L'){
+                blocks[0].setX(x);
+                blocks[0].setY(y + 80);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 120;
+            }
+            if (type == 'S'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + (i + 1) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 2) * 40);
+                    blocks[i].setY(y + 80);
+                }
+                w = 120;
+            }
+            if (type == 'Z'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + (i) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 1) * 40);
+                    blocks[i].setY(y + 80);
+                }
+                w = 120;
+            }
         }
-        if (type == 'J'){
-            blocks[0].setX(x);
-            blocks[0].setY(y);
-            for (int i = 1; i < 4; i++){
-                blocks[i].setX(x + (i - 1) * 40);
-                blocks[i].setY(y + 40);
+        if (orientation == 4) {
+            if (type == 'I'){
+                for (int i = 0; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y - 40 + (i) * 40);
+                }
+                w = 40;
             }
-            w = 120;
-        }
-        if (type == 'L'){
-            blocks[0].setX(x + 80);
-            blocks[0].setY(y);
-            for (int i = 1; i < 4; i++){
-                blocks[i].setX(x + (i - 1) * 40);
-                blocks[i].setY(y + 40);
+            if (type == 'O'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + (i) * 40);
+                    blocks[i].setY(y);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + (i - 2) * 40);
+                    blocks[i].setY(y + 40);
+                }
+                w = 80;
             }
-            w = 120;
-        }
-        if (type == 'S'){
-            for (int i = 0; i < 2; i++){
-                blocks[i].setX(x + (i + 1) * 40);
-                blocks[i].setY(y);
+            if (type == 'T'){
+                blocks[0].setX(x);
+                blocks[0].setY(y + 40);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
             }
-            for (int i = 2; i < 4; i++){
-                blocks[i].setX(x + (i - 2) * 40);
-                blocks[i].setY(y + 40);
+            if (type == 'J'){
+                blocks[0].setX(x);
+                blocks[0].setY(y + 80);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
             }
-            w = 120;
-        }
-        if (type == 'Z'){
-            for (int i = 0; i < 2; i++){
-                blocks[i].setX(x + (i) * 40);
-                blocks[i].setY(y);
+            if (type == 'L'){
+                blocks[0].setX(x);
+                blocks[0].setY(y + 80);
+                for (int i = 1; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
             }
-            for (int i = 2; i < 4; i++){
-                blocks[i].setX(x + (i - 1) * 40);
-                blocks[i].setY(y + 40);
+            if (type == 'S'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x);
+                    blocks[i].setY(y + (i) * 40);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
             }
-            w = 120;
+            if (type == 'Z'){
+                for (int i = 0; i < 2; i++){
+                    blocks[i].setX(x + 40);
+                    blocks[i].setY(y + (i) * 40);
+                }
+                for (int i = 2; i < 4; i++){
+                    blocks[i].setX(x);
+                    blocks[i].setY(y + (i - 1) * 40);
+                }
+                w = 80;
+            }
         }
     }
 
@@ -120,12 +329,13 @@ public class tetrimino{
             g.setColor(new Color(170, 2, 0));
         }
 
-        for (int i = 0; i < 4; i++){
-            g.fillRect(blocks[i].getX(), blocks[i].getY(), blocks[i].getSize(), blocks[i].getSize());
+        for (int j = 0; j < 4; j++){
+            g.fillRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
             g1.setStroke(new java.awt.BasicStroke(2));
             g1.setColor(Color.black);
-            g1.drawRect(blocks[i].getX(), blocks[i].getY(), blocks[i].getSize(), blocks[i].getSize());
+            g1.drawRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
         }
+        
         
     }
 
@@ -169,6 +379,10 @@ public class tetrimino{
         return Dbound;
     }
 
+    public int getOrientation() {
+        return orientation;
+    }
+
     public void setX(int newx) {
         x = newx;
         placing();
@@ -193,6 +407,11 @@ public class tetrimino{
 
     public void setDbound(boolean newDbound) {
         Dbound = newDbound;
+    }
+
+    public void setOrientation(int newOrientation) {
+        orientation = newOrientation;
+        placing();
     }
 
     public void moveRight() {

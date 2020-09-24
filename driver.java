@@ -45,7 +45,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		String name = String.format("block%d", counter);
 		// System.out.println(name);
 		// System.out.println(newBlock);
-		map.put(name, new tetrimino(newBlock));
+		map.put(name, new tetrimino(newBlock, 1));
 		counter++;
 	}
 
@@ -116,16 +116,61 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			newTetrimino();
 		}
 
-		// block bounds
+		// falling
+		if (lastTime - getSeconds() == 0) {
+			down = false;
+		} else if (getSeconds() % 1 == 0) {
+			down = true;
+			lastTime = getSeconds();
+		}
+		if (down) {
+			// System.out.println(getSeconds());
+			for (tetrimino value : map.values()) {
+				if (value.getMoving()){
+					// System.out.printf("Rbound: %b%n", value.getRbound());
+					// System.out.printf("Lbound: %b%n", value.getLbound());
+					// System.out.printf("Dbound: %b%n", value.getDbound());
+					value.setY(value.getY() + 40);
+				}
+			}
+			down = false;
+		}
+
+		// bounds
 		for (tetrimino value : map.values()) {
 			if (value.getMoving()) {
 				value.setRbound(false);
 				value.setLbound(false);
 				value.setDbound(false);
 				for (int i = 0; i < 4; i++) {
+					int FXRblockCoords = value.getBlockX(i) + 40;
+					int FXLblockCoords = value.getBlockX(i) - 40;
+					int FYDblockCoords = value.getBlockY(i) + 40;
 					String FRblockCoords = getCoords(value.getBlockX(i) + 40, value.getBlockY(i));
 					String FLblockCoords = getCoords(value.getBlockX(i) - 40, value.getBlockY(i));
 					String FDblockCoords = getCoords(value.getBlockX(i), value.getBlockY(i) + 40);
+
+					// game bounds
+					if (FXRblockCoords >= 650) {
+						value.setRbound(true);
+					}
+					if (FXLblockCoords <= 210) {
+						value.setLbound(true);
+					}
+					if (FYDblockCoords >= 880) {
+						value.setDbound(true);
+						if (value.getDbound()) {
+							value.setY(value.getY());
+							value.setMoving(false);
+							for (int j = 0; j < 4; j++) {
+								String coordinate = String.format("(%d, %d)", value.getBlockX(j), value.getBlockY(j));
+								coordinates.add(coordinate);
+							}
+							break;
+						}
+					}
+
+					// block bounds
 					for (String coords : coordinates) {
 						if (FRblockCoords.equals(coords)) {
 							value.setRbound(true);
@@ -156,59 +201,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					}
 				}
 			}
-		}
-
-		// falling
-		if (lastTime - getSeconds() == 0) {
-			down = false;
-		} else if (getSeconds() % 1 == 0) {
-			down = true;
-			lastTime = getSeconds();
-		}
-		if (down) {
-			// System.out.println(getSeconds());
-			for (tetrimino value : map.values()) {
-				if (value.getMoving()){
-					// System.out.printf("Rbound: %b%n", value.getRbound());
-					// System.out.printf("Lbound: %b%n", value.getLbound());
-					// System.out.printf("Dbound: %b%n", value.getDbound());
-					value.setY(value.getY() + 40);
-				}
-			}
-			down = false;
-		}
-
-		// game bounds
-		for (tetrimino value : map.values()) {
-			if (value.getType() == 'I') {
-				if (value.getY() >= 840) {
-					value.setY(840);
-					value.setMoving(false);
-					for (int i = 0; i < 4; i++) {
-						String coordinate = String.format("(%d, %d)", value.getBlockX(i), value.getBlockY(i));
-						coordinates.add(coordinate);
-					}
-				} // bottom
-			} else {
-				if (value.getY() >= 800) {
-					value.setY(800);
-					value.setMoving(false);
-					for (int i = 0; i < 4; i++) {
-						String coordinate = String.format("(%d, %d)", value.getBlockX(i), value.getBlockY(i));
-						coordinates.add(coordinate);
-					}
-				}
-			}
-			if (value.getX() <= 250) {
-				value.setX(250);
-			}
-			if (value.getX() + value.getW() >= 650) {
-				value.setX(650 - value.getW());
-			}
-			// if (value.getDbound()) {
-			// 	value.setY(value.getY());
-			// 	value.setMoving(false);
-			// }
 		}
 
 		// new tetrimino
@@ -249,10 +241,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		if(arg0.getKeyCode() == 39){
 			for (tetrimino value : map.values()) {
-				System.out.printf("Rbound: %b%n", value.getRbound());
+				// System.out.printf("Rbound: %b%n", value.getRbound());
 				if (value.getMoving() && !value.getRbound()) {
 					value.moveRight();
 				}
@@ -261,7 +252,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		if(arg0.getKeyCode() == 37){
 			for (tetrimino value : map.values()) {
-				System.out.printf("Lbound: %b%n", value.getLbound());
+				// System.out.printf("Lbound: %b%n", value.getLbound());
 				if (value.getMoving() && !value.getLbound()) {
 					value.moveLeft();
 				}
@@ -270,9 +261,21 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		if(arg0.getKeyCode() == 40){
 			for (tetrimino value : map.values()) {
-				System.out.printf("Dbound: %b%n", value.getDbound());
+				// System.out.printf("Dbound: %b%n", value.getDbound());
 				if (value.getMoving() && !value.getDbound()) {
 					value.moveDown();
+				}
+			}
+		} 
+		
+		if(arg0.getKeyCode() == 38){
+			for (tetrimino value : map.values()) {
+				if (value.getMoving()) {
+					if (value.getOrientation() == 4){
+						value.setOrientation(1);
+					} else {
+						value.setOrientation(value.getOrientation() + 1);
+					}
 				}
 			}
         } 
@@ -280,13 +283,11 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 		
 	}
