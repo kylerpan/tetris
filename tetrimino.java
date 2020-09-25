@@ -28,8 +28,6 @@ public class tetrimino{
     private void placing() {
         if (orientation == 1){
             if (type == 'I'){
-                // if (x >= 530) x = 490;
-                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + i * 40);
                     blocks[i].setY(y);
@@ -343,8 +341,6 @@ public class tetrimino{
             g1.setColor(Color.black);
             g1.drawRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
         }
-        
-        
     }
 
     public int getX() {
@@ -389,6 +385,10 @@ public class tetrimino{
 
     public int getOrientation() {
         return orientation;
+    }
+
+    public void refreshPlacing() {
+        placing();
     }
 
     public void setX(int newx) {

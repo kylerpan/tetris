@@ -65,6 +65,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	// column check
 	gridCheck gridCheck = new gridCheck();
 
+	// predicted position
+	// Map<String, ArrayList<Integer>> blocks;
+
 	// getting time
 	int lastTime;
 	boolean down;
@@ -108,6 +111,21 @@ public class driver extends JPanel implements ActionListener, KeyListener {
         }
         for(int j = 40; j < playing_height; j += 40){
             g1.drawLine(250, 80 + j, playing_width + 250, 80 + j);
+		}
+
+		// predicted position
+		for (tetrimino value : map.values()) {
+			if (value.getMoving()) {
+				// Map<String, ArrayList<Integer>> blocks = gridCheck.lowestPosition(value);
+				// for (ArrayList<Integer> coords: blocks.values()){
+				// 	g1.setStroke(new java.awt.BasicStroke(2));
+				// 	g1.setColor(Color.black);
+				// 	// System.out.printf("%d, %d%n", coords.get(0), coords.get(1));
+				// 	g1.drawRect(coords.get(0), coords.get(1), 40, 40);
+				// }
+				Map<String, ArrayList<Integer>> blocks = gridCheck.lowestPosition(value);
+				gridCheck.draw(g, blocks);
+			}
 		}
 		
 		// tetriminos
@@ -170,9 +188,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					}
 
 					// block bounds
-					boolean RBound = gridCheck.checkRBound(value.getBlockX(i) + 40, value.getBlockY(i));
-					boolean LBound = gridCheck.checkLBound(value.getBlockX(i) - 40, value.getBlockY(i));
-					boolean DBound = gridCheck.checkDBound(value.getBlockX(i), value.getBlockY(i) + 40);
+					boolean RBound = gridCheck.checkBound(value.getBlockX(i) + 40, value.getBlockY(i));
+					boolean LBound = gridCheck.checkBound(value.getBlockX(i) - 40, value.getBlockY(i));
+					boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + 40);
 					if (RBound) {
 						value.setRbound(true);
 					} 
@@ -187,6 +205,26 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 		}
+
+		// // predicted position bounds
+		// for (tetrimino value : map.values()) {
+		// 	if (value.getMoving()) {
+		// 		Map<String, ArrayList<Integer>> blocks = gridCheck.lowestPosition(value);
+		// 		for (ArrayList<Integer> coord: blocks.values()){
+		// 			int FYDblockCoords = coord.get(1) + 40;
+
+		// 			if (FYDblockCoords > 880) {
+		// 				int shift = FYDblockCoords - 880;
+		// 				for (ArrayList<Integer> allCoords: blocks.values()){
+		// 					System.out.println(allCoords.get(1));
+		// 					allCoords.set(1, allCoords.get(1) - shift);
+		// 					System.out.println(allCoords.get(1));
+		// 				}
+		// 				gridCheck.refreshPosition(blocks);
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		// falling
 		if (lastTime - getSeconds() == 0) {
