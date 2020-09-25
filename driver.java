@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,12 +28,24 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	int score = 0;
 	
 	// new tetriminos
-	Set<String> coordinates = new HashSet<String>();
 	int counter = 0;
-	Map<String, tetrimino> map = new HashMap<String, tetrimino>();
+	ArrayList<Integer> bag = new ArrayList<Integer>();
+	Set<String> coordinates = new HashSet<String>();
+	public Map<String, tetrimino> map = new HashMap<String, tetrimino>();
 	public void newTetrimino() {
 		char newBlock;
-		int num = (int)(Math.random() * 7);
+		if (bag.size() == 0) {
+			bag.add(0);
+			bag.add(1);
+			bag.add(2);
+			bag.add(3);
+			bag.add(4);
+			bag.add(5);
+			bag.add(6);
+		}
+		int index = (int)(Math.random() * bag.size());
+		int num = bag.get(index);
+		bag.remove(index);
 
 		if (num == 0) newBlock = 'I'; 
 		else if (num == 1) newBlock = 'O'; 
@@ -42,18 +55,15 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		else if (num == 5) newBlock = 'S'; 
 		else newBlock = 'Z';
 		
-		String name = String.format("block%d", counter);
+		String name = String.format("tetrimino%d", counter);
 		// System.out.println(name);
 		// System.out.println(newBlock);
 		map.put(name, new tetrimino(newBlock, 1));
 		counter++;
 	}
 
-	// change coords to string
-	public String getCoords(int x, int y) {
-		String coord = String.format("(%d, %d)", x, y);
-		return coord;
-	}
+	// column check
+	gridCheck gridCheck = new gridCheck();
 
 	// getting time
 	int lastTime;
@@ -83,6 +93,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		g.fillRect(250, 80, playing_width, playing_height); // playing
 		g.fillRect(45, 120, hold_next_side, hold_next_side); // hold
 		g.fillRect(695, 120, hold_next_side, hold_next_side); // next
+
+		// g.setColor(Color.red);
+		// g.drawLine(250, 0, 250, 1000);
+		// g.drawLine(650, 0, 650, 1000);
+		// g.drawLine(0, 80, 1000, 80);
+		// g.drawLine(0, 880, 1000, 880);
 
         // playing vertical & horizontal grid lines
         g1.setStroke(new java.awt.BasicStroke(2));
@@ -126,41 +142,48 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					int FXRblockCoords = value.getBlockX(i) + 40;
 					int FXLblockCoords = value.getBlockX(i) - 40;
 					int FYDblockCoords = value.getBlockY(i) + 40;
-					String FRblockCoords = getCoords(value.getBlockX(i) + 40, value.getBlockY(i));
-					String FLblockCoords = getCoords(value.getBlockX(i) - 40, value.getBlockY(i));
-					String FDblockCoords = getCoords(value.getBlockX(i), value.getBlockY(i) + 40);
+					int FYTblockCoords = value.getBlockY(i) - 40;
 
 					// game bounds
-					if (FXRblockCoords >= 650) {
+					if (FXRblockCoords > 650) {
+						int shift = FXRblockCoords - 650;
+						value.setX(value.getX() - shift);
 						value.setRbound(true);
 					}
-					if (FXLblockCoords <= 210) {
+
+					if (FXLblockCoords < 210) {
+						int shift = 210 - FXLblockCoords;
+						value.setX(value.getX() + shift);
 						value.setLbound(true);
 					}
-					if (FYDblockCoords >= 880) {
+
+					if (FYDblockCoords > 880) {
+						int shift = FYDblockCoords - 880;
+						value.setY(value.getY() - shift);
 						value.setDbound(true);
 					}
 
-					// block bounds
-					for (String coords : coordinates) {
-						if (FRblockCoords.equals(coords)) {
-							value.setRbound(true);
-							// System.out.println("right ran"); 
-							// System.out.printf("Rbound: %b%n", value.getRbound());
-						} 
-						
-						if (FLblockCoords.equals(coords)) {
-							value.setLbound(true);
-							// System.out.println("left ran");
-							// System.out.printf("Lbound: %b%n", value.getLbound());
-						} 
-						
-						if (FDblockCoords.equals(coords)) {
-							value.setDbound(true);
-							// System.out.println("down ran");
-							// System.out.printf("Dbound: %b%n", value.getDbound());
-						} 
+					if (FYTblockCoords < 40) {
+						int shift = 40 - FYTblockCoords;
+						value.setY(value.getY() + shift);
+						// value.setTbound(true);
 					}
+
+					// block bounds
+					boolean RBound = gridCheck.checkRBound(value.getBlockX(i) + 40, value.getBlockY(i));
+					boolean LBound = gridCheck.checkLBound(value.getBlockX(i) - 40, value.getBlockY(i));
+					boolean DBound = gridCheck.checkDBound(value.getBlockX(i), value.getBlockY(i) + 40);
+					if (RBound) {
+						value.setRbound(true);
+					} 
+					
+					if (LBound) {
+						value.setLbound(true);
+					} 
+					
+					if (DBound) {
+						value.setDbound(true);
+					} 
 				}
 			}
 		}
@@ -183,8 +206,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						value.setY(value.getY());
 						value.setMoving(false);
 						for (int j = 0; j < 4; j++) {
-							String coordinate = String.format("(%d, %d)", value.getBlockX(j), value.getBlockY(j));
-							coordinates.add(coordinate);
+							gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
 						}
 						break;
 					}

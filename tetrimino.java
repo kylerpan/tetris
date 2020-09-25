@@ -28,6 +28,8 @@ public class tetrimino{
     private void placing() {
         if (orientation == 1){
             if (type == 'I'){
+                // if (x >= 530) x = 490;
+                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + i * 40);
                     blocks[i].setY(y);
@@ -97,6 +99,8 @@ public class tetrimino{
         }
         if (orientation == 2) {
             if (type == 'I'){
+                // if (x >= 690) x = 650;
+                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + 80);
                     blocks[i].setY(y - 40 + (i) * 40);
@@ -166,6 +170,8 @@ public class tetrimino{
         }
         if (orientation == 3) {
             if (type == 'I'){
+                // if (x >= 530) x = 490;
+                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + i * 40);
                     blocks[i].setY(y + 40);
@@ -235,6 +241,8 @@ public class tetrimino{
         }
         if (orientation == 4) {
             if (type == 'I'){
+                // if (x >= 690) x = 650;
+                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y - 40 + (i) * 40);
