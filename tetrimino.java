@@ -401,6 +401,7 @@ public class tetrimino{
         placing();
     }
 
+
     public void setMoving(boolean newMoving) {
         moving = newMoving;
     }

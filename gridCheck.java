@@ -20,11 +20,7 @@ public class gridCheck {
             ArrayList<Boolean> check = new ArrayList<Boolean>();
             if (i == 0 || i == 11) {
                 for (int j = 0; j < 21; j++) {
-                    if (j == 20) {
-                        check.add(true);
-                    } else {
-                        check.add(true);
-                    }
+                    check.add(true);
                 }
             } else {
                 for (int j = 0; j < 21; j++) {
@@ -73,50 +69,28 @@ public class gridCheck {
             blocksMap.put(name, coords);
         }
 
-        // getting lowest position
+        // setting lowest position 
         int lowest = 1000;
-        int shift = 0;
-        for (int i = 0; i < 4; i++) {
-            String column = getColumn(tetrimino.getBlockX(i));
-            String block = String.format("block%d", i + 1);
-            for (int j = 0; j < 21; j++) {
-                if (columns.get(column).get(j)) {
-                    System.out.printf("lowest: %d%n", lowest);
-                    // System.out.printf("current: %d%n", (j + 1) * 40);
-                    if((j + 1) * 40 < lowest) {
-                        lowest = (j + 1) * 40;
-                        System.out.printf("new lowest: %d%n", lowest);
-                    }
-                    shift = lowest - blocksMap.get(block).get(1);
-                }
+        int shift = 1000;
+        for (ArrayList<Integer> value: blocksMap.values()) {
+            int nextDown = value.get(1);
+            while (!checkBound(value.get(0), nextDown)) {
+                nextDown += 40;
+                if (nextDown >= 880) break;
             }
-            
+            lowest = nextDown - 40;
+            if (lowest - value.get(1) < shift) {
+                shift = lowest - value.get(1);
+            }
         }
 
-        // setting lowest position 
         for (ArrayList<Integer> value: blocksMap.values()) {
             value.set(1, value.get(1) + shift);
-            if (value.get(1) > 840) {
-                int shift2 = value.get(1) - 840;
-                for (ArrayList<Integer> value2: blocksMap.values()) {
-                    value2.set(1, value2.get(1) - shift2);
-                }
-            }
         }
 
         return blocksMap;
     }
 
-    // public void refreshPosition(Map<String, ArrayList<Integer>> blocks) {
-
-    //     // all block positions
-    //     for (int i = 0; i < 4; i++) {
-    //         String name = String.format("block%d", i + 1);
-    //         ArrayList<Integer> coords = new ArrayList<Integer>();
-    //         coords.set(0, blocks.get(name).get(0));
-    //         coords.set(1, blocks.get(name).get(0));
-    //     }
-    // }
 
     public void draw(Graphics g, Map<String, ArrayList<Integer>> blocksMap) {
         java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
@@ -124,7 +98,6 @@ public class gridCheck {
         for (ArrayList<Integer> coords: blocksMap.values()){
             g1.setStroke(new java.awt.BasicStroke(2));
             g1.setColor(Color.black);
-            // System.out.printf("%d, %d%n", coords.get(0), coords.get(1));
             g1.drawRect(coords.get(0), coords.get(1), 40, 40);
         }
     }
