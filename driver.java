@@ -26,12 +26,14 @@ public class driver extends JPanel implements ActionListener, KeyListener {
     
 	// score
 	int score = 0;
+
+	// grid checks
+	gridCheck gridCheck = new gridCheck();
 	
 	// new tetriminos
 	int counter = 0;
 	ArrayList<Integer> bag = new ArrayList<Integer>();
 	Set<String> coordinates = new HashSet<String>();
-	public Map<String, tetrimino> map = new HashMap<String, tetrimino>();
 	public void newTetrimino() {
 		char newBlock;
 		if (bag.size() == 0) {
@@ -56,12 +58,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		else newBlock = 'Z';
 		
 		String name = String.format("tetrimino%d", counter);
-		map.put(name, new tetrimino(newBlock, 1));
+		gridCheck.getMap().put(name, new tetrimino(newBlock, 1));
 		counter++;
 	}
-
-	// column check
-	gridCheck gridCheck = new gridCheck();
 
 	// getting time
 	int lastTime;
@@ -109,7 +108,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// predicted position
-		for (tetrimino value : map.values()) {
+		for (tetrimino value : gridCheck.getMap().values()) {
 			if (value.getMoving()) {
 				Map<String, ArrayList<Integer>> blocks = gridCheck.lowestPosition(value);
 				gridCheck.draw(g, blocks);
@@ -117,7 +116,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		// tetriminos
-		for (tetrimino value : map.values()) {
+		for (tetrimino value : gridCheck.getMap().values()) {
 			value.draw(g);
 		}
         
@@ -134,12 +133,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	public void update() {
 
 		// first tetrimino
-		if (map.size() == 0) {
+		if (gridCheck.getMap().size() == 0) {
 			newTetrimino();
 		}
 
 		// bounds
-		for (tetrimino value : map.values()) {
+		for (tetrimino value : gridCheck.getMap().values()) {
 			if (value.getMoving()) {
 				value.setRbound(false);
 				value.setLbound(false);
@@ -202,7 +201,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 		if (down) {
 			// System.out.println(getSeconds());
-			for (tetrimino value : map.values()) {
+			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()){
 					if (value.getDbound()) {
 						value.setY(value.getY());
@@ -220,7 +219,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		// new tetrimino
 		int movingCounter = 0;
-		for (tetrimino value : map.values()) {
+		for (tetrimino value : gridCheck.getMap().values()) {
 			if (value.getMoving()) movingCounter++; 
 		}
 		if (movingCounter == 0) newTetrimino();
@@ -258,7 +257,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent arg0) {
 		// right
 		if(arg0.getKeyCode() == 39){ 
-			for (tetrimino value : map.values()) {
+			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getRbound()) {
 					value.moveRight();
 				}
@@ -267,7 +266,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		// left
 		if(arg0.getKeyCode() == 37){
-			for (tetrimino value : map.values()) {
+			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getLbound()) {
 					value.moveLeft();
 				}
@@ -276,7 +275,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		// down
 		if(arg0.getKeyCode() == 40){
-			for (tetrimino value : map.values()) {
+			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getDbound()) {
 					value.moveDown();
 				}
@@ -285,7 +284,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		
 		// up
 		if(arg0.getKeyCode() == 38){
-			for (tetrimino value : map.values()) {
+			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (value.getOrientation() == 4){
 						value.setOrientation(1);
@@ -296,7 +295,18 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			}
 		} 
 		
-		
+		// spacebar
+		if(arg0.getKeyCode() == 32){
+			for (tetrimino value : gridCheck.getMap().values()) {
+				if (value.getMoving()) {
+					gridCheck.instantDrop(value);
+					value.setMoving(false);
+					for (int j = 0; j < 4; j++) {
+						gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
+					}
+				}
+			}
+        } 
 	}
 
 	@Override

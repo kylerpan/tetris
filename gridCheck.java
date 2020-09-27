@@ -7,12 +7,8 @@ import java.util.Map;
 public class gridCheck {
     
     Map<String, ArrayList<Boolean>> columns = new HashMap<String, ArrayList<Boolean>>();
-    block block1 = new block();
-    block block2 = new block();
-    block block3 = new block();
-    block block4 = new block();
-    block[] blocks = new block[]{block1, block2, block3, block4};
     Map<String, ArrayList<Integer>> blocksMap = new HashMap<String, ArrayList<Integer>>();
+    Map<String, tetrimino> map = new HashMap<String, tetrimino>();
 
     public gridCheck(){
         for (int i = 0; i < 12; i++) {
@@ -35,6 +31,10 @@ public class gridCheck {
         }
     }
 
+    public Map<String, ArrayList<Boolean>> getColumns() {
+        return columns;
+    }
+
     public String getColumn(int x) {
         String column = "";
         for (int i = 0; i < 12; i++){
@@ -44,6 +44,10 @@ public class gridCheck {
             }
         }
         return column;
+    }
+
+    public Map<String, tetrimino> getMap(){
+        return map;
     }
 
     public Boolean checkBound(int x, int y) {
@@ -91,6 +95,21 @@ public class gridCheck {
         return blocksMap;
     }
 
+    public tetrimino instantDrop(tetrimino tetrimino) {
+        Map<String, ArrayList<Integer>> blocks = lowestPosition(tetrimino);
+        int index = 0;
+        for (ArrayList<Integer> value: blocks.values()) {
+            tetrimino.setBlockY(index, value.get(1));
+            index++;
+        }
+        return tetrimino;
+    }
+
+    public Map<String, tetrimino> getMap(Map<String, tetrimino> theMap) {
+        return theMap;
+    }
+
+    
 
     public void draw(Graphics g, Map<String, ArrayList<Integer>> blocksMap) {
         java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();

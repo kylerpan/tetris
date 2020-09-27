@@ -12,6 +12,7 @@ public class tetrimino{
     block block3 = new block();
     block block4 = new block();
     block[] blocks = new block[]{block1, block2, block3, block4};
+    
 
     public tetrimino(char type, int orientation) {
         x = 370;
@@ -97,8 +98,6 @@ public class tetrimino{
         }
         if (orientation == 2) {
             if (type == 'I'){
-                // if (x >= 690) x = 650;
-                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + 80);
                     blocks[i].setY(y - 40 + (i) * 40);
@@ -168,8 +167,6 @@ public class tetrimino{
         }
         if (orientation == 3) {
             if (type == 'I'){
-                // if (x >= 530) x = 490;
-                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + i * 40);
                     blocks[i].setY(y + 40);
@@ -239,8 +236,6 @@ public class tetrimino{
         }
         if (orientation == 4) {
             if (type == 'I'){
-                // if (x >= 690) x = 650;
-                // else if (x <= 170) x = 210;
                 for (int i = 0; i < 4; i++){
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y - 40 + (i) * 40);
@@ -401,6 +396,13 @@ public class tetrimino{
         placing();
     }
 
+    public void setBlockX(int index, int newX) {
+        blocks[index].setX(newX);
+    }
+
+    public void setBlockY(int index, int newY) {
+        blocks[index].setY(newY);
+    }
 
     public void setMoving(boolean newMoving) {
         moving = newMoving;
