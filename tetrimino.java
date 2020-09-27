@@ -12,6 +12,7 @@ public class tetrimino{
     block block3 = new block();
     block block4 = new block();
     block[] blocks = new block[]{block1, block2, block3, block4};
+    boolean[] visible = new boolean[]{true, true, true, true};
     
 
     public tetrimino(char type, int orientation) {
@@ -331,10 +332,12 @@ public class tetrimino{
         }
 
         for (int j = 0; j < 4; j++){
-            g.fillRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
-            g1.setStroke(new java.awt.BasicStroke(2));
-            g1.setColor(Color.black);
-            g1.drawRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
+            if (visible[j]){
+                g.fillRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
+                g1.setStroke(new java.awt.BasicStroke(2));
+                g1.setColor(Color.black);
+                g1.drawRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
+            }
         }
     }
 
@@ -423,6 +426,10 @@ public class tetrimino{
     public void setOrientation(int newOrientation) {
         orientation = newOrientation;
         placing();
+    }
+
+    public void setVisible(int index, boolean newbool) {
+        visible[index] = newbool;
     }
 
     public void moveRight() {

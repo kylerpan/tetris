@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -25,10 +24,14 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	int hold_next_side = 160;
     
 	// score
+	int previous = 0;
 	int score = 0;
 
 	// grid checks
 	gridCheck gridCheck = new gridCheck();
+
+	// fall interval
+	int interval = 10;
 	
 	// new tetriminos
 	int counter = 0;
@@ -68,7 +71,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	private final long startTime = System.currentTimeMillis();
     public int getSeconds() {
 		long time = System.currentTimeMillis();
-        return (int)((time - startTime) / 1000);
+        return (int)((time - startTime) / 100);
 	}
 	
 	
@@ -191,16 +194,27 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 		}
+		
+		// changing interval
+		if (score != previous){
+			if (score % 10 == 0 && score > 0 ) {
+				if (interval == 0) {
+					interval = 0;
+				} else {
+					interval -= 2;
+				}
+				previous = score;
+			}
+		}
 
 		// falling
 		if (lastTime - getSeconds() == 0) {
 			down = false;
-		} else if (getSeconds() % 1 == 0) {
+		} else if (getSeconds() % interval == 0) {
 			down = true;
 			lastTime = getSeconds();
 		}
 		if (down) {
-			// System.out.println(getSeconds());
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()){
 					if (value.getDbound()) {
@@ -215,6 +229,21 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 			down = false;
+		}
+
+		// clearing 
+		for (int i = 19; i >= 0; i--) {
+			int counter = 0;
+			for (int j = 1; j < 11; j++) {
+				String column = String.format("column%d", j);
+				if (gridCheck.getColumns().get(column).get(i)) {
+					counter++;
+				}
+			}
+			if (counter == 10) {
+				gridCheck.clearline(i);
+				score++;
+			}
 		}
 
 		// new tetrimino

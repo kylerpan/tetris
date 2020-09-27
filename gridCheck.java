@@ -109,7 +109,26 @@ public class gridCheck {
         return theMap;
     }
 
-    
+    public void clearline(int row) {
+        for (ArrayList<Boolean> value : columns.values()) {
+            value.remove(row);
+            value.add(0, false);
+        }
+        for (tetrimino tetrimino : map.values()) {
+            for (int i = 0; i < 4; i++) {
+                if (tetrimino.getBlockY(i) == (row + 2) * 40) {
+                    tetrimino.setVisible(i, false);
+                }
+            }
+        }
+        for (tetrimino tetrimino : map.values()) {
+            for (int i = 0; i < 4; i++) {
+                if (tetrimino.getBlockY(i) < (row + 2) * 40) {
+                    tetrimino.setBlockY(i, tetrimino.getBlockY(i) + 40);
+                }
+            }
+        }
+    }
 
     public void draw(Graphics g, Map<String, ArrayList<Integer>> blocksMap) {
         java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
