@@ -311,8 +311,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			}
 		} 
 		
-		// up
-		if(arg0.getKeyCode() == 38){
+		// up and x
+		if(arg0.getKeyCode() == 38 || arg0.getKeyCode() == 88){
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (value.getOrientation() == 4){
@@ -335,7 +335,30 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					}
 				}
 			}
-        } 
+		} 
+		
+		// z and ctrl
+		if(arg0.getKeyCode() == 90 || arg0.getKeyCode() == 17){
+			for (tetrimino value : gridCheck.getMap().values()) {
+				if (value.getMoving()) {
+					if (value.getOrientation() == 1){
+						value.setOrientation(4);
+					} else {
+						value.setOrientation(value.getOrientation() - 1);
+					}
+				}
+			}
+		} 
+
+		// c and shift
+		if(arg0.getKeyCode() == 67 || arg0.getKeyCode() == 16){
+			System.out.println("c or shift");
+		} 
+
+		// escape
+		if(arg0.getKeyCode() == 27){
+			System.out.println("escape");
+		} 
 	}
 
 	@Override
