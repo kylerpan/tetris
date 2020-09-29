@@ -116,14 +116,14 @@ public class gridCheck {
         }
         for (tetrimino tetrimino : map.values()) {
             for (int i = 0; i < 4; i++) {
-                if (tetrimino.getBlockY(i) == (row + 2) * 40) {
+                if (tetrimino.getBlockY(i) == (row + 2) * 40 && tetrimino.getBlockX(i) >= 250 && tetrimino.getBlockX(i) <= 650) {
                     tetrimino.setVisible(i, false);
                 }
             }
         }
         for (tetrimino tetrimino : map.values()) {
             for (int i = 0; i < 4; i++) {
-                if (tetrimino.getBlockY(i) < (row + 2) * 40) {
+                if (tetrimino.getBlockY(i) < (row + 2) * 40 && tetrimino.getBlockX(i) >= 250 && tetrimino.getBlockX(i) <= 650) {
                     tetrimino.setBlockY(i, tetrimino.getBlockY(i) + 40);
                 }
             }

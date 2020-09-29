@@ -1,11 +1,14 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +19,7 @@ import javax.swing.Timer;
 
 public class driver extends JPanel implements ActionListener, KeyListener {
     
-    // dimensions
+	// dimensions
     int screen_height = 930; 
     int screen_width = 900; 
     int playing_height = 800;
@@ -35,22 +38,27 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	
 	// new tetriminos
 	int counter = 0;
+	tetrimino next;
 	ArrayList<Integer> bag = new ArrayList<Integer>();
 	Set<String> coordinates = new HashSet<String>();
 	public void newTetrimino() {
 		char newBlock;
 		if (bag.size() == 0) {
-			bag.add(0);
-			bag.add(1);
-			bag.add(2);
-			bag.add(3);
-			bag.add(4);
-			bag.add(5);
-			bag.add(6);
+			for (int i = 0; i < 7; i++) {
+				bag.add(i);
+			}
+			Collections.shuffle(bag);
+		} 
+		int num = bag.get(0);
+		bag.remove(0);
+		if (bag.size() == 0) {
+			for (int i = 0; i < 7; i++) {
+				bag.add(i);
+			}
+			Collections.shuffle(bag);
 		}
-		int index = (int)(Math.random() * bag.size());
-		int num = bag.get(index);
-		bag.remove(index);
+		int nextNum = bag.get(0);
+		char nextBlock;
 
 		if (num == 0) newBlock = 'I'; 
 		else if (num == 1) newBlock = 'O'; 
@@ -59,10 +67,19 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		else if (num == 4) newBlock = 'L'; 
 		else if (num == 5) newBlock = 'S'; 
 		else newBlock = 'Z';
+
+		if (nextNum == 0) nextBlock = 'I'; 
+		else if (nextNum == 1) nextBlock = 'O'; 
+		else if (nextNum == 2) nextBlock = 'T'; 
+		else if (nextNum == 3) nextBlock = 'J'; 
+		else if (nextNum == 4) nextBlock = 'L'; 
+		else if (nextNum == 5) nextBlock = 'S'; 
+		else nextBlock = 'Z';
 		
 		String name = String.format("tetrimino%d", counter);
 		gridCheck.getMap().put(name, new tetrimino(newBlock, 1));
 		counter++;
+		next = new tetrimino(nextBlock, 1);
 	}
 
 	// getting time
@@ -122,6 +139,11 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		for (tetrimino value : gridCheck.getMap().values()) {
 			value.draw(g);
 		}
+
+		// next piece
+		next.setX(775 - next.getW() / 2);
+		next.setY(200 - next.getH() / 2);
+		next.draw(g);
         
         // border lines
         g1.setStroke(new java.awt.BasicStroke(3));

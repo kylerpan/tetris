@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 public class tetrimino{
 
-    int x, y, w;
+    int x, y, h, w;
     char type;
     int orientation;
     boolean moving, Rbound, Lbound, Dbound;
@@ -34,6 +34,7 @@ public class tetrimino{
                     blocks[i].setX(x + i * 40);
                     blocks[i].setY(y);
                 }
+                h = 40;
                 w = 160;
             }
             if (type == 'O'){
@@ -45,6 +46,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 80;
             }
             if (type == 'T'){
@@ -54,6 +56,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'J'){
@@ -63,6 +66,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'L'){
@@ -72,6 +76,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'S'){
@@ -83,6 +88,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'Z'){
@@ -94,6 +100,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
         }
@@ -103,6 +110,7 @@ public class tetrimino{
                     blocks[i].setX(x + 80);
                     blocks[i].setY(y - 40 + (i) * 40);
                 }
+                h = 160;
                 w = 40;
             }
             if (type == 'O'){
@@ -114,6 +122,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 80;
             }
             if (type == 'T'){
@@ -132,6 +141,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
             if (type == 'L'){
@@ -141,6 +151,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
             if (type == 'S'){
@@ -152,6 +163,7 @@ public class tetrimino{
                     blocks[i].setX(x + 80);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
             if (type == 'Z'){
@@ -163,6 +175,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
         }
@@ -172,6 +185,7 @@ public class tetrimino{
                     blocks[i].setX(x + i * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 40;
                 w = 160;
             }
             if (type == 'O'){
@@ -183,6 +197,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 80;
             }
             if (type == 'T'){
@@ -192,6 +207,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'J'){
@@ -201,6 +217,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'L'){
@@ -210,6 +227,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'S'){
@@ -221,6 +239,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * 40);
                     blocks[i].setY(y + 80);
                 }
+                h = 80;
                 w = 120;
             }
             if (type == 'Z'){
@@ -232,6 +251,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 1) * 40);
                     blocks[i].setY(y + 80);
                 }
+                h = 80;
                 w = 120;
             }
         }
@@ -241,6 +261,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y - 40 + (i) * 40);
                 }
+                h = 160;
                 w = 40;
             }
             if (type == 'O'){
@@ -252,6 +273,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * 40);
                     blocks[i].setY(y + 40);
                 }
+                h = 80;
                 w = 80;
             }
             if (type == 'T'){
@@ -261,6 +283,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
             if (type == 'J'){
@@ -270,6 +293,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
             if (type == 'L'){
@@ -279,6 +303,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
             if (type == 'S'){
@@ -290,6 +315,7 @@ public class tetrimino{
                     blocks[i].setX(x + 40);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
             if (type == 'Z'){
@@ -301,6 +327,7 @@ public class tetrimino{
                     blocks[i].setX(x);
                     blocks[i].setY(y + (i - 1) * 40);
                 }
+                h = 120;
                 w = 80;
             }
         }
@@ -355,6 +382,10 @@ public class tetrimino{
 
     public int getBlockY(int number) {
         return blocks[number].getY();
+    }
+
+    public int getH() {
+        return h;
     }
 
     public int getW() {
