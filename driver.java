@@ -1,8 +1,6 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,13 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class driver extends JPanel implements ActionListener, KeyListener {
-    
-	// dimensions
-    int screen_height = 930; 
-    int screen_width = 900; 
-    int playing_height = 800;
-	int playing_width = 400;
-	int hold_next_side = 160;
+
+	// jframe
+	JFrame f = new JFrame();
     
 	// score
 	int previous = 0;
@@ -32,6 +26,13 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 	// grid checks
 	gridCheck gridCheck = new gridCheck();
+
+	// game dimensions 
+	gameDimensions dim = new gameDimensions();
+	
+	// real time dimensions
+	int rt_app_height = dim.app_height;
+	int rt_app_width = dim.app_width;
 
 	// fall interval
 	int interval = 10;
@@ -101,30 +102,24 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		Font font = new Font ("Arya", 1, 30);
         g.setFont(font);
         String scoreTitle = String.format("SCORE: %d", score);
-		g.drawString(scoreTitle, 450 - g.getFontMetrics().stringWidth(scoreTitle)/2, 50); // score
-		g.drawString("HOLD", 125 - g.getFontMetrics().stringWidth("HOLD")/2, 110);
-		g.drawString("NEXT", 775 - g.getFontMetrics().stringWidth("NEXT")/2, 110);
+		g.drawString(scoreTitle, dim.block_size * 11 - g.getFontMetrics().stringWidth(scoreTitle)/2, dim.block_size * 3 / 2); // score
+		g.drawString("HOLD", dim.block_size * 3 - g.getFontMetrics().stringWidth("HOLD")/2, dim.block_size * 5 / 2);
+		g.drawString("NEXT", dim.block_size * 19 - g.getFontMetrics().stringWidth("NEXT")/2, dim.block_size * 5 / 2);
         
         // backgrounds
         g.setColor(Color.white);
-		g.fillRect(250, 80, playing_width, playing_height); // playing
-		g.fillRect(45, 120, hold_next_side, hold_next_side); // hold
-		g.fillRect(695, 120, hold_next_side, hold_next_side); // next
-
-		// g.setColor(Color.red);
-		// g.drawLine(250, 0, 250, 1000);
-		// g.drawLine(650, 0, 650, 1000);
-		// g.drawLine(0, 80, 1000, 80);
-		// g.drawLine(0, 880, 1000, 880);
+		g.fillRect(dim.side_width, dim.top_height, dim.playing_width, dim.playing_height); // playing
+		g.fillRect(dim.block_size, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // hold
+		g.fillRect(dim.side_width + dim.block_size * 11, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // next
 
         // playing vertical & horizontal grid lines
         g1.setStroke(new java.awt.BasicStroke(2));
 		g1.setColor(Color.lightGray);
-		for(int i = 40; i < playing_width; i += 40){
-            g1.drawLine(250 + i, 80, 250 + i, playing_height + 80);
+		for(int i = dim.block_size; i < dim.playing_width; i += dim.block_size){
+            g1.drawLine(dim.side_width + i, dim.top_height, dim.side_width + i, dim.top_height + dim.playing_height);
         }
-        for(int j = 40; j < playing_height; j += 40){
-            g1.drawLine(250, 80 + j, playing_width + 250, 80 + j);
+        for(int j = dim.block_size; j < dim.playing_height; j += dim.block_size){
+            g1.drawLine(dim.side_width, dim.top_height + j, dim.side_width + dim.playing_width, dim.top_height + j);
 		}
 
 		// predicted position
@@ -141,21 +136,30 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// next piece
-		next.setX(775 - next.getW() / 2);
-		next.setY(200 - next.getH() / 2);
+		next.setX(dim.block_size * 19 - next.getW() / 2);
+		next.setY(dim.block_size * 5 - next.getH() / 2);
 		next.draw(g);
         
         // border lines
         g1.setStroke(new java.awt.BasicStroke(3));
         g1.setColor(Color.black);
-		g1.drawRect(250, 80, playing_width, playing_height); // playing	
-		g1.drawRect(45, 120, hold_next_side, hold_next_side); // hold
-		g1.drawRect(695, 120, hold_next_side, hold_next_side); // next
+		g1.drawRect(dim.side_width, dim.top_height, dim.playing_width, dim.playing_height); // playing	
+		g1.drawRect(dim.block_size, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // hold
+		g1.drawRect(dim.block_size * 17, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // next
 
 	}// end of paint
 	
 	// Update Stuff 
 	public void update() {
+		// System.out.println(f.getContentPane().getHeight());
+		// System.out.println(f.getContentPane().getWidth());
+		// System.out.println(dim.app_height);
+		// System.out.println(dim.app_width);
+		// rt_app_width = f.getContentPane().getWidth();
+		// rt_app_height = rt_app_width * 24 / 22;
+		// if (dim.app_width != rt_app_width && rt_app_width != 0) {
+		// 	dim.update(rt_app_width / 22, rt_app_height, rt_app_width);
+		// }
 
 		// first tetrimino
 		if (gridCheck.getMap().size() == 0) {
@@ -169,39 +173,39 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 				value.setLbound(false);
 				value.setDbound(false);
 				for (int i = 0; i < 4; i++) {
-					int FXRblockCoords = value.getBlockX(i) + 40;
-					int FXLblockCoords = value.getBlockX(i) - 40;
-					int FYDblockCoords = value.getBlockY(i) + 40;
-					int FYTblockCoords = value.getBlockY(i) - 40;
+					int FXRblockCoords = value.getBlockX(i) + dim.block_size;
+					int FXLblockCoords = value.getBlockX(i) - dim.block_size;
+					int FYDblockCoords = value.getBlockY(i) + dim.block_size;
+					int FYTblockCoords = value.getBlockY(i) - dim.block_size;
 
 					// game bounds
-					if (FXRblockCoords > 650) {
-						int shift = FXRblockCoords - 650;
+					if (FXRblockCoords > dim.side_width + dim.playing_width) {
+						int shift = FXRblockCoords - (dim.side_width + dim.playing_width);
 						value.setX(value.getX() - shift);
 						value.setRbound(true);
 					}
 
-					if (FXLblockCoords < 210) {
-						int shift = 210 - FXLblockCoords;
+					if (FXLblockCoords < dim.side_width - dim.block_size) {
+						int shift = dim.side_width - dim.block_size - FXLblockCoords;
 						value.setX(value.getX() + shift);
 						value.setLbound(true);
 					}
 
-					if (FYDblockCoords > 880) {
-						int shift = FYDblockCoords - 880;
+					if (FYDblockCoords > dim.top_height + dim.playing_height) {
+						int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
 						value.setY(value.getY() - shift);
 						value.setDbound(true);
 					}
 
-					if (FYTblockCoords < 40) {
-						int shift = 40 - FYTblockCoords;
+					if (FYTblockCoords < dim.top_height + dim.block_size) {
+						int shift = dim.top_height - FYTblockCoords;
 						value.setY(value.getY() + shift);
 					}
 
 					// block bounds
-					boolean RBound = gridCheck.checkBound(value.getBlockX(i) + 40, value.getBlockY(i));
-					boolean LBound = gridCheck.checkBound(value.getBlockX(i) - 40, value.getBlockY(i));
-					boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + 40);
+					boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
+					boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
+					boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
 					if (RBound) {
 						value.setRbound(true);
 					} 
@@ -247,7 +251,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						}
 						break;
 					}
-					value.setY(value.getY() + 40);
+					value.setY(value.getY() + dim.block_size);
 				}
 			}
 			down = false;
@@ -288,10 +292,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		driver d = new driver();
 	}
 	public driver(){
-		
-		JFrame f = new JFrame();
 		f.setTitle("Tetris");
-		f.setSize(screen_width,screen_height);
+		f.setSize(dim.app_width, dim.app_height);
 		f.setBackground(Color.black);
 		f.setResizable(false);
 		f.addKeyListener(this);

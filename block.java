@@ -3,8 +3,11 @@ import java.awt.Graphics;
 
 public class block{
 
+    // game dimensions 
+	gameDimensions dim = new gameDimensions();
+
     int x, y;
-    int size = 40;
+    int size = dim.block_size;
 
     public block() {
         x = 410;
