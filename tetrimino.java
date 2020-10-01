@@ -19,8 +19,8 @@ public class tetrimino{
     
 
     public tetrimino(char type, int orientation) {
-        x = dim.side_width + dim.block_size * 4;
-        y = dim.top_height + dim.block_size;
+        x = dim.side_width + dim.block_size * 3;
+        y = dim.top_height;
         moving = true;
         Rbound = false;
         Lbound = false;
@@ -440,6 +440,11 @@ public class tetrimino{
 
     public void setBlockY(int index, int newY) {
         blocks[index].setY(newY);
+    }
+
+    public void setType(char newType) {
+        type = newType;
+        placing();
     }
 
     public void setMoving(boolean newMoving) {

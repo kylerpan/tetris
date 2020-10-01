@@ -24,6 +24,13 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	int previous = 0;
 	int score = 0;
 
+	// holding
+	boolean hold = false;
+	tetrimino holdPiece;
+
+	// pause
+	boolean pause = false;
+
 	// grid checks
 	gridCheck gridCheck = new gridCheck();
 
@@ -96,9 +103,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	// Painting Stuff
 	public void paint(Graphics g) {
         super.paintComponent(g);
-        java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
+		java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
 
-        // Strings
+        // strings
 		Font font = new Font ("Arya", 1, 30);
         g.setFont(font);
         String scoreTitle = String.format("SCORE: %d", score);
@@ -147,6 +154,18 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		g1.drawRect(dim.block_size, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // hold
 		g1.drawRect(dim.block_size * 17, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // next
 
+		if (pause) {
+			g.setColor(new Color(0, 0, 0, 57));
+			g.fillRect(0, 0, dim.app_width, dim.app_height);
+
+			g.setColor(new Color(240, 240, 240));
+			g.fillRoundRect(dim.block_size * 11 / 2, dim.block_size * 7 / 2, dim.block_size * 11, dim.block_size * 17, 15, 15);
+			g1.drawRoundRect(dim.block_size * 11 / 2, dim.block_size * 7 / 2, dim.block_size * 11, dim.block_size * 17, 15, 15);
+
+			g.setColor(Color.black);
+			g.drawString("PAUSED", dim.block_size * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.block_size * 9 / 2);
+		}
+
 	}// end of paint
 	
 	// Update Stuff 
@@ -160,125 +179,127 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		// if (dim.app_width != rt_app_width && rt_app_width != 0) {
 		// 	dim.update(rt_app_width / 22, rt_app_height, rt_app_width);
 		// }
-
-		// first tetrimino
-		if (gridCheck.getMap().size() == 0) {
-			newTetrimino();
-		}
-
-		// bounds
-		for (tetrimino value : gridCheck.getMap().values()) {
-			if (value.getMoving()) {
-				value.setRbound(false);
-				value.setLbound(false);
-				value.setDbound(false);
-				for (int i = 0; i < 4; i++) {
-					int FXRblockCoords = value.getBlockX(i) + dim.block_size;
-					int FXLblockCoords = value.getBlockX(i) - dim.block_size;
-					int FYDblockCoords = value.getBlockY(i) + dim.block_size;
-					int FYTblockCoords = value.getBlockY(i) - dim.block_size;
-
-					// game bounds
-					if (FXRblockCoords > dim.side_width + dim.playing_width) {
-						int shift = FXRblockCoords - (dim.side_width + dim.playing_width);
-						value.setX(value.getX() - shift);
-						value.setRbound(true);
-					}
-
-					if (FXLblockCoords < dim.side_width - dim.block_size) {
-						int shift = dim.side_width - dim.block_size - FXLblockCoords;
-						value.setX(value.getX() + shift);
-						value.setLbound(true);
-					}
-
-					if (FYDblockCoords > dim.top_height + dim.playing_height) {
-						int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
-						value.setY(value.getY() - shift);
-						value.setDbound(true);
-					}
-
-					if (FYTblockCoords < dim.top_height + dim.block_size) {
-						int shift = dim.top_height - FYTblockCoords;
-						value.setY(value.getY() + shift);
-					}
-
-					// block bounds
-					boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
-					boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
-					boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
-					if (RBound) {
-						value.setRbound(true);
-					} 
-					
-					if (LBound) {
-						value.setLbound(true);
-					} 
-					
-					if (DBound) {
-						value.setDbound(true);
-					} 
-				}
+		if (!pause) {
+			
+			// first tetrimino
+			if (gridCheck.getMap().size() == 0) {
+				newTetrimino();
 			}
-		}
-		
-		// changing interval
-		if (score != previous){
-			if (score % 10 == 0 && score > 0 ) {
-				if (interval == 0) {
-					interval = 0;
-				} else {
-					interval -= 2;
-				}
-				previous = score;
-			}
-		}
 
-		// falling
-		if (lastTime - getSeconds() == 0) {
-			down = false;
-		} else if (getSeconds() % interval == 0) {
-			down = true;
-			lastTime = getSeconds();
-		}
-		if (down) {
+			// bounds
 			for (tetrimino value : gridCheck.getMap().values()) {
-				if (value.getMoving()){
-					if (value.getDbound()) {
-						value.setY(value.getY());
-						value.setMoving(false);
-						for (int j = 0; j < 4; j++) {
-							gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
+				if (value.getMoving()) {
+					value.setRbound(false);
+					value.setLbound(false);
+					value.setDbound(false);
+					for (int i = 0; i < 4; i++) {
+						int FXRblockCoords = value.getBlockX(i) + dim.block_size;
+						int FXLblockCoords = value.getBlockX(i) - dim.block_size;
+						int FYDblockCoords = value.getBlockY(i) + dim.block_size;
+						int FYTblockCoords = value.getBlockY(i) - dim.block_size;
+
+						// game bounds
+						if (FXRblockCoords > dim.side_width + dim.playing_width) {
+							int shift = FXRblockCoords - (dim.side_width + dim.playing_width);
+							value.setX(value.getX() - shift);
+							value.setRbound(true);
 						}
-						break;
+
+						if (FXLblockCoords < dim.side_width - dim.block_size) {
+							int shift = dim.side_width - dim.block_size - FXLblockCoords;
+							value.setX(value.getX() + shift);
+							value.setLbound(true);
+						}
+
+						if (FYDblockCoords > dim.top_height + dim.playing_height) {
+							int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
+							value.setY(value.getY() - shift);
+							value.setDbound(true);
+						}
+
+						if (FYTblockCoords < dim.top_height - dim.block_size) {
+							int shift = dim.top_height - FYTblockCoords;
+							value.setY(value.getY() + shift);
+						}
+
+						// block bounds
+						boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
+						boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
+						boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
+						if (RBound) {
+							value.setRbound(true);
+						} 
+						
+						if (LBound) {
+							value.setLbound(true);
+						} 
+						
+						if (DBound) {
+							value.setDbound(true);
+						} 
 					}
-					value.setY(value.getY() + dim.block_size);
 				}
 			}
-			down = false;
-		}
-
-		// clearing 
-		for (int i = 19; i >= 0; i--) {
-			int counter = 0;
-			for (int j = 1; j < 11; j++) {
-				String column = String.format("column%d", j);
-				if (gridCheck.getColumns().get(column).get(i)) {
-					counter++;
+			
+			// changing interval
+			if (score != previous){
+				if (score % 10 == 0 && score > 0 ) {
+					if (interval == 0) {
+						interval = 0;
+					} else {
+						interval -= 2;
+					}
+					previous = score;
 				}
 			}
-			if (counter == 10) {
-				gridCheck.clearline(i);
-				score++;
+
+			// falling
+			if (lastTime - getSeconds() == 0) {
+				down = false;
+			} else if (getSeconds() % interval == 0) {
+				down = true;
+				lastTime = getSeconds();
 			}
-		}
+			if (down) {
+				for (tetrimino value : gridCheck.getMap().values()) {
+					if (value.getMoving()){
+						if (value.getDbound()) {
+							value.setY(value.getY());
+							value.setMoving(false);
+							for (int j = 0; j < 4; j++) {
+								gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
+							}
+							hold = false;
+							break;
+						}
+						value.setY(value.getY() + dim.block_size);
+					}
+				}
+				down = false;
+			}
 
-		// new tetrimino
-		int movingCounter = 0;
-		for (tetrimino value : gridCheck.getMap().values()) {
-			if (value.getMoving()) movingCounter++; 
-		}
-		if (movingCounter == 0) newTetrimino();
+			// clearing 
+			for (int i = 19; i >= 0; i--) {
+				int counter = 0;
+				for (int j = 1; j < 11; j++) {
+					String column = String.format("column%d", j);
+					if (gridCheck.getColumns().get(column).get(i)) {
+						counter++;
+					}
+				}
+				if (counter == 10) {
+					gridCheck.clearline(i);
+					score++;
+				}
+			}
 
+			// new tetrimino
+			int movingCounter = 0;
+			for (tetrimino value : gridCheck.getMap().values()) {
+				if (value.getMoving()) movingCounter++; 
+			}
+			if (movingCounter == 0) newTetrimino();
+		}
 
 	}// end of update
 	
@@ -294,7 +315,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	public driver(){
 		f.setTitle("Tetris");
 		f.setSize(dim.app_width, dim.app_height);
-		f.setBackground(Color.black);
 		f.setResizable(false);
 		f.addKeyListener(this);
 		f.add(this);
@@ -309,7 +329,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// right
-		if(arg0.getKeyCode() == 39){ 
+		if(arg0.getKeyCode() == 39 && !pause){ 
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getRbound()) {
 					value.moveRight();
@@ -318,7 +338,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 
 		// left
-		if(arg0.getKeyCode() == 37){
+		if(arg0.getKeyCode() == 37 && !pause){
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getLbound()) {
 					value.moveLeft();
@@ -327,7 +347,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 
 		// down
-		if(arg0.getKeyCode() == 40){
+		if(arg0.getKeyCode() == 40 && !pause){
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getDbound()) {
 					value.moveDown();
@@ -336,7 +356,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 		
 		// up and x
-		if(arg0.getKeyCode() == 38 || arg0.getKeyCode() == 88){
+		if((arg0.getKeyCode() == 38 || arg0.getKeyCode() == 88) && !pause){
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (value.getOrientation() == 4){
@@ -349,11 +369,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 		
 		// spacebar
-		if(arg0.getKeyCode() == 32){
+		if(arg0.getKeyCode() == 32 && !pause){
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					gridCheck.instantDrop(value);
 					value.setMoving(false);
+					hold = false;
 					for (int j = 0; j < 4; j++) {
 						gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
 					}
@@ -362,7 +383,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 		
 		// z and ctrl
-		if(arg0.getKeyCode() == 90 || arg0.getKeyCode() == 17){
+		if((arg0.getKeyCode() == 90 || arg0.getKeyCode() == 17) && !pause){
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (value.getOrientation() == 1){
@@ -372,16 +393,37 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					}
 				}
 			}
-		} 
+		}  
 
 		// c and shift
-		if(arg0.getKeyCode() == 67 || arg0.getKeyCode() == 16){
-			System.out.println("c or shift");
+		if((arg0.getKeyCode() == 67 || arg0.getKeyCode() == 16) && !pause){
+			for (tetrimino value : gridCheck.getMap().values()) {
+				if (value.getMoving()) {
+					if (!hold) {
+						if (holdPiece != null) {
+							char previous = value.getType();
+							value.setType(holdPiece.getType());
+							value.setX(dim.side_width + dim.block_size * 4);
+							value.setY(dim.top_height);
+							holdPiece.setType(previous);
+							holdPiece.setX(dim.block_size * 3 - holdPiece.getW() / 2);
+							holdPiece.setY(dim.block_size * 5 - holdPiece.getH() / 2);
+						} else {
+							holdPiece = value;
+							holdPiece.setX(dim.block_size * 3 - holdPiece.getW() / 2);
+							holdPiece.setY(dim.block_size * 5 - holdPiece.getH() / 2);
+							value.setMoving(false);
+						}
+						hold = true;
+					}
+				}
+			}
 		} 
 
 		// escape
 		if(arg0.getKeyCode() == 27){
-			System.out.println("escape");
+			if (pause) pause = false;
+			else pause = true;
 		} 
 	}
 
