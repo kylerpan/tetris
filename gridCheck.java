@@ -34,6 +34,10 @@ public class gridCheck {
         }
     }
 
+    public void update() {
+        dim.update();
+    }
+
     public Map<String, ArrayList<Boolean>> getColumns() {
         return columns;
     }

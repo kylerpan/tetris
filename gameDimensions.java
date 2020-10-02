@@ -17,7 +17,6 @@ public class gameDimensions {
 
     public gameDimensions(){
         screen_height = screenSize.height;
-        // screen_width = screenSize.width;
         block_size = screen_height * 2 / 69; // 40
         app_height = block_size * 24; // 930
         app_width = block_size * 22; // 900
@@ -28,16 +27,14 @@ public class gameDimensions {
         hold_next_side = block_size * 4; // 160
     }
 
-    // public void update(int block_size, int app_height, int app_width) {
-    //     this.block_size = block_size;
-    //     this.app_height = app_height;
-    //     this.app_width = app_width;
-    //     playing_height = block_size * 20;
-    //     playing_width = block_size * 10;
-    //     side_width = block_size * 6;
-    //     top_height = block_size * 2; 
-    //     hold_next_side = block_size * 4;
-    // }
+    public void update(){
+        block_size = app_height / 24;
+        playing_height = block_size * 20; // 800
+        playing_width = block_size * 10; // 400
+        side_width = block_size * 6;
+        top_height = block_size * 2; 
+        hold_next_side = block_size * 4; // 160
+    }
 
     public int getScreen_height() {
         return screen_height;
@@ -69,5 +66,15 @@ public class gameDimensions {
 
     public int getBlock_size() {
         return block_size;
+    }
+
+    public void minusAppDim() {
+        app_height -= 24;
+        app_width -= 22;
+    }
+
+    public void plusAppDim() {
+        app_height += 24;
+        app_width += 22;
     }
 }

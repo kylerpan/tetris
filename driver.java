@@ -179,26 +179,40 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			g.fillRect(0, 0, dim.app_width, dim.app_height);
 
 			g.setColor(new Color(240, 240, 240));
-			g.fillRoundRect(dim.block_size * 11 / 2, dim.block_size * 7 / 2, dim.block_size * 11, dim.block_size * 17, 15, 15);
-			g1.drawRoundRect(dim.block_size * 11 / 2, dim.block_size * 7 / 2, dim.block_size * 11, dim.block_size * 17, 15, 15);
+			g.fillRoundRect(dim.block_size * 13 / 2, dim.block_size * 7 / 2, dim.block_size * 9, dim.block_size * 17, 15, 15);
+			g1.drawRoundRect(dim.block_size * 13 / 2, dim.block_size * 7 / 2, dim.block_size * 9, dim.block_size * 17, 15, 15);
+
+			g1.setStroke(new java.awt.BasicStroke(2));
+			g1.setColor(Color.black);
+			g.fillRoundRect(dim.block_size * 15 / 2, dim.block_size * 10, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.block_size * 15 / 2, dim.block_size * 10, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
+			g.fillRoundRect(dim.block_size * 15 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.block_size * 15 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
+			g.fillRoundRect(dim.block_size * 25 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.block_size * 25 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
+			g.setColor(new Color(43, 127, 25));
+			g.fillRoundRect(dim.block_size * 15 / 2, dim.block_size * 6, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.block_size * 15 / 2, dim.block_size * 6, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
 
 			g.setColor(Color.black);
+        	g.setFont(new Font ("Arya", 1, 25));
+			g.drawString("esc - resume", dim.block_size * 11 - g.getFontMetrics().stringWidth("esc - resume")/2, dim.block_size * 27 / 4);
+			g.drawString("-", dim.block_size * 17 / 2 - g.getFontMetrics().stringWidth("-")/2, dim.block_size * 35 / 4);
+			g.drawString("size", dim.block_size * 11 - g.getFontMetrics().stringWidth("size")/2, dim.block_size * 35 / 4);
+			g.drawString("+", dim.block_size * 27 / 2 - g.getFontMetrics().stringWidth("+")/2, dim.block_size * 35 / 4);
+			g.drawString("q - restart", dim.block_size * 11 - g.getFontMetrics().stringWidth("q - restart")/2, dim.block_size * 43 / 4);
+
+			g.setFont(new Font ("Arya", 1, 40));
+			g.setColor(Color.black);
 			g.drawString("PAUSED", dim.block_size * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.block_size * 5);
+
 		}
 
 	}// end of paint
 	
 	// Update Stuff 
 	public void update() {
-		// System.out.println(f.getContentPane().getHeight());
-		// System.out.println(f.getContentPane().getWidth());
-		// System.out.println(dim.app_height);
-		// System.out.println(dim.app_width);
-		// rt_app_width = f.getContentPane().getWidth();
-		// rt_app_height = rt_app_width * 24 / 22;
-		// if (dim.app_width != rt_app_width && rt_app_width != 0) {
-		// 	dim.update(rt_app_width / 22, rt_app_height, rt_app_width);
-		// }
+
 		if (!pause) {
 			
 			// first tetrimino
@@ -332,10 +346,10 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	public static void main(String[] arg) {
 		driver d = new driver();
 	}
-	public driver(){
+	public driver() {
 		f.setTitle("Tetris");
 		f.setSize(dim.app_width, dim.app_height);
-		f.setResizable(false);
+		f.setResizable(true);
 		f.addKeyListener(this);
 		f.add(this);
 		t = new Timer(17,this);
@@ -349,7 +363,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// right
-		if(arg0.getKeyCode() == 39 && !pause){ 
+		if (arg0.getKeyCode() == 39 && !pause) { 
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getRbound()) {
 					value.moveRight();
@@ -358,7 +372,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 
 		// left
-		if(arg0.getKeyCode() == 37 && !pause){
+		if (arg0.getKeyCode() == 37 && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getLbound()) {
 					value.moveLeft();
@@ -367,7 +381,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 
 		// down
-		if(arg0.getKeyCode() == 40 && !pause){
+		if (arg0.getKeyCode() == 40 && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving() && !value.getDbound()) {
 					value.moveDown();
@@ -376,7 +390,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 		
 		// up and x
-		if((arg0.getKeyCode() == 38 || arg0.getKeyCode() == 88) && !pause){
+		if ((arg0.getKeyCode() == 38 || arg0.getKeyCode() == 88) && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (value.getOrientation() == 4){
@@ -389,7 +403,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 		
 		// spacebar
-		if(arg0.getKeyCode() == 32 && !pause){
+		if (arg0.getKeyCode() == 32 && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					gridCheck.instantDrop(value);
@@ -402,8 +416,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			}
 		} 
 		
-		// z and ctrl
-		if((arg0.getKeyCode() == 90 || arg0.getKeyCode() == 17) && !pause){
+		// z 
+		if (arg0.getKeyCode() == 90 && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (value.getOrientation() == 1){
@@ -415,8 +429,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			}
 		}  
 
-		// c and shift
-		if((arg0.getKeyCode() == 67 || arg0.getKeyCode() == 16) && !pause){
+		// c 
+		if (arg0.getKeyCode() == 67 && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (!hold) {
@@ -441,10 +455,32 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 
 		// escape
-		if(arg0.getKeyCode() == 27){
+		if (arg0.getKeyCode() == 27) {
 			if (pause) pause = false;
 			else pause = true;
 		} 
+
+		// minus
+		if (arg0.getKeyCode() == 45 && pause) { 
+			dim.minusAppDim();
+			dim.update();
+			gridCheck.update();
+			for (tetrimino value : gridCheck.getMap().values()) {
+				value.update();
+			}
+			f.setSize(dim.app_width, dim.app_height);
+		}
+
+		// plus
+		if (arg0.getKeyCode() == 61 && pause) { 
+			dim.plusAppDim();
+			dim.update();
+			gridCheck.update();
+			for (tetrimino value : gridCheck.getMap().values()) {
+				value.update();
+			}
+			f.setSize(dim.app_width, dim.app_height);
+		}
 	}
 
 	@Override

@@ -30,6 +30,10 @@ public class tetrimino{
         placing();
     }
 
+    public void update() {
+        dim.update();
+    }
+
     private void placing() {
         if (orientation == 1){
             if (type == 'I'){
