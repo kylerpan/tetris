@@ -104,6 +104,26 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	public void paint(Graphics g) {
         super.paintComponent(g);
 		java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
+		
+		// controls
+		g.drawString("\u2191", dim.block_size * 1, dim.block_size * 10);
+		g.drawString("- rotate right", dim.block_size * 2, dim.block_size * 10);
+		g.drawString("\u2192", dim.block_size * 1, dim.block_size * 21 / 2);
+		g.drawString("- move right", dim.block_size * 2, dim.block_size * 21 / 2);
+		g.drawString("\u2193", dim.block_size * 1, dim.block_size * 11);
+		g.drawString("- soft drop", dim.block_size * 2, dim.block_size * 11);
+		g.drawString("\u2190", dim.block_size * 1, dim.block_size * 23 / 2);
+		g.drawString("- move left", dim.block_size * 2, dim.block_size * 23 / 2);
+		g.drawString("\u2190", dim.block_size * 1, dim.block_size * 23 / 2);
+		g.drawString("- move left", dim.block_size * 2, dim.block_size * 23 / 2);
+		g.drawString("z", dim.block_size * 1, dim.block_size * 25 / 2);
+		g.drawString("- rotate left", dim.block_size * 2, dim.block_size * 25 / 2);
+		g.drawString("c", dim.block_size * 1, dim.block_size * 13);
+		g.drawString("- hold", dim.block_size * 2, dim.block_size * 13);
+		g.drawString("esc", dim.block_size * 1, dim.block_size * 27 / 2);
+		g.drawString("- pause", dim.block_size * 2, dim.block_size * 27 / 2);
+		g.drawString("⎵", dim.block_size * 1, dim.block_size * 12);
+		g.drawString("- hard drop", dim.block_size * 2, dim.block_size * 12);
 
         // strings
 		Font font = new Font ("Arya", 1, 30);
@@ -163,7 +183,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			g1.drawRoundRect(dim.block_size * 11 / 2, dim.block_size * 7 / 2, dim.block_size * 11, dim.block_size * 17, 15, 15);
 
 			g.setColor(Color.black);
-			g.drawString("PAUSED", dim.block_size * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.block_size * 9 / 2);
+			g.drawString("PAUSED", dim.block_size * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.block_size * 5);
 		}
 
 	}// end of paint
