@@ -389,8 +389,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			}
 		} 
 		
-		// up and x
-		if ((arg0.getKeyCode() == 38 || arg0.getKeyCode() == 88) && !pause) {
+		// up
+		if (arg0.getKeyCode() == 38 && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					if (value.getOrientation() == 4){
@@ -466,8 +466,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			dim.update();
 			gridCheck.update();
 			for (tetrimino value : gridCheck.getMap().values()) {
-				value.update();
+				value.update(value);
 			}
+			repaint();
 			f.setSize(dim.app_width, dim.app_height);
 		}
 
@@ -477,8 +478,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			dim.update();
 			gridCheck.update();
 			for (tetrimino value : gridCheck.getMap().values()) {
-				value.update();
+				value.update(value);
 			}
+			repaint();
 			f.setSize(dim.app_width, dim.app_height);
 		}
 	}

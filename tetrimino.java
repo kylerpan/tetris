@@ -30,8 +30,13 @@ public class tetrimino{
         placing();
     }
 
-    public void update() {
+    public void update(tetrimino value) {
+        System.out.println(dim.block_size);
         dim.update();
+        System.out.println(dim.block_size);
+        x = value.getX();
+        y = value.getY();
+        placing();
     }
 
     private void placing() {

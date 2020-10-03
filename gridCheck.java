@@ -81,8 +81,8 @@ public class gridCheck {
         }
 
         // setting lowest position 
-        int lowest = 1000;
-        int shift = 1000;
+        int lowest = 10000000;
+        int shift = 10000000;
         for (ArrayList<Integer> value: blocksMap.values()) {
             int nextDown = value.get(1);
             while (!checkBound(value.get(0), nextDown)) {
@@ -105,10 +105,13 @@ public class gridCheck {
     public tetrimino instantDrop(tetrimino tetrimino) {
         Map<String, ArrayList<Integer>> blocks = lowestPosition(tetrimino);
         int index = 0;
+        int offset = 0;
         for (ArrayList<Integer> value: blocks.values()) {
+            offset = value.get(1) - tetrimino.getBlockY(index);
             tetrimino.setBlockY(index, value.get(1));
             index++;
         }
+        tetrimino.setY(tetrimino.getY() + offset);
         return tetrimino;
     }
 
