@@ -30,13 +30,13 @@ public class tetrimino{
         placing();
     }
 
-    public void update(tetrimino value) {
+    public void update(tetrimino value, gameDimensions dimensions) {
         System.out.println(dim.block_size);
-        dim.update();
-        System.out.println(dim.block_size);
+        dim = dimensions;
         x = value.getX();
         y = value.getY();
         placing();
+        System.out.println(dim.block_size);
     }
 
     private void placing() {
@@ -449,6 +449,12 @@ public class tetrimino{
 
     public void setBlockY(int index, int newY) {
         blocks[index].setY(newY);
+    }
+
+    public void setBlockSize(int newSize) {
+        for (int i = 0; i < 4; i++) {
+            blocks[i].setSize(newSize);
+        }
     }
 
     public void setType(char newType) {

@@ -44,4 +44,8 @@ public class block{
     public void setY(int newy) {
         y = newy;
     }
+
+    public void setSize(int newSize) {
+        size = newSize;
+    }
 }

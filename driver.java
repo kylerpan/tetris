@@ -440,10 +440,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 							value.setX(dim.side_width + dim.block_size * 4);
 							value.setY(dim.top_height);
 							holdPiece.setType(previous);
+							holdPiece.setOrientation(1);
 							holdPiece.setX(dim.block_size * 3 - holdPiece.getW() / 2);
 							holdPiece.setY(dim.block_size * 5 - holdPiece.getH() / 2);
 						} else {
 							holdPiece = value;
+							holdPiece.setOrientation(1);
 							holdPiece.setX(dim.block_size * 3 - holdPiece.getW() / 2);
 							holdPiece.setY(dim.block_size * 5 - holdPiece.getH() / 2);
 							value.setMoving(false);
@@ -463,11 +465,15 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		// minus
 		if (arg0.getKeyCode() == 45 && pause) { 
 			dim.minusAppDim();
-			dim.update();
-			gridCheck.update();
-			for (tetrimino value : gridCheck.getMap().values()) {
-				value.update(value);
-			}
+			dim.update(gridCheck, gridCheck.getMap().values());
+			// tetrimino moving = null;
+			// for (tetrimino value : gridCheck.getMap().values()) {
+			// 	// System.out.println(value.getY());
+			// 	value.update(value, dim);
+			// 	// System.out.println(value.getY());
+			// 	if (value.getMoving()) moving = value;
+			// }
+			// gridCheck.update(moving, dim);
 			repaint();
 			f.setSize(dim.app_width, dim.app_height);
 		}
@@ -475,11 +481,13 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		// plus
 		if (arg0.getKeyCode() == 61 && pause) { 
 			dim.plusAppDim();
-			dim.update();
-			gridCheck.update();
-			for (tetrimino value : gridCheck.getMap().values()) {
-				value.update(value);
-			}
+			dim.update(gridCheck, gridCheck.getMap().values());
+			// tetrimino moving = null;
+			// for (tetrimino value : gridCheck.getMap().values()) {
+			// 	value.update(value, dim);
+			// 	if (value.getMoving()) moving = value;
+			// }
+			// gridCheck.update(moving, dim);
 			repaint();
 			f.setSize(dim.app_width, dim.app_height);
 		}

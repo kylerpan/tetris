@@ -34,8 +34,11 @@ public class gridCheck {
         }
     }
 
-    public void update() {
-        dim.update();
+    public void update(tetrimino moving, int newSide_width, int newBlock_size, int newPlaying_height) {
+        dim.side_width = newSide_width;
+        dim.block_size = newBlock_size;
+        dim.playing_height = newPlaying_height;
+        // lowestPosition(moving);
     }
 
     public Map<String, ArrayList<Boolean>> getColumns() {
@@ -59,6 +62,7 @@ public class gridCheck {
 
     public Boolean checkBound(int x, int y) {
         int index = y/dim.block_size - 2;
+        System.out.println(x);
         String column = getColumn(x);
         return columns.get(column).get(index) ;
     }

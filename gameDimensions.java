@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Collection;
 
 public class gameDimensions {
 
@@ -27,13 +28,21 @@ public class gameDimensions {
         hold_next_side = block_size * 4; // 160
     }
 
-    public void update(){
+    public void update(gridCheck gridCheck, Collection<tetrimino> tetriminos){
         block_size = app_height / 24;
-        playing_height = block_size * 20; // 800
-        playing_width = block_size * 10; // 400
+        playing_height = block_size * 20;
+        playing_width = block_size * 10;
         side_width = block_size * 6;
         top_height = block_size * 2; 
-        hold_next_side = block_size * 4; // 160
+        hold_next_side = block_size * 4;
+        gridCheck.update(null, side_width, block_size, playing_height);
+        for (tetrimino value : tetriminos) {
+            for (int i = 0; i < 4; i++) {
+                value.setBlockX(i, value.getBlockX(i) - 22);
+                value.setBlockY(i, value.getBlockY(i) - 24);
+                value.setBlockSize(block_size);
+            }
+        }
     }
 
     public int getScreen_height() {
@@ -56,8 +65,12 @@ public class gameDimensions {
         return playing_height;
     }
 
-    public int getplaying_width() {
+    public int getPlaying_width() {
         return playing_width;
+    }
+
+    public int getSideWidth() {
+        return side_width;
     }
 
     public int getHold_next_side() {
