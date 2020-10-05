@@ -38,6 +38,11 @@ public class gridCheck {
         dim.side_width = newSide_width;
         dim.block_size = newBlock_size;
         dim.playing_height = newPlaying_height;
+        ArrayList<Integer> columnList = new ArrayList<Integer>();
+		for (int i = 0; i < 12; i++){
+            columnList.add(dim.side_width + (i - 1) * dim.block_size);
+		}
+		System.out.println(columnList);
         // lowestPosition(moving);
     }
 
@@ -56,13 +61,24 @@ public class gridCheck {
         return column;
     }
 
+    public int getColumnNum(int x) {
+        int column = 0;
+        for (int i = 0; i < 12; i++){
+            if (x == dim.side_width + (i - 1) * dim.block_size) {
+                column = i;
+                System.out.println(column);
+                break;
+            }
+        }
+        return column;
+    }
+
     public Map<String, tetrimino> getMap(){
         return map;
     }
 
     public Boolean checkBound(int x, int y) {
         int index = y/dim.block_size - 2;
-        System.out.println(x);
         String column = getColumn(x);
         return columns.get(column).get(index) ;
     }

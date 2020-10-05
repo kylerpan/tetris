@@ -150,12 +150,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// predicted position
-		for (tetrimino value : gridCheck.getMap().values()) {
-			if (value.getMoving()) {
-				Map<String, ArrayList<Integer>> blocks = gridCheck.lowestPosition(value);
-				gridCheck.draw(g, blocks);
-			}
-		}
+		// for (tetrimino value : gridCheck.getMap().values()) {
+		// 	if (value.getMoving()) {
+		// 		Map<String, ArrayList<Integer>> blocks = gridCheck.lowestPosition(value);
+		// 		gridCheck.draw(g, blocks);
+		// 	}
+		// }
 		
 		// tetriminos
 		for (tetrimino value : gridCheck.getMap().values()) {

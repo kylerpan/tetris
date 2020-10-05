@@ -35,14 +35,16 @@ public class gameDimensions {
         side_width = block_size * 6;
         top_height = block_size * 2; 
         hold_next_side = block_size * 4;
-        gridCheck.update(null, side_width, block_size, playing_height);
         for (tetrimino value : tetriminos) {
             for (int i = 0; i < 4; i++) {
-                value.setBlockX(i, value.getBlockX(i) - 22);
-                value.setBlockY(i, value.getBlockY(i) - 24);
+                int columnNum = gridCheck.getColumnNum(value.getBlockX(i));
+                value.setBlockX(i, value.getBlockX(i) - columnNum - 5);
+                System.out.println(value.getBlockX(i));
+                value.setBlockY(i, value.getBlockY(i) - 1);
                 value.setBlockSize(block_size);
             }
         }
+        gridCheck.update(null, side_width, block_size, playing_height);
     }
 
     public int getScreen_height() {
