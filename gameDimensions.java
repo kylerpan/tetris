@@ -28,7 +28,7 @@ public class gameDimensions {
         hold_next_side = block_size * 4; // 160
     }
 
-    public void update(gridCheck gridCheck, Collection<tetrimino> tetriminos){
+    public void update(boolean plus, gridCheck gridCheck, Collection<tetrimino> tetriminos){
         block_size = app_height / 24;
         playing_height = block_size * 20;
         playing_width = block_size * 10;
@@ -36,15 +36,27 @@ public class gameDimensions {
         top_height = block_size * 2; 
         hold_next_side = block_size * 4;
         for (tetrimino value : tetriminos) {
+            System.out.println("ran");
             for (int i = 0; i < 4; i++) {
                 int columnNum = gridCheck.getColumnNum(value.getBlockX(i));
-                value.setBlockX(i, value.getBlockX(i) - columnNum - 5);
-                System.out.println(value.getBlockX(i));
-                value.setBlockY(i, value.getBlockY(i) - 1);
+                int rowNum = gridCheck.getRowNum(value.getBlockY(i));
+                if (plus) {
+                    value.setBlockX(i, value.getBlockX(i) + columnNum + 5);
+                    value.setBlockY(i, value.getBlockY(i) + rowNum + 2);
+                    // value.setX(value.getX() + columnNum + 5);
+                    // value.setY(value.getY() + rowNum + 2);
+                    System.out.println(value.getBlockY(i));
+                } else {
+                    value.setBlockX(i, value.getBlockX(i) - columnNum - 5);
+                    value.setBlockY(i, value.getBlockY(i) - rowNum - 2);
+                    // value.setX(value.getX() - columnNum - 5);
+                    // value.setY(value.getY() - rowNum - 2);
+                    System.out.println(value.getBlockY(i));
+                }
                 value.setBlockSize(block_size);
             }
         }
-        gridCheck.update(null, side_width, block_size, playing_height);
+        gridCheck.update(null, top_height, side_width, block_size, playing_height);
     }
 
     public int getScreen_height() {

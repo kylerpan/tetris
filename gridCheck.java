@@ -34,13 +34,14 @@ public class gridCheck {
         }
     }
 
-    public void update(tetrimino moving, int newSide_width, int newBlock_size, int newPlaying_height) {
+    public void update(tetrimino moving, int newTop_height, int newSide_width, int newBlock_size, int newPlaying_height) {
+        dim.top_height = newTop_height;
         dim.side_width = newSide_width;
         dim.block_size = newBlock_size;
         dim.playing_height = newPlaying_height;
         ArrayList<Integer> columnList = new ArrayList<Integer>();
-		for (int i = 0; i < 12; i++){
-            columnList.add(dim.side_width + (i - 1) * dim.block_size);
+		for (int i = 0; i < 20; i++){
+            columnList.add(dim.top_height + i * dim.block_size);
 		}
 		System.out.println(columnList);
         // lowestPosition(moving);
@@ -66,11 +67,23 @@ public class gridCheck {
         for (int i = 0; i < 12; i++){
             if (x == dim.side_width + (i - 1) * dim.block_size) {
                 column = i;
-                System.out.println(column);
+                // System.out.println(column);
                 break;
             }
         }
         return column;
+    }
+
+    public int getRowNum(int y) {
+        int row = 0;
+        for (int i = 0; i < 20; i++){
+            if (y == dim.top_height + i * dim.block_size) {
+                row = i;
+                System.out.println(row);
+                break;
+            }
+        }
+        return row;
     }
 
     public Map<String, tetrimino> getMap(){

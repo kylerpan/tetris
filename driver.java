@@ -465,7 +465,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		// minus
 		if (arg0.getKeyCode() == 45 && pause) { 
 			dim.minusAppDim();
-			dim.update(gridCheck, gridCheck.getMap().values());
+			dim.update(false, gridCheck, gridCheck.getMap().values());
 			// tetrimino moving = null;
 			// for (tetrimino value : gridCheck.getMap().values()) {
 			// 	// System.out.println(value.getY());
@@ -481,7 +481,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		// plus
 		if (arg0.getKeyCode() == 61 && pause) { 
 			dim.plusAppDim();
-			dim.update(gridCheck, gridCheck.getMap().values());
+			dim.update(true, gridCheck, gridCheck.getMap().values());
 			// tetrimino moving = null;
 			// for (tetrimino value : gridCheck.getMap().values()) {
 			// 	value.update(value, dim);
