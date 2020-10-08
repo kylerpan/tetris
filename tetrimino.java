@@ -438,6 +438,16 @@ public class tetrimino{
         for (int i = 0; i < 4; i++) {
             blocks[i].setX(blocks[i].getX() - diff);
         }
+        left = newLeft;
+        placing();
+    }
+
+    public void setRight(int newRight) {
+        int diff = right - newRight;
+        for (int i = 0; i < 4; i++) {
+            blocks[i].setX(blocks[i].getX() - diff);
+        }
+        right = newRight;
         placing();
     }
 
@@ -446,6 +456,16 @@ public class tetrimino{
         for (int i = 0; i < 4; i++) {
             blocks[i].setY(blocks[i].getY() - diff);
         }
+        top = newTop;
+        placing();
+    }
+
+    public void setBottom(int newBottom) {
+        int diff = bottom - newBottom;
+        for (int i = 0; i < 4; i++) {
+            blocks[i].setY(blocks[i].getY() - diff);
+        }
+        bottom = newBottom;
         placing();
     }
 
@@ -494,23 +514,17 @@ public class tetrimino{
     }
 
     public void moveRight() {
-        for (int i = 0; i < 4; i++) {
-            blocks[i].setX(blocks[i].getX() + dim.block_size);
-        }
+        setLeft(left + dim.block_size);
         placing();
     }
 
     public void moveLeft() {
-        for (int i = 0; i < 4; i++) {
-            blocks[i].setX(blocks[i].getX() - dim.block_size);
-        }
+        setLeft(left - dim.block_size);
         placing();
     }
 
     public void moveDown() {
-        for (int i = 0; i < 4; i++) {
-            blocks[i].setY(blocks[i].getY() + dim.block_size);
-        }
+        setTop(top + dim.block_size);
         placing();
     }
 }

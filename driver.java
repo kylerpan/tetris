@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -150,12 +149,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// predicted position
-		// for (tetrimino value : gridCheck.getMap().values()) {
-		// 	if (value.getMoving()) {
-		// 		Map<String, ArrayList<Integer>> blocks = gridCheck.lowestPosition(value);
-		// 		gridCheck.draw(g, blocks);
-		// 	}
-		// }
+		for (tetrimino value : gridCheck.getMap().values()) {
+			if (value.getMoving()) {
+				// tetrimino blocks = gridCheck.predictedInstantDrop(value);
+				// gridCheck.draw(g, blocks);
+			}
+		}
 		
 		// tetriminos
 		for (tetrimino value : gridCheck.getMap().values()) {
@@ -163,8 +162,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// next piece
-		next.setX(dim.block_size * 19 - next.getW() / 2);
-		next.setY(dim.block_size * 5 - next.getH() / 2);
+		next.setLeft(dim.block_size * 19 - (next.getRight() - next.getLeft()) / 2);
+		next.setTop(dim.block_size * 5 - (next.getBottom() - next.getTop()) / 2);
 		next.draw(g);
         
         // border lines
@@ -226,51 +225,81 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					value.setRbound(false);
 					value.setLbound(false);
 					value.setDbound(false);
-					for (int i = 0; i < 4; i++) {
-						int FXRblockCoords = value.getBlockX(i) + dim.block_size;
-						int FXLblockCoords = value.getBlockX(i) - dim.block_size;
-						int FYDblockCoords = value.getBlockY(i) + dim.block_size;
-						int FYTblockCoords = value.getBlockY(i) - dim.block_size;
+					// for (int i = 0; i < 4; i++) {
+					// 	int FXRblockCoords = value.getBlockX(i) + dim.block_size;
+					// 	int FXLblockCoords = value.getBlockX(i) - dim.block_size;
+					// 	int FYDblockCoords = value.getBlockY(i) + dim.block_size;
+					// 	int FYTblockCoords = value.getBlockY(i) - dim.block_size;
 
-						// game bounds
-						if (FXRblockCoords > dim.side_width + dim.playing_width) {
-							int shift = FXRblockCoords - (dim.side_width + dim.playing_width);
-							value.setX(value.getX() - shift);
-							value.setRbound(true);
-						}
+					// 	// game bounds
+					// 	if (FXRblockCoords > dim.side_width + dim.playing_width) {
+					// 		int shift = FXRblockCoords - (dim.side_width + dim.playing_width);
+					// 		value.setX(value.getX() - shift);
+					// 		value.setRbound(true);
+					// 	}
 
-						if (FXLblockCoords < dim.side_width - dim.block_size) {
-							int shift = dim.side_width - dim.block_size - FXLblockCoords;
-							value.setX(value.getX() + shift);
-							value.setLbound(true);
-						}
+					// 	if (FXLblockCoords < dim.side_width - dim.block_size) {
+					// 		int shift = dim.side_width - dim.block_size - FXLblockCoords;
+					// 		value.setX(value.getX() + shift);
+					// 		value.setLbound(true);
+					// 	}
 
-						if (FYDblockCoords > dim.top_height + dim.playing_height) {
-							int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
-							value.setY(value.getY() - shift);
-							value.setDbound(true);
-						}
+					// 	if (FYDblockCoords > dim.top_height + dim.playing_height) {
+					// 		int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
+					// 		value.setY(value.getY() - shift);
+					// 		value.setDbound(true);
+					// 	}
 
-						if (FYTblockCoords < dim.top_height - dim.block_size) {
-							int shift = dim.top_height - FYTblockCoords;
-							value.setY(value.getY() + shift);
-						}
+					// 	if (FYTblockCoords < dim.top_height - dim.block_size) {
+					// 		int shift = dim.top_height - FYTblockCoords;
+					// 		value.setY(value.getY() + shift);
+					// 	}
 
-						// block bounds
-						boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
-						boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
-						boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
-						if (RBound) {
-							value.setRbound(true);
-						} 
+					// 	// block bounds
+					// 	boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
+					// 	boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
+					// 	boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
+					// 	if (RBound) {
+					// 		value.setRbound(true);
+					// 	} 
 						
-						if (LBound) {
-							value.setLbound(true);
-						} 
+					// 	if (LBound) {
+					// 		value.setLbound(true);
+					// 	} 
 						
-						if (DBound) {
-							value.setDbound(true);
-						} 
+					// 	if (DBound) {
+					// 		value.setDbound(true);
+					// 	} 
+					// }
+					int FXRblockCoords = value.getRight();
+					int FXLblockCoords = value.getLeft();
+					int FYDblockCoords = value.getBottom();
+					int FYTblockCoords = value.getTop() - dim.block_size;
+
+					// game bounds
+					if (value.getRight() >= dim.side_width + dim.playing_width) {
+						if (value.getRight() > dim.side_width + dim.playing_width) {
+							int shift = value.getRight() - (dim.side_width + dim.playing_width);
+							value.setRight(value.getRight() - shift);
+						}
+						value.setRbound(true);
+					}
+
+					if (FXLblockCoords <= dim.side_width) {
+						// int shift = dim.side_width - dim.block_size - FXLblockCoords;
+						// value.setLeft(value.getLeft() + shift);
+						value.setLbound(true);
+					}
+
+					if (FYDblockCoords >= dim.top_height + dim.playing_height) {
+						// int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
+						// value.setBottom(value.getBottom() - shift);
+						value.setDbound(true);
+					}
+
+					if (FYTblockCoords < dim.top_height - dim.block_size) {
+						int shift = dim.top_height - FYTblockCoords;
+						value.setTop(value.getTop() + shift);
 					}
 				}
 			}
@@ -298,7 +327,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 				for (tetrimino value : gridCheck.getMap().values()) {
 					if (value.getMoving()){
 						if (value.getDbound()) {
-							value.setY(value.getY());
+							value.setTop(value.getTop());
 							value.setMoving(false);
 							for (int j = 0; j < 4; j++) {
 								gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
@@ -306,7 +335,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 							hold = false;
 							break;
 						}
-						value.setY(value.getY() + dim.block_size);
+						value.setTop(value.getTop() + dim.block_size);
 					}
 				}
 				down = false;
@@ -437,17 +466,17 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						if (holdPiece != null) {
 							char previous = value.getType();
 							value.setType(holdPiece.getType());
-							value.setX(dim.side_width + dim.block_size * 4);
-							value.setY(dim.top_height);
+							value.setLeft(dim.side_width + dim.block_size * 4);
+							value.setTop(dim.top_height);
 							holdPiece.setType(previous);
 							holdPiece.setOrientation(1);
-							holdPiece.setX(dim.block_size * 3 - holdPiece.getW() / 2);
-							holdPiece.setY(dim.block_size * 5 - holdPiece.getH() / 2);
+							holdPiece.setLeft(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
+							holdPiece.setTop(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
 						} else {
 							holdPiece = value;
 							holdPiece.setOrientation(1);
-							holdPiece.setX(dim.block_size * 3 - holdPiece.getW() / 2);
-							holdPiece.setY(dim.block_size * 5 - holdPiece.getH() / 2);
+							holdPiece.setLeft(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
+							holdPiece.setTop(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
 							value.setMoving(false);
 						}
 						hold = true;
