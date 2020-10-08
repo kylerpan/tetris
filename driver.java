@@ -162,8 +162,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// next piece
-		next.setLeft(dim.block_size * 19 - (next.getRight() - next.getLeft()) / 2);
-		next.setTop(dim.block_size * 5 - (next.getBottom() - next.getTop()) / 2);
+		next.setX(dim.block_size * 19 - (next.getRight() - next.getLeft()) / 2);
+		next.setY(dim.block_size * 5 - (next.getBottom() - next.getTop()) / 2);
 		next.draw(g);
         
         // border lines
@@ -271,35 +271,38 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					// 		value.setDbound(true);
 					// 	} 
 					// }
-					int FXRblockCoords = value.getRight();
-					int FXLblockCoords = value.getLeft();
-					int FYDblockCoords = value.getBottom();
-					int FYTblockCoords = value.getTop() - dim.block_size;
 
 					// game bounds
 					if (value.getRight() >= dim.side_width + dim.playing_width) {
 						if (value.getRight() > dim.side_width + dim.playing_width) {
 							int shift = value.getRight() - (dim.side_width + dim.playing_width);
-							value.setRight(value.getRight() - shift);
+							value.setX(value.getX() - shift);
 						}
 						value.setRbound(true);
 					}
 
-					if (FXLblockCoords <= dim.side_width) {
-						// int shift = dim.side_width - dim.block_size - FXLblockCoords;
-						// value.setLeft(value.getLeft() + shift);
+					if (value.getLeft() <= dim.side_width) {
+						if (value.getLeft() < dim.side_width) {
+							int shift = dim.side_width - value.getLeft();
+							value.setX(value.getX() + shift);
+						}
 						value.setLbound(true);
 					}
 
-					if (FYDblockCoords >= dim.top_height + dim.playing_height) {
-						// int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
-						// value.setBottom(value.getBottom() - shift);
+					if (value.getBottom() >= dim.top_height + dim.playing_height) {
+						if (value.getBottom() > dim.top_height + dim.playing_height) {
+							int shift = value.getBottom() - (dim.top_height + dim.playing_height);
+							value.setY(value.getY() - shift);
+						}
 						value.setDbound(true);
 					}
 
-					if (FYTblockCoords < dim.top_height - dim.block_size) {
-						int shift = dim.top_height - FYTblockCoords;
-						value.setTop(value.getTop() + shift);
+					if (value.getTop() <= dim.top_height) {
+						if (value.getTop() < dim.top_height) {
+							int shift =  dim.top_height - value.getTop();
+							value.setY(value.getY() + shift);
+						}
+						value.setTbound(true);
 					}
 				}
 			}
@@ -335,6 +338,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 							hold = false;
 							break;
 						}
+						value.setY(value.getY() + dim.block_size);
 						value.setTop(value.getTop() + dim.block_size);
 					}
 				}
