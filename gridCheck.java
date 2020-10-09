@@ -67,7 +67,6 @@ public class gridCheck {
         for (int i = 0; i < 12; i++){
             if (x == dim.side_width + (i - 1) * dim.block_size) {
                 column = i;
-                // System.out.println(column);
                 break;
             }
         }
@@ -79,7 +78,6 @@ public class gridCheck {
         for (int i = 0; i < 20; i++){
             if (y == dim.top_height + i * dim.block_size) {
                 row = i;
-                System.out.println(row);
                 break;
             }
         }
@@ -102,66 +100,23 @@ public class gridCheck {
         columns.get(column).set(index, true);
     }
 
-    // public Map<String, ArrayList<Integer>> lowestPosition(tetrimino tetrimino) {
-
-    //     // all block positions
-    //     for (int i = 0; i < 4; i++) {
-    //         String name = String.format("block%d", i + 1);
-    //         ArrayList<Integer> coords = new ArrayList<Integer>();
-    //         coords.add(tetrimino.getBlockX(i));
-    //         coords.add(tetrimino.getBlockY(i));
-    //         blocksMap.put(name, coords);
-    //     }
-
-    //     // setting lowest position 
-    //     int lowest = 10000000;
-    //     int shift = 10000000;
-    //     for (ArrayList<Integer> value: blocksMap.values()) {
-    //         int nextDown = value.get(1);
-    //         while (!checkBound(value.get(0), nextDown)) {
-    //             nextDown += dim.block_size;
-    //             if (nextDown >= (dim.side_width - dim.block_size) + dim.playing_height) break;
-    //         }
-    //         lowest = nextDown - dim.block_size;
-    //         if (lowest - value.get(1) < shift) {
-    //             shift = lowest - value.get(1);
-    //         }
-    //     }
-
-    //     for (ArrayList<Integer> value: blocksMap.values()) {
-    //         value.set(1, value.get(1) + shift);
-    //     }
-
-    //     return blocksMap;
-    // }
-
-    // public tetrimino instantDrop(tetrimino tetrimino) {
-    //     Map<String, ArrayList<Integer>> blocks = lowestPosition(tetrimino);
-    //     int index = 0;
-    //     int offset = 0;
-    //     for (ArrayList<Integer> value: blocks.values()) {
-    //         offset = value.get(1) - tetrimino.getBlockY(index);
-    //         tetrimino.setBlockY(index, value.get(1));
-    //         index++;
-    //     }
-    //     tetrimino.setY(tetrimino.getY() + offset);
-    //     return tetrimino;
-    // }
-
     public int lowestPositionOffset(tetrimino tetrimino) {
         int lowest = dim.top_height + dim.block_size * 20;
+        int blockY = 0;
         for (int i = 0; i < 4; i++) {
             String column = getColumn(tetrimino.getBlockX(i));
             int index = 0;
             for (boolean taken : columns.get(column)) {
-                if (taken && (index * dim.block_size + dim.top_height) < lowest) {
+                if (taken && (index * dim.block_size + dim.top_height) <= lowest) {
                     lowest = index * dim.block_size + dim.top_height;
+                    blockY = tetrimino.getBlockY(i) + dim.block_size;
+                    break;
                 } else {
                     index++;
                 }
             }
         }
-        return lowest - tetrimino.getBottom();
+        return lowest - blockY;
     }
 
     public tetrimino instantDrop (tetrimino tetrimino) {
@@ -169,7 +124,7 @@ public class gridCheck {
         for (int i = 0; i < 4; i++) {
             tetrimino.setBlockY(i, tetrimino.getBlockY(i) + offset);
         }
-        tetrimino.setTop(tetrimino.getTop() + offset);
+        tetrimino.setY(tetrimino.getY() + offset);
         return tetrimino;
     }
 

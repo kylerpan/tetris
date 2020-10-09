@@ -225,52 +225,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					value.setRbound(false);
 					value.setLbound(false);
 					value.setDbound(false);
-					// for (int i = 0; i < 4; i++) {
-					// 	int FXRblockCoords = value.getBlockX(i) + dim.block_size;
-					// 	int FXLblockCoords = value.getBlockX(i) - dim.block_size;
-					// 	int FYDblockCoords = value.getBlockY(i) + dim.block_size;
-					// 	int FYTblockCoords = value.getBlockY(i) - dim.block_size;
-
-					// 	// game bounds
-					// 	if (FXRblockCoords > dim.side_width + dim.playing_width) {
-					// 		int shift = FXRblockCoords - (dim.side_width + dim.playing_width);
-					// 		value.setX(value.getX() - shift);
-					// 		value.setRbound(true);
-					// 	}
-
-					// 	if (FXLblockCoords < dim.side_width - dim.block_size) {
-					// 		int shift = dim.side_width - dim.block_size - FXLblockCoords;
-					// 		value.setX(value.getX() + shift);
-					// 		value.setLbound(true);
-					// 	}
-
-					// 	if (FYDblockCoords > dim.top_height + dim.playing_height) {
-					// 		int shift = FYDblockCoords - (dim.top_height + dim.playing_height);
-					// 		value.setY(value.getY() - shift);
-					// 		value.setDbound(true);
-					// 	}
-
-					// 	if (FYTblockCoords < dim.top_height - dim.block_size) {
-					// 		int shift = dim.top_height - FYTblockCoords;
-					// 		value.setY(value.getY() + shift);
-					// 	}
-
-					// 	// block bounds
-					// 	boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
-					// 	boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
-					// 	boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
-					// 	if (RBound) {
-					// 		value.setRbound(true);
-					// 	} 
-						
-					// 	if (LBound) {
-					// 		value.setLbound(true);
-					// 	} 
-						
-					// 	if (DBound) {
-					// 		value.setDbound(true);
-					// 	} 
-					// }
 
 					// game bounds
 					if (value.getRight() >= dim.side_width + dim.playing_width) {
@@ -304,6 +258,24 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						}
 						value.setTbound(true);
 					}
+
+					// block bounds
+					for (int i = 0; i < 4; i++) {
+						boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
+						boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
+						boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
+						if (RBound) {
+							value.setRbound(true);
+						} 
+						
+						if (LBound) {
+							value.setLbound(true);
+						} 
+						
+						if (DBound) {
+							value.setDbound(true);
+						} 
+					}
 				}
 			}
 			
@@ -330,7 +302,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 				for (tetrimino value : gridCheck.getMap().values()) {
 					if (value.getMoving()){
 						if (value.getDbound()) {
-							value.setTop(value.getTop());
+							value.setY(value.getY());
 							value.setMoving(false);
 							for (int j = 0; j < 4; j++) {
 								gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
@@ -339,7 +311,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 							break;
 						}
 						value.setY(value.getY() + dim.block_size);
-						value.setTop(value.getTop() + dim.block_size);
 					}
 				}
 				down = false;
