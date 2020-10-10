@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -151,8 +152,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		// predicted position
 		for (tetrimino value : gridCheck.getMap().values()) {
 			if (value.getMoving()) {
-				// tetrimino blocks = gridCheck.predictedInstantDrop(value);
-				// gridCheck.draw(g, blocks);
+				Map<Integer, ArrayList<Integer>> blocks = gridCheck.predictedInstantDrop(value);
+				gridCheck.draw(g, blocks);
 			}
 		}
 		
@@ -441,17 +442,17 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						if (holdPiece != null) {
 							char previous = value.getType();
 							value.setType(holdPiece.getType());
-							value.setLeft(dim.side_width + dim.block_size * 4);
-							value.setTop(dim.top_height);
+							value.setX(dim.side_width + dim.block_size * 4);
+							value.setY(dim.top_height);
 							holdPiece.setType(previous);
 							holdPiece.setOrientation(1);
-							holdPiece.setLeft(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
-							holdPiece.setTop(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
+							holdPiece.setX(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
+							holdPiece.setY(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
 						} else {
 							holdPiece = value;
 							holdPiece.setOrientation(1);
-							holdPiece.setLeft(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
-							holdPiece.setTop(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
+							holdPiece.setX(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
+							holdPiece.setY(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
 							value.setMoving(false);
 						}
 						hold = true;

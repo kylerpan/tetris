@@ -101,8 +101,9 @@ public class gridCheck {
     }
 
     public int lowestPositionOffset(tetrimino tetrimino) {
-        int lowest = dim.top_height + dim.block_size * 20;
+        int lowest = dim.top_height + dim.playing_height;
         int blockY = 0;
+        boolean check = false;
         for (int i = 0; i < 4; i++) {
             String column = getColumn(tetrimino.getBlockX(i));
             int index = 0;
@@ -110,11 +111,15 @@ public class gridCheck {
                 if (taken && (index * dim.block_size + dim.top_height) <= lowest) {
                     lowest = index * dim.block_size + dim.top_height;
                     blockY = tetrimino.getBlockY(i) + dim.block_size;
+                    check = true;
                     break;
                 } else {
                     index++;
                 }
             }
+            // if (!check) {
+            //     blockY = tetrimino.getBottom();
+            // }
         }
         return lowest - blockY;
     }
@@ -128,14 +133,24 @@ public class gridCheck {
         return tetrimino;
     }
 
-    public tetrimino predictedInstantDrop (tetrimino tetrimino) {
-        tetrimino predicted = tetrimino;
-        int offset = lowestPositionOffset(predicted);
-        for (int i = 0; i < 4; i++) {
-            predicted.setBlockY(i, predicted.getBlockY(i) + offset);
+    public Map<Integer, ArrayList<Integer>> predictedInstantDrop (tetrimino tetrimino) {
+        // tetrimino predicted = tetrimino;
+        // int offset = lowestPositionOffset(predicted);
+        // for (int i = 0; i < 4; i++) {
+        //     predicted.setBlockY(i, predicted.getBlockY(i) + offset);
+        // }
+        // predicted.setY(predicted.getY() + offset);
+        // return predicted;
+        Map<Integer, ArrayList<Integer>> coords = new HashMap<Integer, ArrayList<Integer>>();
+        int offset = lowestPositionOffset(tetrimino);
+        for (int i = 0; i < 4 ; i++) {
+            ArrayList<Integer> blockCoords = new ArrayList<Integer>();
+            blockCoords.add(tetrimino.getBlockX(i));
+            System.out.println(tetrimino.getBlockY(i) + offset);
+            blockCoords.add(tetrimino.getBlockY(i) + offset);
+            coords.put(i, blockCoords);
         }
-        predicted.setTop(predicted.getTop() + offset);
-        return predicted;
+        return coords;
     }
 
     public Map<String, tetrimino> getMap(Map<String, tetrimino> theMap) {
@@ -163,13 +178,12 @@ public class gridCheck {
         }
     }
 
-    public void draw(Graphics g, tetrimino blocks) {
+    public void draw(Graphics g, Map<Integer, ArrayList<Integer>> blocks) {
         java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
-
         for (int i = 0; i < 4; i++) {
             g1.setStroke(new java.awt.BasicStroke(2));
             g1.setColor(Color.black);
-            g1.drawRect(blocks.getBlockX(i), blocks.getBlockY(i), dim.block_size, dim.block_size);
+            g1.drawRect(blocks.get(i).get(0), blocks.get(i).get(1), dim.block_size, dim.block_size);
         }
     }
 }
