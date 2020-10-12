@@ -20,6 +20,7 @@ public class tetrimino{
 
     public tetrimino(char type, int orientation) {
         x = dim.side_width + dim.block_size * 3;
+        if (type == 'O') x  = dim.side_width + dim.block_size * 4;
         y = dim.top_height;
         left = dim.side_width + dim.block_size * 3;
         top = dim.top_height;

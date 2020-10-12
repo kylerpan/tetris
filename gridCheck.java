@@ -102,26 +102,18 @@ public class gridCheck {
 
     public int lowestPositionOffset(tetrimino tetrimino) {
         int lowest = dim.top_height + dim.playing_height;
-        int blockY = 0;
-        boolean check = false;
+        int shift = dim.top_height + dim.playing_height;
         for (int i = 0; i < 4; i++) {
-            String column = getColumn(tetrimino.getBlockX(i));
-            int index = 0;
-            for (boolean taken : columns.get(column)) {
-                if (taken && (index * dim.block_size + dim.top_height) <= lowest) {
-                    lowest = index * dim.block_size + dim.top_height;
-                    blockY = tetrimino.getBlockY(i) + dim.block_size;
-                    check = true;
-                    break;
-                } else {
-                    index++;
-                }
+            int nextDown = tetrimino.getBlockY(i) + dim.block_size;
+            while (!checkBound(tetrimino.getBlockX(i), nextDown)) {
+                nextDown += dim.block_size;
             }
-            // if (!check) {
-            //     blockY = tetrimino.getBottom();
-            // }
+            lowest = nextDown - dim.block_size;
+            if (lowest - tetrimino.getBlockY(i) < shift) {
+                shift = lowest - tetrimino.getBlockY(i);
+            }
         }
-        return lowest - blockY;
+        return shift;
     }
 
     public tetrimino instantDrop (tetrimino tetrimino) {
@@ -134,19 +126,11 @@ public class gridCheck {
     }
 
     public Map<Integer, ArrayList<Integer>> predictedInstantDrop (tetrimino tetrimino) {
-        // tetrimino predicted = tetrimino;
-        // int offset = lowestPositionOffset(predicted);
-        // for (int i = 0; i < 4; i++) {
-        //     predicted.setBlockY(i, predicted.getBlockY(i) + offset);
-        // }
-        // predicted.setY(predicted.getY() + offset);
-        // return predicted;
         Map<Integer, ArrayList<Integer>> coords = new HashMap<Integer, ArrayList<Integer>>();
         int offset = lowestPositionOffset(tetrimino);
         for (int i = 0; i < 4 ; i++) {
             ArrayList<Integer> blockCoords = new ArrayList<Integer>();
             blockCoords.add(tetrimino.getBlockX(i));
-            System.out.println(tetrimino.getBlockY(i) + offset);
             blockCoords.add(tetrimino.getBlockY(i) + offset);
             coords.put(i, blockCoords);
         }
