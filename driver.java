@@ -38,8 +38,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	gameDimensions dim = new gameDimensions();
 	
 	// real time dimensions
-	int rt_app_height = dim.app_height;
-	int rt_app_width = dim.app_width;
+	int rt_app_height = dim.getApp_height();
+	int rt_app_width = dim.getApp_width();
 
 	// fall interval
 	int interval = 10;
@@ -106,47 +106,47 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
 		
 		// controls
-		g.drawString("\u2191", dim.block_size * 1, dim.block_size * 10);
-		g.drawString("- rotate right", dim.block_size * 2, dim.block_size * 10);
-		g.drawString("\u2192", dim.block_size * 1, dim.block_size * 21 / 2);
-		g.drawString("- move right", dim.block_size * 2, dim.block_size * 21 / 2);
-		g.drawString("\u2193", dim.block_size * 1, dim.block_size * 11);
-		g.drawString("- soft drop", dim.block_size * 2, dim.block_size * 11);
-		g.drawString("\u2190", dim.block_size * 1, dim.block_size * 23 / 2);
-		g.drawString("- move left", dim.block_size * 2, dim.block_size * 23 / 2);
-		g.drawString("\u2190", dim.block_size * 1, dim.block_size * 23 / 2);
-		g.drawString("- move left", dim.block_size * 2, dim.block_size * 23 / 2);
-		g.drawString("z", dim.block_size * 1, dim.block_size * 25 / 2);
-		g.drawString("- rotate left", dim.block_size * 2, dim.block_size * 25 / 2);
-		g.drawString("c", dim.block_size * 1, dim.block_size * 13);
-		g.drawString("- hold", dim.block_size * 2, dim.block_size * 13);
-		g.drawString("esc", dim.block_size * 1, dim.block_size * 27 / 2);
-		g.drawString("- pause", dim.block_size * 2, dim.block_size * 27 / 2);
-		g.drawString("⎵", dim.block_size * 1, dim.block_size * 12);
-		g.drawString("- hard drop", dim.block_size * 2, dim.block_size * 12);
+		g.drawString("\u2191", dim.getBlock_size() * 1, dim.getBlock_size() * 10);
+		g.drawString("- rotate right", dim.getBlock_size() * 2, dim.getBlock_size() * 10);
+		g.drawString("\u2192", dim.getBlock_size() * 1, dim.getBlock_size() * 21 / 2);
+		g.drawString("- move right", dim.getBlock_size() * 2, dim.getBlock_size() * 21 / 2);
+		g.drawString("\u2193", dim.getBlock_size() * 1, dim.getBlock_size() * 11);
+		g.drawString("- soft drop", dim.getBlock_size() * 2, dim.getBlock_size() * 11);
+		g.drawString("\u2190", dim.getBlock_size() * 1, dim.getBlock_size() * 23 / 2);
+		g.drawString("- move left", dim.getBlock_size() * 2, dim.getBlock_size() * 23 / 2);
+		g.drawString("\u2190", dim.getBlock_size() * 1, dim.getBlock_size() * 23 / 2);
+		g.drawString("- move left", dim.getBlock_size() * 2, dim.getBlock_size() * 23 / 2);
+		g.drawString("z", dim.getBlock_size() * 1, dim.getBlock_size() * 25 / 2);
+		g.drawString("- rotate left", dim.getBlock_size() * 2, dim.getBlock_size() * 25 / 2);
+		g.drawString("c", dim.getBlock_size() * 1, dim.getBlock_size() * 13);
+		g.drawString("- hold", dim.getBlock_size() * 2, dim.getBlock_size() * 13);
+		g.drawString("esc", dim.getBlock_size() * 1, dim.getBlock_size() * 27 / 2);
+		g.drawString("- pause", dim.getBlock_size() * 2, dim.getBlock_size() * 27 / 2);
+		g.drawString("⎵", dim.getBlock_size() * 1, dim.getBlock_size() * 12);
+		g.drawString("- hard drop", dim.getBlock_size() * 2, dim.getBlock_size() * 12);
 
         // strings
 		Font font = new Font ("Arya", 1, 30);
         g.setFont(font);
         String scoreTitle = String.format("SCORE: %d", score);
-		g.drawString(scoreTitle, dim.block_size * 11 - g.getFontMetrics().stringWidth(scoreTitle)/2, dim.block_size * 3 / 2); // score
-		g.drawString("HOLD", dim.block_size * 3 - g.getFontMetrics().stringWidth("HOLD")/2, dim.block_size * 5 / 2);
-		g.drawString("NEXT", dim.block_size * 19 - g.getFontMetrics().stringWidth("NEXT")/2, dim.block_size * 5 / 2);
+		g.drawString(scoreTitle, dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth(scoreTitle)/2, dim.getBlock_size() * 3 / 2); // score
+		g.drawString("HOLD", dim.getBlock_size() * 3 - g.getFontMetrics().stringWidth("HOLD")/2, dim.getBlock_size() * 5 / 2);
+		g.drawString("NEXT", dim.getBlock_size() * 19 - g.getFontMetrics().stringWidth("NEXT")/2, dim.getBlock_size() * 5 / 2);
         
         // backgrounds
         g.setColor(Color.white);
-		g.fillRect(dim.side_width, dim.top_height, dim.playing_width, dim.playing_height); // playing
-		g.fillRect(dim.block_size, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // hold
-		g.fillRect(dim.side_width + dim.block_size * 11, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // next
+		g.fillRect(dim.getSide_width(), dim.getTop_height(), dim.getPlaying_width(), dim.getPlaying_height()); // playing
+		g.fillRect(dim.getBlock_size(), dim.getBlock_size() * 3, dim.getHold_next_side(), dim.getHold_next_side()); // hold
+		g.fillRect(dim.getSide_width() + dim.getBlock_size() * 11, dim.getBlock_size() * 3, dim.getHold_next_side(), dim.getHold_next_side()); // next
 
         // playing vertical & horizontal grid lines
         g1.setStroke(new java.awt.BasicStroke(2));
 		g1.setColor(Color.lightGray);
-		for(int i = dim.block_size; i < dim.playing_width; i += dim.block_size){
-            g1.drawLine(dim.side_width + i, dim.top_height, dim.side_width + i, dim.top_height + dim.playing_height);
+		for(int i = dim.getBlock_size(); i < dim.getPlaying_width(); i += dim.getBlock_size()){
+            g1.drawLine(dim.getSide_width() + i, dim.getTop_height(), dim.getSide_width() + i, dim.getTop_height() + dim.getPlaying_height());
         }
-        for(int j = dim.block_size; j < dim.playing_height; j += dim.block_size){
-            g1.drawLine(dim.side_width, dim.top_height + j, dim.side_width + dim.playing_width, dim.top_height + j);
+        for(int j = dim.getBlock_size(); j < dim.getPlaying_height(); j += dim.getBlock_size()){
+            g1.drawLine(dim.getSide_width(), dim.getTop_height() + j, dim.getSide_width() + dim.getPlaying_width(), dim.getTop_height() + j);
 		}
 
 		// predicted position
@@ -163,48 +163,48 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// next piece
-		next.setX(dim.block_size * 19 - (next.getRight() - next.getLeft()) / 2);
-		next.setY(dim.block_size * 5 - (next.getBottom() - next.getTop()) / 2);
+		next.setX(dim.getBlock_size() * 19 - (next.getRight() - next.getLeft()) / 2);
+		next.setY(dim.getBlock_size() * 5 - (next.getBottom() - next.getTop()) / 2);
 		next.draw(g);
         
         // border lines
         g1.setStroke(new java.awt.BasicStroke(3));
         g1.setColor(Color.black);
-		g1.drawRect(dim.side_width, dim.top_height, dim.playing_width, dim.playing_height); // playing	
-		g1.drawRect(dim.block_size, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // hold
-		g1.drawRect(dim.block_size * 17, dim.block_size * 3, dim.hold_next_side, dim.hold_next_side); // next
+		g1.drawRect(dim.getSide_width(), dim.getTop_height(), dim.getPlaying_width(), dim.getPlaying_height()); // playing	
+		g1.drawRect(dim.getBlock_size(), dim.getBlock_size() * 3, dim.getHold_next_side(), dim.getHold_next_side()); // hold
+		g1.drawRect(dim.getBlock_size() * 17, dim.getBlock_size() * 3, dim.getHold_next_side(), dim.getHold_next_side()); // next
 
 		if (pause) {
 			g.setColor(new Color(0, 0, 0, 57));
 			g.fillRect(0, 0, dim.app_width, dim.app_height);
 
 			g.setColor(new Color(240, 240, 240));
-			g.fillRoundRect(dim.block_size * 13 / 2, dim.block_size * 7 / 2, dim.block_size * 9, dim.block_size * 17, 15, 15);
-			g1.drawRoundRect(dim.block_size * 13 / 2, dim.block_size * 7 / 2, dim.block_size * 9, dim.block_size * 17, 15, 15);
+			g.fillRoundRect(dim.getBlock_size() * 13 / 2, dim.getBlock_size() * 7 / 2, dim.getBlock_size() * 9, dim.getBlock_size() * 17, 15, 15);
+			g1.drawRoundRect(dim.getBlock_size() * 13 / 2, dim.getBlock_size() * 7 / 2, dim.getBlock_size() * 9, dim.getBlock_size() * 17, 15, 15);
 
 			g1.setStroke(new java.awt.BasicStroke(2));
 			g1.setColor(Color.black);
-			g.fillRoundRect(dim.block_size * 15 / 2, dim.block_size * 10, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.block_size * 15 / 2, dim.block_size * 10, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
-			g.fillRoundRect(dim.block_size * 15 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.block_size * 15 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
-			g.fillRoundRect(dim.block_size * 25 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.block_size * 25 / 2, dim.block_size * 8, dim.block_size * 2, dim.block_size * 5 / 4, 15, 15);
+			g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 10, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 10, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
+			g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
+			g.fillRoundRect(dim.getBlock_size() * 25 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.getBlock_size() * 25 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
 			g.setColor(new Color(43, 127, 25));
-			g.fillRoundRect(dim.block_size * 15 / 2, dim.block_size * 6, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.block_size * 15 / 2, dim.block_size * 6, dim.block_size * 7, dim.block_size * 5 / 4, 15, 15);
+			g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 6, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
+			g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 6, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
 
 			g.setColor(Color.black);
         	g.setFont(new Font ("Arya", 1, 25));
-			g.drawString("esc - resume", dim.block_size * 11 - g.getFontMetrics().stringWidth("esc - resume")/2, dim.block_size * 27 / 4);
-			g.drawString("-", dim.block_size * 17 / 2 - g.getFontMetrics().stringWidth("-")/2, dim.block_size * 35 / 4);
-			g.drawString("size", dim.block_size * 11 - g.getFontMetrics().stringWidth("size")/2, dim.block_size * 35 / 4);
-			g.drawString("+", dim.block_size * 27 / 2 - g.getFontMetrics().stringWidth("+")/2, dim.block_size * 35 / 4);
-			g.drawString("q - restart", dim.block_size * 11 - g.getFontMetrics().stringWidth("q - restart")/2, dim.block_size * 43 / 4);
+			g.drawString("esc - resume", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("esc - resume")/2, dim.getBlock_size() * 27 / 4);
+			g.drawString("-", dim.getBlock_size() * 17 / 2 - g.getFontMetrics().stringWidth("-")/2, dim.getBlock_size() * 35 / 4);
+			g.drawString("size", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("size")/2, dim.getBlock_size() * 35 / 4);
+			g.drawString("+", dim.getBlock_size() * 27 / 2 - g.getFontMetrics().stringWidth("+")/2, dim.getBlock_size() * 35 / 4);
+			g.drawString("q - restart", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("q - restart")/2, dim.getBlock_size() * 43 / 4);
 
 			g.setFont(new Font ("Arya", 1, 40));
 			g.setColor(Color.black);
-			g.drawString("PAUSED", dim.block_size * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.block_size * 5);
+			g.drawString("PAUSED", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.getBlock_size() * 5);
 
 		}
 
@@ -228,33 +228,33 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					value.setDbound(false);
 
 					// game bounds
-					if (value.getRight() >= dim.side_width + dim.playing_width) {
-						if (value.getRight() > dim.side_width + dim.playing_width) {
-							int shift = value.getRight() - (dim.side_width + dim.playing_width);
+					if (value.getRight() >= dim.getSide_width() + dim.getPlaying_width()) {
+						if (value.getRight() > dim.getSide_width() + dim.getPlaying_width()) {
+							int shift = value.getRight() - (dim.getSide_width() + dim.getPlaying_width());
 							value.setX(value.getX() - shift);
 						}
 						value.setRbound(true);
 					}
 
-					if (value.getLeft() <= dim.side_width) {
-						if (value.getLeft() < dim.side_width) {
-							int shift = dim.side_width - value.getLeft();
+					if (value.getLeft() <= dim.getSide_width()) {
+						if (value.getLeft() < dim.getSide_width()) {
+							int shift = dim.getSide_width() - value.getLeft();
 							value.setX(value.getX() + shift);
 						}
 						value.setLbound(true);
 					}
 
-					if (value.getBottom() >= dim.top_height + dim.playing_height) {
-						if (value.getBottom() > dim.top_height + dim.playing_height) {
-							int shift = value.getBottom() - (dim.top_height + dim.playing_height);
+					if (value.getBottom() >= dim.getTop_height() + dim.getPlaying_height()) {
+						if (value.getBottom() > dim.getTop_height() + dim.getPlaying_height()) {
+							int shift = value.getBottom() - (dim.getTop_height() + dim.getPlaying_height());
 							value.setY(value.getY() - shift);
 						}
 						value.setDbound(true);
 					}
 
-					if (value.getTop() <= dim.top_height) {
-						if (value.getTop() < dim.top_height) {
-							int shift =  dim.top_height - value.getTop();
+					if (value.getTop() <= dim.getTop_height()) {
+						if (value.getTop() < dim.getTop_height()) {
+							int shift =  dim.getTop_height() - value.getTop();
 							value.setY(value.getY() + shift);
 						}
 						value.setTbound(true);
@@ -262,9 +262,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 					// block bounds
 					for (int i = 0; i < 4; i++) {
-						boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.block_size, value.getBlockY(i));
-						boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.block_size, value.getBlockY(i));
-						boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.block_size);
+						boolean RBound = gridCheck.checkBound(value.getBlockX(i) + dim.getBlock_size(), value.getBlockY(i));
+						boolean LBound = gridCheck.checkBound(value.getBlockX(i) - dim.getBlock_size(), value.getBlockY(i));
+						boolean DBound = gridCheck.checkBound(value.getBlockX(i), value.getBlockY(i) + dim.getBlock_size());
 						if (RBound) {
 							value.setRbound(true);
 						} 
@@ -311,7 +311,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 							hold = false;
 							break;
 						}
-						value.setY(value.getY() + dim.block_size);
+						value.setY(value.getY() + dim.getBlock_size());
 					}
 				}
 				down = false;
@@ -353,7 +353,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 	}
 	public driver() {
 		f.setTitle("Tetris");
-		f.setSize(dim.app_width, dim.app_height);
+		f.setSize(dim.getApp_width(), dim.getApp_height());
 		f.setResizable(true);
 		f.addKeyListener(this);
 		f.add(this);
@@ -442,17 +442,17 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						if (holdPiece != null) {
 							char previous = value.getType();
 							value.setType(holdPiece.getType());
-							value.setX(dim.side_width + dim.block_size * 4);
-							value.setY(dim.top_height);
+							value.setX(dim.getSide_width() + dim.getBlock_size() * 4);
+							value.setY(dim.getTop_height());
 							holdPiece.setType(previous);
 							holdPiece.setOrientation(1);
-							holdPiece.setX(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
-							holdPiece.setY(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
+							holdPiece.setX(dim.getBlock_size() * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
+							holdPiece.setY(dim.getBlock_size() * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
 						} else {
 							holdPiece = value;
 							holdPiece.setOrientation(1);
-							holdPiece.setX(dim.block_size * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
-							holdPiece.setY(dim.block_size * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
+							holdPiece.setX(dim.getBlock_size() * 3 - (holdPiece.getRight() - holdPiece.getLeft()) / 2);
+							holdPiece.setY(dim.getBlock_size() * 5 - (holdPiece.getBottom() - holdPiece.getTop()) / 2);
 							value.setMoving(false);
 						}
 						hold = true;
@@ -472,7 +472,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			dim.minusAppDim();
 			dim.update(false, gridCheck, gridCheck.getMap().values());
 			repaint();
-			f.setSize(dim.app_width, dim.app_height);
+			f.setSize(dim.getApp_width(), dim.getApp_height());
 		}
 
 		// plus
@@ -480,7 +480,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			dim.plusAppDim();
 			dim.update(true, gridCheck, gridCheck.getMap().values());
 			repaint();
-			f.setSize(dim.app_width, dim.app_height);
+			f.setSize(dim.getApp_width(), dim.getApp_height());
 		}
 	}
 

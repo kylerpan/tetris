@@ -19,11 +19,10 @@ public class tetrimino{
     
 
     public tetrimino(char type, int orientation) {
-        x = dim.side_width + dim.block_size * 3;
-        if (type == 'O') x  = dim.side_width + dim.block_size * 4;
-        y = dim.top_height;
-        left = dim.side_width + dim.block_size * 3;
-        top = dim.top_height;
+        x = dim.getSide_width() + dim.getBlock_size() * 3;
+        if (type == 'O') x  = dim.getSide_width() + dim.getBlock_size() * 4;
+        y = dim.getTop_height();
+        // dim.getBlock_size() = dim.getBlock_size();
         moving = true;
         Rbound = false;
         Lbound = false;
@@ -34,374 +33,374 @@ public class tetrimino{
         placing();
     }
 
-    public void update(tetrimino value, gameDimensions dimensions) {
-        System.out.println(dim.block_size);
-        dim = dimensions;
-        left = value.getLeft();
-        top = value.getTop();
-        placing();
-        System.out.println(dim.block_size);
-    }
+    // public void update(int newBlock_size, int newSide_width, int newTop_height) {
+    //     System.out.println(dim.getBlock_size());
+    //     dim = dimensions;
+    //     left = value.getLeft();
+    //     top = value.getTop();
+    //     placing();
+    //     System.out.println(dim.getBlock_size());
+    // }
 
     private void placing() {
         if (orientation == 1){
             if (type == 'I'){
                 for (int i = 0; i < 4; i++){
-                    blocks[i].setX(x + i * dim.block_size);
+                    blocks[i].setX(x + i * dim.getBlock_size());
                     blocks[i].setY(y);
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size;
-                right = left + dim.block_size * 4;
+                bottom = top + dim.getBlock_size();
+                right = left + dim.getBlock_size() * 4;
             }
             if (type == 'O'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + i * dim.block_size);
+                    blocks[i].setX(x + i * dim.getBlock_size());
                     blocks[i].setY(y);
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 2) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 2) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'T'){
-                blocks[0].setX(x + dim.block_size);
+                blocks[0].setX(x + dim.getBlock_size());
                 blocks[0].setY(y);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'J'){
                 blocks[0].setX(x);
                 blocks[0].setY(y);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'L'){
-                blocks[0].setX(x + dim.block_size * 2);
+                blocks[0].setX(x + dim.getBlock_size() * 2);
                 blocks[0].setY(y);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'S'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + (i + 1) * dim.block_size);
+                    blocks[i].setX(x + (i + 1) * dim.getBlock_size());
                     blocks[i].setY(y);
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 2) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 2) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'Z'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + (i) * dim.block_size);
+                    blocks[i].setX(x + (i) * dim.getBlock_size());
                     blocks[i].setY(y);
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
         }
         if (orientation == 2) {
             if (type == 'I'){
                 for (int i = 0; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size * 2);
-                    blocks[i].setY(y - dim.block_size + (i) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size() * 2);
+                    blocks[i].setY(y - dim.getBlock_size() + (i) * dim.getBlock_size());
                 }
-                left = x + dim.block_size * 2;
-                top = y - dim.block_size;
-                bottom = top + dim.block_size * 4;
-                right = left + dim.block_size;
+                left = x + dim.getBlock_size() * 2;
+                top = y - dim.getBlock_size();
+                bottom = top + dim.getBlock_size() * 4;
+                right = left + dim.getBlock_size();
             }
             if (type == 'O'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + i * dim.block_size);
+                    blocks[i].setX(x + i * dim.getBlock_size());
                     blocks[i].setY(y);
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 2) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 2) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'T'){
-                blocks[0].setX(x + dim.block_size * 2);
-                blocks[0].setY(y + dim.block_size);
+                blocks[0].setX(x + dim.getBlock_size() * 2);
+                blocks[0].setY(y + dim.getBlock_size());
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'J'){
-                blocks[0].setX(x + dim.block_size * 2);
+                blocks[0].setX(x + dim.getBlock_size() * 2);
                 blocks[0].setY(y);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'L'){
-                blocks[0].setX(x + dim.block_size * 2);
-                blocks[0].setY(y + dim.block_size * 2);
+                blocks[0].setX(x + dim.getBlock_size() * 2);
+                blocks[0].setY(y + dim.getBlock_size() * 2);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'S'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i) * dim.getBlock_size());
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size * 2);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size() * 2);
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'Z'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + dim.block_size * 2);
-                    blocks[i].setY(y + (i) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size() * 2);
+                    blocks[i].setY(y + (i) * dim.getBlock_size());
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
         }
         if (orientation == 3) {
             if (type == 'I'){
                 for (int i = 0; i < 4; i++){
-                    blocks[i].setX(x + i * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + i * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
-                top = y + dim.block_size;
-                bottom = top + dim.block_size;
-                right = left + dim.block_size * 4;
+                top = y + dim.getBlock_size();
+                bottom = top + dim.getBlock_size();
+                right = left + dim.getBlock_size() * 4;
             }
             if (type == 'O'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + i * dim.block_size);
+                    blocks[i].setX(x + i * dim.getBlock_size());
                     blocks[i].setY(y);
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 2) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 2) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'T'){
-                blocks[0].setX(x + dim.block_size);
-                blocks[0].setY(y + dim.block_size * 2);
+                blocks[0].setX(x + dim.getBlock_size());
+                blocks[0].setY(y + dim.getBlock_size() * 2);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
-                top = y + dim.block_size;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                top = y + dim.getBlock_size();
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'J'){
-                blocks[0].setX(x + dim.block_size * 2);
-                blocks[0].setY(y + dim.block_size * 2);
+                blocks[0].setX(x + dim.getBlock_size() * 2);
+                blocks[0].setY(y + dim.getBlock_size() * 2);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
-                top = y + dim.block_size;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                top = y + dim.getBlock_size();
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'L'){
                 blocks[0].setX(x);
-                blocks[0].setY(y + dim.block_size * 2);
+                blocks[0].setY(y + dim.getBlock_size() * 2);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 left = x;
-                top = y + dim.block_size;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                top = y + dim.getBlock_size();
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'S'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + (i + 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i + 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 2) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size * 2);
+                    blocks[i].setX(x + (i - 2) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size() * 2);
                 }
                 left = x;
-                top = y + dim.block_size;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                top = y + dim.getBlock_size();
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
             if (type == 'Z'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + (i) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 1) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size * 2);
+                    blocks[i].setX(x + (i - 1) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size() * 2);
                 }
                 left = x;
-                top = y + dim.block_size;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 3;
+                top = y + dim.getBlock_size();
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 3;
             }
         }
         if (orientation == 4) {
             if (type == 'I'){
                 for (int i = 0; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y - dim.block_size + (i) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y - dim.getBlock_size() + (i) * dim.getBlock_size());
                 }
-                left = x + dim.block_size;
-                top = y - dim.block_size;
-                bottom = top + dim.block_size * 4;
-                right = left + dim.block_size;
+                left = x + dim.getBlock_size();
+                top = y - dim.getBlock_size();
+                bottom = top + dim.getBlock_size() * 4;
+                right = left + dim.getBlock_size();
             }
             if (type == 'O'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + i * dim.block_size);
+                    blocks[i].setX(x + i * dim.getBlock_size());
                     blocks[i].setY(y);
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + (i - 2) * dim.block_size);
-                    blocks[i].setY(y + dim.block_size);
+                    blocks[i].setX(x + (i - 2) * dim.getBlock_size());
+                    blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.block_size;
+                left = x + dim.getBlock_size();
                 top = y;
-                bottom = top + dim.block_size * 2;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 2;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'T'){
                 blocks[0].setX(x);
-                blocks[0].setY(y + dim.block_size);
+                blocks[0].setY(y + dim.getBlock_size());
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'J'){
                 blocks[0].setX(x);
-                blocks[0].setY(y + dim.block_size * 2);
+                blocks[0].setY(y + dim.getBlock_size() * 2);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'L'){
                 blocks[0].setX(x);
                 blocks[0].setY(y);
                 for (int i = 1; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'S'){
                 for (int i = 0; i < 2; i++){
                     blocks[i].setX(x);
-                    blocks[i].setY(y + (i) * dim.block_size);
+                    blocks[i].setY(y + (i) * dim.getBlock_size());
                 }
                 for (int i = 2; i < 4; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
             if (type == 'Z'){
                 for (int i = 0; i < 2; i++){
-                    blocks[i].setX(x + dim.block_size);
-                    blocks[i].setY(y + (i) * dim.block_size);
+                    blocks[i].setX(x + dim.getBlock_size());
+                    blocks[i].setY(y + (i) * dim.getBlock_size());
                 }
                 for (int i = 2; i < 4; i++){
                     blocks[i].setX(x);
-                    blocks[i].setY(y + (i - 1) * dim.block_size);
+                    blocks[i].setY(y + (i - 1) * dim.getBlock_size());
                 }
                 left = x;
                 top = y;
-                bottom = top + dim.block_size * 3;
-                right = left + dim.block_size * 2;
+                bottom = top + dim.getBlock_size() * 3;
+                right = left + dim.getBlock_size() * 2;
             }
         }
     }
@@ -433,10 +432,10 @@ public class tetrimino{
 
         for (int j = 0; j < 4; j++){
             if (visible[j]){
-                g.fillRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
+                g.fillRect(blocks[j].getX(), blocks[j].getY(), dim.getBlock_size(), dim.getBlock_size());
                 g1.setStroke(new java.awt.BasicStroke(2));
                 g1.setColor(Color.black);
-                g1.drawRect(blocks[j].getX(), blocks[j].getY(), blocks[j].getSize(), blocks[j].getSize());
+                g1.drawRect(blocks[j].getX(), blocks[j].getY(), dim.getBlock_size(), dim.getBlock_size());
             }
         }
     }
@@ -559,12 +558,12 @@ public class tetrimino{
         blocks[index].setY(newY);
     }
 
-    public void setBlockSize(int newSize) {
-        for (int i = 0; i < 4; i++) {
-            blocks[i].setSize(newSize);
-        }
-        dim.block_size = newSize;
-    }
+    // public void setBlockSize(int newSize) {
+    //     for (int i = 0; i < 4; i++) {
+    //         blocks[i].setSize(newSize);
+    //     }
+    //     // dim.getBlock_size() = newSize;
+    // }
 
     public void setType(char newType) {
         type = newType;
@@ -601,20 +600,20 @@ public class tetrimino{
     }
 
     public void moveRight() {
-        setX(x + dim.block_size);
-        setLeft(left + dim.block_size);
+        setX(x + dim.getBlock_size());
+        setLeft(left + dim.getBlock_size());
         placing();
     }
 
     public void moveLeft() {
-        setX(x - dim.block_size);
-        setLeft(left - dim.block_size);
+        setX(x - dim.getBlock_size());
+        setLeft(left - dim.getBlock_size());
         placing();
     }
 
     public void moveDown() {
-        setY(y + dim.block_size);
-        setTop(top + dim.block_size);
+        setY(y + dim.getBlock_size());
+        setTop(top + dim.getBlock_size());
         placing();
     }
 }

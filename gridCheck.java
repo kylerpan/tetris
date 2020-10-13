@@ -35,13 +35,13 @@ public class gridCheck {
     }
 
     public void update(tetrimino moving, int newTop_height, int newSide_width, int newBlock_size, int newPlaying_height) {
-        dim.top_height = newTop_height;
-        dim.side_width = newSide_width;
-        dim.block_size = newBlock_size;
-        dim.playing_height = newPlaying_height;
+        // dim.getTop_height() = newTop_height;
+        // dim.getSide_width() = newSide_width;
+        // dim.getBlock_size() = newBlock_size;
+        // dim.getPlaying_height() = newPlaying_height;
         ArrayList<Integer> columnList = new ArrayList<Integer>();
 		for (int i = 0; i < 20; i++){
-            columnList.add(dim.top_height + i * dim.block_size);
+            columnList.add(dim.getTop_height() + i * dim.getBlock_size());
 		}
 		// System.out.println(columnList);
         // lowestPosition(moving);
@@ -54,7 +54,7 @@ public class gridCheck {
     public String getColumn(int x) {
         String column = "";
         for (int i = 0; i < 12; i++){
-            if (x == dim.side_width + (i - 1) * dim.block_size) {
+            if (x == dim.getSide_width() + (i - 1) * dim.getBlock_size()) {
                 column = String.format("column%d", i);
                 break;
             }
@@ -65,7 +65,7 @@ public class gridCheck {
     public int getColumnNum(int x) {
         int column = 0;
         for (int i = 0; i < 12; i++){
-            if (x == dim.side_width + (i - 1) * dim.block_size) {
+            if (x == dim.getSide_width() + (i - 1) * dim.getBlock_size()) {
                 column = i;
                 break;
             }
@@ -76,7 +76,7 @@ public class gridCheck {
     public int getRowNum(int y) {
         int row = 0;
         for (int i = 0; i < 20; i++){
-            if (y == dim.top_height + i * dim.block_size) {
+            if (y == dim.getTop_height() + i * dim.getBlock_size()) {
                 row = i;
                 break;
             }
@@ -89,26 +89,26 @@ public class gridCheck {
     }
 
     public Boolean checkBound(int x, int y) {
-        int index = y/dim.block_size - 2;
+        int index = y/dim.getBlock_size() - 2;
         String column = getColumn(x);
         return columns.get(column).get(index) ;
     }
 
     public void setBound(int x, int y) {
-        int index = y/dim.block_size - 2;
+        int index = y/dim.getBlock_size() - 2;
         String column = getColumn(x);
         columns.get(column).set(index, true);
     }
 
     public int lowestPositionOffset(tetrimino tetrimino) {
-        int lowest = dim.top_height + dim.playing_height;
-        int shift = dim.top_height + dim.playing_height;
+        int lowest = dim.getTop_height() + dim.getPlaying_height();
+        int shift = dim.getTop_height() + dim.getPlaying_height();
         for (int i = 0; i < 4; i++) {
-            int nextDown = tetrimino.getBlockY(i) + dim.block_size;
+            int nextDown = tetrimino.getBlockY(i) + dim.getBlock_size();
             while (!checkBound(tetrimino.getBlockX(i), nextDown)) {
-                nextDown += dim.block_size;
+                nextDown += dim.getBlock_size();
             }
-            lowest = nextDown - dim.block_size;
+            lowest = nextDown - dim.getBlock_size();
             if (lowest - tetrimino.getBlockY(i) < shift) {
                 shift = lowest - tetrimino.getBlockY(i);
             }
@@ -148,15 +148,15 @@ public class gridCheck {
         }
         for (tetrimino tetrimino : map.values()) {
             for (int i = 0; i < 4; i++) {
-                if (tetrimino.getBlockY(i) == (row + 2) * dim.block_size && tetrimino.getBlockX(i) >= (dim.side_width - dim.block_size) && tetrimino.getBlockX(i) <= (dim.side_width + dim.playing_width)) {
+                if (tetrimino.getBlockY(i) == (row + 2) * dim.getBlock_size() && tetrimino.getBlockX(i) >= (dim.getSide_width() - dim.getBlock_size()) && tetrimino.getBlockX(i) <= (dim.getSide_width() + dim.playing_width)) {
                     tetrimino.setVisible(i, false);
                 }
             }
         }
         for (tetrimino tetrimino : map.values()) {
             for (int i = 0; i < 4; i++) {
-                if (tetrimino.getBlockY(i) < (row + 2) * dim.block_size && tetrimino.getBlockX(i) >= (dim.side_width - dim.block_size) && tetrimino.getBlockX(i) <= (dim.side_width + dim.playing_width)) {
-                    tetrimino.setBlockY(i, tetrimino.getBlockY(i) + dim.block_size);
+                if (tetrimino.getBlockY(i) < (row + 2) * dim.getBlock_size() && tetrimino.getBlockX(i) >= (dim.getSide_width() - dim.getBlock_size()) && tetrimino.getBlockX(i) <= (dim.getSide_width() + dim.playing_width)) {
+                    tetrimino.setBlockY(i, tetrimino.getBlockY(i) + dim.getBlock_size());
                 }
             }
         }
@@ -167,7 +167,7 @@ public class gridCheck {
         for (int i = 0; i < 4; i++) {
             g1.setStroke(new java.awt.BasicStroke(2));
             g1.setColor(Color.black);
-            g1.drawRect(blocks.get(i).get(0), blocks.get(i).get(1), dim.block_size, dim.block_size);
+            g1.drawRect(blocks.get(i).get(0), blocks.get(i).get(1), dim.getBlock_size(), dim.getBlock_size());
         }
     }
 }

@@ -41,7 +41,7 @@ public class gameDimensions {
             int left = side_width + playing_width;
             int top = top_height + playing_height;
             for (int i = 0; i < 4; i++) {
-                value.setBlockSize(block_size);
+                // value.setBlockSize(block_size);
                 if (value.getBlockX(i) < left) left = value.getBlockX(i);
                 if (value.getBlockY(i) < top) top = value.getBlockY(i);
             }
@@ -51,6 +51,7 @@ public class gameDimensions {
             value.setY(top);
         }
         gridCheck.update(null, top_height, side_width, block_size, playing_height);
+        // tetrimino.update(block_size, side_width, top_height);
     }
 
     public int getScreen_height() {
@@ -77,7 +78,11 @@ public class gameDimensions {
         return playing_width;
     }
 
-    public int getSideWidth() {
+    public int getTop_height() {
+        return top_height;
+    }
+
+    public int getSide_width() {
         return side_width;
     }
 
@@ -86,6 +91,7 @@ public class gameDimensions {
     }
 
     public int getBlock_size() {
+        System.out.println(block_size);
         return block_size;
     }
 
