@@ -150,12 +150,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// predicted position
-		for (tetrimino value : gridCheck.getMap().values()) {
-			if (value.getMoving()) {
-				Map<Integer, ArrayList<Integer>> blocks = gridCheck.predictedInstantDrop(value);
-				gridCheck.draw(g, blocks);
-			}
-		}
+		// for (tetrimino value : gridCheck.getMap().values()) {
+		// 	if (value.getMoving()) {
+		// 		Map<Integer, ArrayList<Integer>> blocks = gridCheck.predictedInstantDrop(value);
+		// 		gridCheck.draw(g, blocks);
+		// 	}
+		// }
 		
 		// tetriminos
 		for (tetrimino value : gridCheck.getMap().values()) {
@@ -471,14 +471,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == 45 && pause) { 
 			dim.minusAppDim();
 			dim.update(false, gridCheck, gridCheck.getMap().values());
-			// tetrimino moving = null;
-			// for (tetrimino value : gridCheck.getMap().values()) {
-			// 	// System.out.println(value.getY());
-			// 	value.update(value, dim);
-			// 	// System.out.println(value.getY());
-			// 	if (value.getMoving()) moving = value;
-			// }
-			// gridCheck.update(moving, dim);
 			repaint();
 			f.setSize(dim.app_width, dim.app_height);
 		}
@@ -487,12 +479,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == 61 && pause) { 
 			dim.plusAppDim();
 			dim.update(true, gridCheck, gridCheck.getMap().values());
-			// tetrimino moving = null;
-			// for (tetrimino value : gridCheck.getMap().values()) {
-			// 	value.update(value, dim);
-			// 	if (value.getMoving()) moving = value;
-			// }
-			// gridCheck.update(moving, dim);
 			repaint();
 			f.setSize(dim.app_width, dim.app_height);
 		}

@@ -563,6 +563,7 @@ public class tetrimino{
         for (int i = 0; i < 4; i++) {
             blocks[i].setSize(newSize);
         }
+        dim.block_size = newSize;
     }
 
     public void setType(char newType) {

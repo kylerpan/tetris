@@ -15,10 +15,12 @@ public class gameDimensions {
     int top_height;
     int hold_next_side; 
     int block_size;
+    int old_block_size;
 
     public gameDimensions(){
         screen_height = screenSize.height;
         block_size = screen_height * 2 / 69; // 40
+        old_block_size = screen_height * 2 / 69;
         app_height = block_size * 24; // 930
         app_width = block_size * 22; // 900
         playing_height = block_size * 20; // 800
@@ -36,25 +38,17 @@ public class gameDimensions {
         top_height = block_size * 2; 
         hold_next_side = block_size * 4;
         for (tetrimino value : tetriminos) {
-            System.out.println("ran");
+            int left = side_width + playing_width;
+            int top = top_height + playing_height;
             for (int i = 0; i < 4; i++) {
-                int columnNum = gridCheck.getColumnNum(value.getBlockX(i));
-                int rowNum = gridCheck.getRowNum(value.getBlockY(i));
-                if (plus) {
-                    value.setBlockX(i, value.getBlockX(i) + columnNum + 5);
-                    value.setBlockY(i, value.getBlockY(i) + rowNum + 2);
-                    // value.setX(value.getX() + columnNum + 5);
-                    // value.setY(value.getY() + rowNum + 2);
-                    System.out.println(value.getBlockY(i));
-                } else {
-                    value.setBlockX(i, value.getBlockX(i) - columnNum - 5);
-                    value.setBlockY(i, value.getBlockY(i) - rowNum - 2);
-                    // value.setX(value.getX() - columnNum - 5);
-                    // value.setY(value.getY() - rowNum - 2);
-                    System.out.println(value.getBlockY(i));
-                }
                 value.setBlockSize(block_size);
+                if (value.getBlockX(i) < left) left = value.getBlockX(i);
+                if (value.getBlockY(i) < top) top = value.getBlockY(i);
             }
+            left = (gridCheck.getColumnNum(left) + 5) * block_size;
+            top = (gridCheck.getRowNum(top) + 2) * block_size;
+            value.setX(left);
+            value.setY(top);
         }
         gridCheck.update(null, top_height, side_width, block_size, playing_height);
     }
