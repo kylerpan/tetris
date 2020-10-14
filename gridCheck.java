@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,17 +35,8 @@ public class gridCheck {
         }
     }
 
-    public void update(tetrimino moving, int newTop_height, int newSide_width, int newBlock_size, int newPlaying_height) {
-        // dim.getTop_height() = newTop_height;
-        // dim.getSide_width() = newSide_width;
-        // dim.getBlock_size() = newBlock_size;
-        // dim.getPlaying_height() = newPlaying_height;
-        ArrayList<Integer> columnList = new ArrayList<Integer>();
-		for (int i = 0; i < 20; i++){
-            columnList.add(dim.getTop_height() + i * dim.getBlock_size());
-		}
-		// System.out.println(columnList);
-        // lowestPosition(moving);
+    public void update(boolean plus) {
+        dim.update(plus);
     }
 
     public Map<String, ArrayList<Boolean>> getColumns() {
@@ -64,21 +56,29 @@ public class gridCheck {
 
     public int getColumnNum(int x) {
         int column = 0;
+        int lowest = 10000;
         for (int i = 0; i < 12; i++){
-            if (x == dim.getSide_width() + (i - 1) * dim.getBlock_size()) {
+            System.out.println(x);
+            // System.out.println(dim.getSide_width() + (i - 1) * dim.getBlock_size());
+            int diff = x - (dim.getSide_width() + (i - 1) * dim.getBlock_size());
+            // System.out.println(Math.abs(diff));
+            if (Math.abs(diff) < lowest) {
+                lowest = Math.abs(diff);
                 column = i;
-                break;
             }
         }
+        System.out.printf("index: %d%n", column);
         return column;
     }
 
     public int getRowNum(int y) {
         int row = 0;
+        int lowest = 10000;
         for (int i = 0; i < 20; i++){
-            if (y == dim.getTop_height() + i * dim.getBlock_size()) {
+            int diff = y - dim.getTop_height() - (i) * dim.getBlock_size();
+            if (Math.abs(diff) < lowest) {
+                lowest = Math.abs(diff);
                 row = i;
-                break;
             }
         }
         return row;

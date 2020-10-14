@@ -5,6 +5,7 @@ public class tetrimino{
 
     // game dimensions  
     gameDimensions dim = new gameDimensions();
+    gridCheck gridCheck = new gridCheck();
 
     int x, y, left, right, top, bottom;
     char type;
@@ -22,7 +23,6 @@ public class tetrimino{
         x = dim.getSide_width() + dim.getBlock_size() * 3;
         if (type == 'O') x  = dim.getSide_width() + dim.getBlock_size() * 4;
         y = dim.getTop_height();
-        // dim.getBlock_size() = dim.getBlock_size();
         moving = true;
         Rbound = false;
         Lbound = false;
@@ -33,14 +33,27 @@ public class tetrimino{
         placing();
     }
 
-    // public void update(int newBlock_size, int newSide_width, int newTop_height) {
-    //     System.out.println(dim.getBlock_size());
-    //     dim = dimensions;
-    //     left = value.getLeft();
-    //     top = value.getTop();
-    //     placing();
-    //     System.out.println(dim.getBlock_size());
-    // }
+    public void update(boolean plus) {
+        dim.update(plus);
+        gridCheck.update(plus);
+        int left = dim.getSide_width() + dim.getPlaying_height();
+        int top = dim.getTop_height() + dim.getPlaying_height();
+        for (int i = 0; i < 4; i++) {
+            blocks[i].update(plus);
+            int columnNum = gridCheck.getColumnNum(blocks[i].getX());
+            int rowNum = gridCheck.getRowNum(blocks[i].getY());
+            int blockX = blocks[i].getX() + (plus ? columnNum + 5 : -(columnNum + 5));
+            int blockY = blocks[i].getY() + (plus ? rowNum + 2 : -(rowNum + 1));
+            if (blockX < left) left = blockX;
+            if (blockY < top) top = blockY;
+        }
+        // System.out.println(gridCheck.getColumnNum(left));
+        left = (gridCheck.getColumnNum(left) + 5) * dim.block_size;
+        top = (gridCheck.getRowNum(top) + 2) * dim.block_size;
+        x = left;
+        y = top;
+        placing();
+    }
 
     private void placing() {
         if (orientation == 1){

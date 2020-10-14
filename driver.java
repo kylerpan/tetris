@@ -469,16 +469,24 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		// minus
 		if (arg0.getKeyCode() == 45 && pause) { 
-			dim.minusAppDim();
-			dim.update(false, gridCheck, gridCheck.getMap().values());
+			// dim.minusAppDim();
+			dim.update(false);
+			gridCheck.update(false);
+			for (tetrimino tetrimino : gridCheck.getMap().values()) {
+				tetrimino.update(false);
+			}
 			repaint();
 			f.setSize(dim.getApp_width(), dim.getApp_height());
 		}
 
 		// plus
 		if (arg0.getKeyCode() == 61 && pause) { 
-			dim.plusAppDim();
-			dim.update(true, gridCheck, gridCheck.getMap().values());
+			// dim.plusAppDim();
+			dim.update(true);
+			gridCheck.update(true);
+			for (tetrimino tetrimino : gridCheck.getMap().values()) {
+				tetrimino.update(true);
+			}
 			repaint();
 			f.setSize(dim.getApp_width(), dim.getApp_height());
 		}

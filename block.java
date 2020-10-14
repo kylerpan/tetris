@@ -13,6 +13,10 @@ public class block{
         y = 400;
     }
 
+    public void update(boolean plus) {
+        dim.update(plus);
+    }
+
     public void draw(Graphics g) {
         java.awt.Graphics2D g1 = (java.awt.Graphics2D) g.create();
 
@@ -30,6 +34,10 @@ public class block{
 
     public int getY() {
         return y;
+    }
+
+    public gameDimensions getDim() {
+        return dim;
     }
 
     // public int getSize() {

@@ -30,27 +30,36 @@ public class gameDimensions {
         hold_next_side = block_size * 4; // 160
     }
 
-    public void update(boolean plus, gridCheck gridCheck, Collection<tetrimino> tetriminos){
+    public void update(boolean plus){
+        if (plus) {
+            app_height += 24;
+            app_width += 22;
+        } else {
+            app_height -= 24;
+            app_width -= 22;
+        }
         block_size = app_height / 24;
         playing_height = block_size * 20;
         playing_width = block_size * 10;
         side_width = block_size * 6;
         top_height = block_size * 2; 
         hold_next_side = block_size * 4;
-        for (tetrimino value : tetriminos) {
-            int left = side_width + playing_width;
-            int top = top_height + playing_height;
-            for (int i = 0; i < 4; i++) {
-                // value.setBlockSize(block_size);
-                if (value.getBlockX(i) < left) left = value.getBlockX(i);
-                if (value.getBlockY(i) < top) top = value.getBlockY(i);
-            }
-            left = (gridCheck.getColumnNum(left) + 5) * block_size;
-            top = (gridCheck.getRowNum(top) + 2) * block_size;
-            value.setX(left);
-            value.setY(top);
-        }
-        gridCheck.update(null, top_height, side_width, block_size, playing_height);
+        // gridCheck.update();
+        // for (tetrimino value : gridCheck.getMap().values()) {
+        //     value.update();
+        //     int left = side_width + playing_width;
+        //     int top = top_height + playing_height;
+        //     for (int i = 0; i < 4; i++) {
+        //         // value.setBlockSize(block_size);
+        //         if (value.getBlockX(i) < left) left = value.getBlockX(i);
+        //         if (value.getBlockY(i) < top) top = value.getBlockY(i);
+        //     }
+        //     // System.out.println(gridCheck.getColumnNum(left));
+        //     left = (gridCheck.getColumnNum(left) + 5) * block_size;
+        //     top = (gridCheck.getRowNum(top) + 2) * block_size;
+        //     value.setX(left);
+        //     value.setY(top);
+        // }
         // tetrimino.update(block_size, side_width, top_height);
     }
 
@@ -91,7 +100,6 @@ public class gameDimensions {
     }
 
     public int getBlock_size() {
-        System.out.println(block_size);
         return block_size;
     }
 
