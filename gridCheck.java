@@ -58,7 +58,7 @@ public class gridCheck {
         int column = 0;
         int lowest = 10000;
         for (int i = 0; i < 12; i++){
-            System.out.println(x);
+            // System.out.println(x);
             // System.out.println(dim.getSide_width() + (i - 1) * dim.getBlock_size());
             int diff = x - (dim.getSide_width() + (i - 1) * dim.getBlock_size());
             // System.out.println(Math.abs(diff));
@@ -67,7 +67,7 @@ public class gridCheck {
                 column = i;
             }
         }
-        System.out.printf("index: %d%n", column);
+        // System.out.printf("index: %d%n", column);
         return column;
     }
 

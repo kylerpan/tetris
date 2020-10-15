@@ -19,10 +19,16 @@ public class tetrimino{
     boolean[] visible = new boolean[]{true, true, true, true};
     
 
-    public tetrimino(char type, int orientation) {
+    public tetrimino(char type, int orientation, boolean change, int blocksize) {
+        if (change) {
+            dim.setBlock_size(blocksize);
+            dim.setSide_width(blocksize * 6);
+            dim.setTop_height(blocksize * 2);
+        }
         x = dim.getSide_width() + dim.getBlock_size() * 3;
         if (type == 'O') x  = dim.getSide_width() + dim.getBlock_size() * 4;
         y = dim.getTop_height();
+        // System.out.printf("tetrimino block: %d%n", x);
         moving = true;
         Rbound = false;
         Lbound = false;
@@ -47,7 +53,6 @@ public class tetrimino{
             if (blockX < left) left = blockX;
             if (blockY < top) top = blockY;
         }
-        // System.out.println(gridCheck.getColumnNum(left));
         left = (gridCheck.getColumnNum(left) + 5) * dim.block_size;
         top = (gridCheck.getRowNum(top) + 2) * dim.block_size;
         x = left;

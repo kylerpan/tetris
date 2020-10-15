@@ -44,23 +44,7 @@ public class gameDimensions {
         side_width = block_size * 6;
         top_height = block_size * 2; 
         hold_next_side = block_size * 4;
-        // gridCheck.update();
-        // for (tetrimino value : gridCheck.getMap().values()) {
-        //     value.update();
-        //     int left = side_width + playing_width;
-        //     int top = top_height + playing_height;
-        //     for (int i = 0; i < 4; i++) {
-        //         // value.setBlockSize(block_size);
-        //         if (value.getBlockX(i) < left) left = value.getBlockX(i);
-        //         if (value.getBlockY(i) < top) top = value.getBlockY(i);
-        //     }
-        //     // System.out.println(gridCheck.getColumnNum(left));
-        //     left = (gridCheck.getColumnNum(left) + 5) * block_size;
-        //     top = (gridCheck.getRowNum(top) + 2) * block_size;
-        //     value.setX(left);
-        //     value.setY(top);
-        // }
-        // tetrimino.update(block_size, side_width, top_height);
+        // System.out.printf("dim block: %d%n", block_size * 9);
     }
 
     public int getScreen_height() {
@@ -101,6 +85,18 @@ public class gameDimensions {
 
     public int getBlock_size() {
         return block_size;
+    }
+
+    public void setBlock_size(int newBlock_size) {
+        block_size = newBlock_size;
+    }
+
+    public void setSide_width(int newSide_width) {
+        side_width = newSide_width;
+    }
+
+    public void setTop_height(int newTop_height) {
+        top_height = newTop_height;
     }
 
     public void minusAppDim() {
