@@ -19,12 +19,10 @@ public class tetrimino{
     boolean[] visible = new boolean[]{true, true, true, true};
     
 
-    public tetrimino(char type, int orientation, boolean change, int blocksize) {
-        if (change) {
-            dim.setBlock_size(blocksize);
-            dim.setSide_width(blocksize * 6);
-            dim.setTop_height(blocksize * 2);
-        }
+    public tetrimino(char type, int orientation, int blocksize) {
+        dim.setBlock_size(blocksize);
+        dim.setSide_width(blocksize * 6);
+        dim.setTop_height(blocksize * 2);
         x = dim.getSide_width() + dim.getBlock_size() * 3;
         if (type == 'O') x  = dim.getSide_width() + dim.getBlock_size() * 4;
         y = dim.getTop_height();
@@ -39,17 +37,17 @@ public class tetrimino{
         placing();
     }
 
-    public void update(boolean plus) {
-        dim.update(plus);
-        gridCheck.update(plus);
-        int left = dim.getSide_width() + dim.getPlaying_height();
+    public void update(boolean plus, int dimApp_height, int dimApp_width) {
+        dim.otherUpdate(plus, dimApp_height, dimApp_width);
+        gridCheck.otherUpdate(plus, dimApp_height, dimApp_width);
+        int left = dim.getSide_width() + dim.getPlaying_width();
         int top = dim.getTop_height() + dim.getPlaying_height();
         for (int i = 0; i < 4; i++) {
-            blocks[i].update(plus);
+            blocks[i].update(plus, dimApp_height, dimApp_width);
             int columnNum = gridCheck.getColumnNum(blocks[i].getX());
             int rowNum = gridCheck.getRowNum(blocks[i].getY());
             int blockX = blocks[i].getX() + (plus ? columnNum + 5 : -(columnNum + 5));
-            int blockY = blocks[i].getY() + (plus ? rowNum + 2 : -(rowNum + 1));
+            int blockY = blocks[i].getY() + (plus ? rowNum + 2 : -(rowNum + 2));
             if (blockX < left) left = blockX;
             if (blockY < top) top = blockY;
         }
@@ -456,6 +454,10 @@ public class tetrimino{
                 g1.drawRect(blocks[j].getX(), blocks[j].getY(), dim.getBlock_size(), dim.getBlock_size());
             }
         }
+    }
+
+    public int getBlock_size() {
+        return dim.block_size;
     }
 
     public int getX() {

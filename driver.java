@@ -30,7 +30,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 	// pause
 	boolean pause = false;
-	boolean change = false;
 
 	// grid checks
 	gridCheck gridCheck = new gridCheck();
@@ -86,9 +85,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		else nextBlock = 'Z';
 		
 		String name = String.format("tetrimino%d", counter);
-		gridCheck.getMap().put(name, change ? new tetrimino(newBlock, 1, true, dim.block_size): new tetrimino(newBlock, 1, false, 0));
+		gridCheck.getMap().put(name,  new tetrimino(newBlock, 1, dim.block_size));
 		counter++;
-		next = change ? new tetrimino(nextBlock, 1, true, dim.block_size): new tetrimino(nextBlock, 1, false, 0);
+		next = new tetrimino(nextBlock, 1, dim.block_size);
 	}
 
 	// getting time
@@ -470,11 +469,11 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		// minus
 		if (arg0.getKeyCode() == 45 && pause) { 
-			change = true;
 			dim.update(false);
 			gridCheck.update(false);
 			for (tetrimino tetrimino : gridCheck.getMap().values()) {
-				tetrimino.update(false);
+				tetrimino.update(false, dim.app_height, dim.app_width);
+				// System.out.println(tetrimino.getBlock_size());
 			}
 			repaint();
 			f.setSize(dim.getApp_width(), dim.getApp_height());
@@ -482,11 +481,11 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 
 		// plus
 		if (arg0.getKeyCode() == 61 && pause) { 
-			change = true;
 			dim.update(true);
 			gridCheck.update(true);
 			for (tetrimino tetrimino : gridCheck.getMap().values()) {
-				tetrimino.update(true);
+				tetrimino.update(true, dim.app_height, dim.app_width);
+				// System.out.println(tetrimino.getBlock_size());
 			}
 			repaint();
 			f.setSize(dim.getApp_width(), dim.getApp_height());

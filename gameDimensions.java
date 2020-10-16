@@ -20,7 +20,6 @@ public class gameDimensions {
     public gameDimensions(){
         screen_height = screenSize.height;
         block_size = screen_height * 2 / 69; // 40
-        old_block_size = screen_height * 2 / 69;
         app_height = block_size * 24; // 930
         app_width = block_size * 22; // 900
         playing_height = block_size * 20; // 800
@@ -44,8 +43,19 @@ public class gameDimensions {
         side_width = block_size * 6;
         top_height = block_size * 2; 
         hold_next_side = block_size * 4;
-        // System.out.printf("dim block: %d%n", block_size * 9);
     }
+
+    public void otherUpdate(boolean plus, int dimApp_height, int dimApp_width){
+        app_height = dimApp_height;
+        app_width = dimApp_width;
+        block_size = app_height / 24;
+        playing_height = block_size * 20;
+        playing_width = block_size * 10;
+        side_width = block_size * 6;
+        top_height = block_size * 2; 
+        hold_next_side = block_size * 4;
+    }
+
 
     public int getScreen_height() {
         return screen_height;
