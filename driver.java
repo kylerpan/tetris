@@ -312,6 +312,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 							break;
 						}
 						value.setY(value.getY() + dim.getBlock_size());
+						value.setRowNum(1);
 					}
 				}
 				down = false;
@@ -416,6 +417,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					hold = false;
 					for (int j = 0; j < 4; j++) {
 						gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
+						value.setFColumnNum(j, value.getBlockX(j));
+						value.setFRowNum(j, value.getBlockY(j));
 					}
 				}
 			}
@@ -471,8 +474,10 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == 45 && pause) { 
 			dim.update(false);
 			gridCheck.update(false);
+			int index = 0;
 			for (tetrimino tetrimino : gridCheck.getMap().values()) {
-				tetrimino.update(false, dim.app_height, dim.app_width);
+				tetrimino.update(false, dim.app_height, dim.app_width, index);
+				index++;
 				// System.out.println(tetrimino.getBlock_size());
 			}
 			repaint();
@@ -483,8 +488,10 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == 61 && pause) { 
 			dim.update(true);
 			gridCheck.update(true);
+			int index = 0;
 			for (tetrimino tetrimino : gridCheck.getMap().values()) {
-				tetrimino.update(true, dim.app_height, dim.app_width);
+				tetrimino.update(true, dim.app_height, dim.app_width, index);
+				index++;
 				// System.out.println(tetrimino.getBlock_size());
 			}
 			repaint();

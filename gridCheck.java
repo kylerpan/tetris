@@ -61,16 +61,18 @@ public class gridCheck {
     public int getColumnNum(int x) {
         int column = 0;
         int lowest = 10000;
+        ArrayList<Integer> difference = new ArrayList<Integer>();
         for (int i = 0; i < 12; i++){
             // System.out.println(x);
             // System.out.println(dim.getSide_width() + (i - 1) * dim.getBlock_size());
             int diff = x - (dim.getSide_width() + (i - 1) * dim.getBlock_size());
-            // System.out.println(Math.abs(diff));
+            difference.add(Math.abs(diff));
             if (Math.abs(diff) < lowest) {
                 lowest = Math.abs(diff);
                 column = i;
             }
         }
+        // System.out.println(difference);
         // System.out.printf("index: %d%n", column);
         return column;
     }

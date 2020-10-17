@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class tetrimino{
 
@@ -17,7 +18,9 @@ public class tetrimino{
     block block4 = new block();
     block[] blocks = new block[]{block1, block2, block3, block4};
     boolean[] visible = new boolean[]{true, true, true, true};
-    
+    ArrayList<Integer> columnNum = new ArrayList<Integer>();
+    ArrayList<Integer> rowNum = new ArrayList<Integer>(4);
+
 
     public tetrimino(char type, int orientation, int blocksize) {
         dim.setBlock_size(blocksize);
@@ -35,22 +38,30 @@ public class tetrimino{
         this.type = type;
         this.orientation = orientation;
         placing();
+        for (int i = 0; i < 4; i++) {
+            if (columnNum.size() < 4) {
+                columnNum.add(gridCheck.getColumnNum(blocks[i].getX()));
+                rowNum.add(gridCheck.getRowNum(blocks[i].getY()));
+            }
+        }
     }
 
-    public void update(boolean plus, int dimApp_height, int dimApp_width) {
+    public void update(boolean plus, int dimApp_height, int dimApp_width, int index) {
         dim.otherUpdate(plus, dimApp_height, dimApp_width);
         gridCheck.otherUpdate(plus, dimApp_height, dimApp_width);
         int left = dim.getSide_width() + dim.getPlaying_width();
         int top = dim.getTop_height() + dim.getPlaying_height();
+        System.out.printf("%n--block %d--%n", index);
         for (int i = 0; i < 4; i++) {
             blocks[i].update(plus, dimApp_height, dimApp_width);
-            int columnNum = gridCheck.getColumnNum(blocks[i].getX());
-            int rowNum = gridCheck.getRowNum(blocks[i].getY());
-            int blockX = blocks[i].getX() + (plus ? columnNum + 5 : -(columnNum + 5));
-            int blockY = blocks[i].getY() + (plus ? rowNum + 2 : -(rowNum + 2));
+            // int columnNum = gridCheck.getColumnNum(blocks[i].getX());
+            // int rowNum = gridCheck.getRowNum(blocks[i].getY());
+            int blockX = blocks[i].getX() + (plus ? columnNum.get(i) + 5 : -(columnNum.get(i) + 5));
+            int blockY = blocks[i].getY() + (plus ? rowNum.get(i) + 2 : -(rowNum.get(i) + 2));
             if (blockX < left) left = blockX;
             if (blockY < top) top = blockY;
         }
+        System.out.println(gridCheck.getColumnNum(left));
         left = (gridCheck.getColumnNum(left) + 5) * dim.block_size;
         top = (gridCheck.getRowNum(top) + 2) * dim.block_size;
         x = left;
@@ -516,6 +527,14 @@ public class tetrimino{
         return Tbound;
     }
 
+    public ArrayList<Integer> getColumnNum() {
+        return columnNum;
+    }
+
+    public ArrayList<Integer> getRowNum() {
+        return rowNum;
+    }
+
     public int getOrientation() {
         return orientation;
     }
@@ -578,13 +597,6 @@ public class tetrimino{
         blocks[index].setY(newY);
     }
 
-    // public void setBlockSize(int newSize) {
-    //     for (int i = 0; i < 4; i++) {
-    //         blocks[i].setSize(newSize);
-    //     }
-    //     // dim.getBlock_size() = newSize;
-    // }
-
     public void setType(char newType) {
         type = newType;
         placing();
@@ -613,27 +625,54 @@ public class tetrimino{
     public void setOrientation(int newOrientation) {
         orientation = newOrientation;
         placing();
+        for (int i = 0; i < 4; i++) {
+            columnNum.set(i, gridCheck.getColumnNum(blocks[i].getX()));
+            rowNum.set(i, gridCheck.getRowNum(blocks[i].getY()));
+        }
     }
 
     public void setVisible(int index, boolean newbool) {
         visible[index] = newbool;
     }
 
+    public void setColumnNum(int change) {
+        for (int i = 0; i < 4; i++) {
+            columnNum.set(i, columnNum.get(i) + change);
+        }
+    }
+
+    public void setRowNum(int change) {
+        for (int i = 0; i < 4; i++) {
+            rowNum.set(i, rowNum.get(i) + change);
+        }
+    }
+
+    public void setFColumnNum(int index, int x) {
+        columnNum.set(index, gridCheck.getColumnNum(x));
+    }
+
+    public void setFRowNum(int index, int y) {
+        rowNum.set(index, gridCheck.getRowNum(y));
+    }
+
     public void moveRight() {
         setX(x + dim.getBlock_size());
         setLeft(left + dim.getBlock_size());
         placing();
+        setColumnNum(1);
     }
 
     public void moveLeft() {
         setX(x - dim.getBlock_size());
         setLeft(left - dim.getBlock_size());
         placing();
+        setColumnNum(-1);
     }
 
     public void moveDown() {
         setY(y + dim.getBlock_size());
         setTop(top + dim.getBlock_size());
         placing();
+        setRowNum(1);
     }
 }
