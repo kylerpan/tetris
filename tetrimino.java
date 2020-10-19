@@ -70,8 +70,8 @@ public class tetrimino{
         System.out.println(left);
         left = (left + 5) * dim.block_size;
         top = (top + 2) * dim.block_size;
-        x = left;
-        y = top;
+        x = x + (plus ? gridCheck.getColumnNum(x) + 5 : -(gridCheck.getColumnNum(x) + 5));
+        y = y + (plus ? gridCheck.getRowNum(y) + 2 : -(gridCheck.getRowNum(y) + 2));
         // System.out.println(x);
         placing();
     }
