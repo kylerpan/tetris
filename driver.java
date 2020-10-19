@@ -163,9 +163,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// next piece
-		next.setX(dim.getBlock_size() * 19 - (next.getRight() - next.getLeft()) / 2);
-		next.setY(dim.getBlock_size() * 5 - (next.getBottom() - next.getTop()) / 2);
-		next.draw(g);
+		// next.setX(dim.getBlock_size() * 19 - (next.getRight() - next.getLeft()) / 2);
+		// next.setY(dim.getBlock_size() * 5 - (next.getBottom() - next.getTop()) / 2);
+		// next.draw(g);
         
         // border lines
         g1.setStroke(new java.awt.BasicStroke(3));
@@ -226,39 +226,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 					value.setRbound(false);
 					value.setLbound(false);
 					value.setDbound(false);
-
-					// game bounds
-					if (value.getRight() >= dim.getSide_width() + dim.getPlaying_width()) {
-						if (value.getRight() > dim.getSide_width() + dim.getPlaying_width()) {
-							int shift = value.getRight() - (dim.getSide_width() + dim.getPlaying_width());
-							value.setX(value.getX() - shift);
-						}
-						value.setRbound(true);
-					}
-
-					if (value.getLeft() <= dim.getSide_width()) {
-						if (value.getLeft() < dim.getSide_width()) {
-							int shift = dim.getSide_width() - value.getLeft();
-							value.setX(value.getX() + shift);
-						}
-						value.setLbound(true);
-					}
-
-					if (value.getBottom() >= dim.getTop_height() + dim.getPlaying_height()) {
-						if (value.getBottom() > dim.getTop_height() + dim.getPlaying_height()) {
-							int shift = value.getBottom() - (dim.getTop_height() + dim.getPlaying_height());
-							value.setY(value.getY() - shift);
-						}
-						value.setDbound(true);
-					}
-
-					if (value.getTop() <= dim.getTop_height()) {
-						if (value.getTop() < dim.getTop_height()) {
-							int shift =  dim.getTop_height() - value.getTop();
-							value.setY(value.getY() + shift);
-						}
-						value.setTbound(true);
-					}
 
 					// block bounds
 					for (int i = 0; i < 4; i++) {

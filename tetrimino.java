@@ -18,7 +18,7 @@ public class tetrimino{
     block block4 = new block();
     block[] blocks = new block[]{block1, block2, block3, block4};
     boolean[] visible = new boolean[]{true, true, true, true};
-    ArrayList<Integer> columnNum = new ArrayList<Integer>();
+    ArrayList<Integer> columnNum = new ArrayList<Integer>(4);
     ArrayList<Integer> rowNum = new ArrayList<Integer>(4);
 
 
@@ -56,16 +56,23 @@ public class tetrimino{
             blocks[i].update(plus, dimApp_height, dimApp_width);
             // int columnNum = gridCheck.getColumnNum(blocks[i].getX());
             // int rowNum = gridCheck.getRowNum(blocks[i].getY());
+            System.out.println(columnNum.get(i));
             int blockX = blocks[i].getX() + (plus ? columnNum.get(i) + 5 : -(columnNum.get(i) + 5));
             int blockY = blocks[i].getY() + (plus ? rowNum.get(i) + 2 : -(rowNum.get(i) + 2));
-            if (blockX < left) left = blockX;
-            if (blockY < top) top = blockY;
+            // if (blockX < left) left = blockX;
+            // if (blockY < top) top = blockY;
+            if (columnNum.get(i) < left) left = columnNum.get(i);
+            if (rowNum.get(i) < top) top = rowNum.get(i);
         }
-        System.out.println(gridCheck.getColumnNum(left));
-        left = (gridCheck.getColumnNum(left) + 5) * dim.block_size;
-        top = (gridCheck.getRowNum(top) + 2) * dim.block_size;
+        // System.out.println(gridCheck.getColumnNum(left));
+        // left = (gridCheck.getColumnNum(left) + 5) * dim.block_size;
+        // top = (gridCheck.getRowNum(top) + 2) * dim.block_size;
+        System.out.println(left);
+        left = (left + 5) * dim.block_size;
+        top = (top + 2) * dim.block_size;
         x = left;
         y = top;
+        // System.out.println(x);
         placing();
     }
 
@@ -625,10 +632,47 @@ public class tetrimino{
     public void setOrientation(int newOrientation) {
         orientation = newOrientation;
         placing();
+
+        // game bounds
+        if (right >= dim.getSide_width() + dim.getPlaying_width()) {
+            if (right > dim.getSide_width() + dim.getPlaying_width()) {
+                int shift = right - (dim.getSide_width() + dim.getPlaying_width());
+                setX(x - shift);
+            }
+            Rbound = true;
+        }
+
+        if (left <= dim.getSide_width()) {
+            if (left < dim.getSide_width()) {
+                int shift = dim.getSide_width() - left;
+                setX(x + shift);
+            }
+            Lbound = true;
+        }
+
+        if (bottom >= dim.getTop_height() + dim.getPlaying_height()) {
+            if (bottom > dim.getTop_height() + dim.getPlaying_height()) {
+                int shift = bottom - (dim.getTop_height() + dim.getPlaying_height());
+                setY(y - shift);
+            }
+            Dbound = true;
+        }
+
+        if (top <= dim.getTop_height()) {
+            if (top < dim.getTop_height()) {
+                int shift =  dim.getTop_height() - top;
+                setY(y + shift);
+            }
+            Tbound = true;
+        }
+
         for (int i = 0; i < 4; i++) {
             columnNum.set(i, gridCheck.getColumnNum(blocks[i].getX()));
             rowNum.set(i, gridCheck.getRowNum(blocks[i].getY()));
         }
+
+        
+        System.out.println(columnNum);
     }
 
     public void setVisible(int index, boolean newbool) {
