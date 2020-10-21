@@ -13,8 +13,8 @@ public class block{
         y = 400;
     }
 
-    public void update(boolean plus, int dimApp_height, int dimApp_width) {
-        dim.otherUpdate(plus, dimApp_height, dimApp_width);
+    public void update(int dimApp_height, int dimApp_width) {
+        dim.otherUpdate(dimApp_height, dimApp_width);
     }
 
     public void draw(Graphics g) {

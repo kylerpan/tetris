@@ -39,8 +39,8 @@ public class gridCheck {
         dim.update(plus);
     }
 
-    public void otherUpdate(boolean plus, int dimApp_height, int dimApp_width) {
-        dim.otherUpdate(plus, dimApp_height, dimApp_width);
+    public void otherUpdate(int dimApp_height, int dimApp_width) {
+        dim.otherUpdate(dimApp_height, dimApp_width);
     }
 
     public Map<String, ArrayList<Boolean>> getColumns() {

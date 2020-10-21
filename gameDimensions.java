@@ -45,7 +45,7 @@ public class gameDimensions {
         hold_next_side = block_size * 4;
     }
 
-    public void otherUpdate(boolean plus, int dimApp_height, int dimApp_width){
+    public void otherUpdate(int dimApp_height, int dimApp_width){
         app_height = dimApp_height;
         app_width = dimApp_width;
         block_size = app_height / 24;

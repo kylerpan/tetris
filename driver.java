@@ -163,9 +163,9 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// next piece
-		// next.setX(dim.getBlock_size() * 19 - (next.getRight() - next.getLeft()) / 2);
-		// next.setY(dim.getBlock_size() * 5 - (next.getBottom() - next.getTop()) / 2);
-		// next.draw(g);
+		next.setX(dim.getBlock_size() * 19 - (next.getRight() - next.getLeft()) / 2);
+		next.setY(dim.getBlock_size() * 5 - (next.getBottom() - next.getTop()) / 2);
+		next.draw(g);
         
         // border lines
         g1.setStroke(new java.awt.BasicStroke(3));
@@ -380,6 +380,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == 32 && !pause) {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
+					int shift = gridCheck.lowestPositionOffset(value) / dim.block_size;
+					System.out.println(shift);
 					gridCheck.instantDrop(value);
 					value.setMoving(false);
 					hold = false;
@@ -387,8 +389,8 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
 						value.setFColumnNum(j, value.getBlockX(j));
 						value.setFRowNum(j, value.getBlockY(j));
-						value.setxyNum(value.getxyNum().get(0), value.getxyNum().get(1) + gridCheck.lowestPositionOffset(value));
 					}
+					value.setxyNum(value.getxyNum().get(0), value.getxyNum().get(1) + shift);
 				}
 			}
 		} 
