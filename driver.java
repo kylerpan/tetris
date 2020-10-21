@@ -280,6 +280,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						}
 						value.setY(value.getY() + dim.getBlock_size());
 						value.setRowNum(1);
+						value.setxyNum(value.getxyNum().get(0), value.getxyNum().get(1) + 1);
 					}
 				}
 				down = false;
@@ -386,6 +387,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 						gridCheck.setBound(value.getBlockX(j), value.getBlockY(j));
 						value.setFColumnNum(j, value.getBlockX(j));
 						value.setFRowNum(j, value.getBlockY(j));
+						value.setxyNum(value.getxyNum().get(0), value.getxyNum().get(1) + gridCheck.lowestPositionOffset(value));
 					}
 				}
 			}
