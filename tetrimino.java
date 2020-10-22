@@ -28,7 +28,7 @@ public class tetrimino{
         dim.setSide_width(blocksize * 6);
         dim.setTop_height(blocksize * 2);
         x = dim.getSide_width() + dim.getBlock_size() * 3;
-        if (type == 'O') x  = dim.getSide_width() + dim.getBlock_size() * 4;
+        // if (type == 'O') x = dim.getSide_width() + dim.getBlock_size() * 4;
         y = dim.getTop_height();
         // System.out.printf("tetrimino block: %d%n", x);
         moving = true;
@@ -66,8 +66,8 @@ public class tetrimino{
         System.out.println(xyNum.get(0));
         x = x + (plus ? xyNum.get(0) + 5 : -(xyNum.get(0) + 5));
         y = y + (plus ? xyNum.get(1) + 2 : -(xyNum.get(1) + 2));
-        left = (left + 5) * dim.block_size;
-        top = (top + 2) * dim.block_size;
+        left = (left + 5) * dim.getBlock_size();
+        top = (top + 2) * dim.getBlock_size();
         placing();
     }
 
@@ -112,7 +112,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * dim.getBlock_size());
                     blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.getBlock_size();
+                left = x;
                 top = y;
                 bottom = top + dim.getBlock_size() * 2;
                 right = left + dim.getBlock_size() * 2;
@@ -202,7 +202,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * dim.getBlock_size());
                     blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.getBlock_size();
+                left = x;
                 top = y;
                 bottom = top + dim.getBlock_size() * 2;
                 right = left + dim.getBlock_size() * 2;
@@ -292,7 +292,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * dim.getBlock_size());
                     blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.getBlock_size();
+                left = x;
                 top = y;
                 bottom = top + dim.getBlock_size() * 2;
                 right = left + dim.getBlock_size() * 2;
@@ -382,7 +382,7 @@ public class tetrimino{
                     blocks[i].setX(x + (i - 2) * dim.getBlock_size());
                     blocks[i].setY(y + dim.getBlock_size());
                 }
-                left = x + dim.getBlock_size();
+                left = x;
                 top = y;
                 bottom = top + dim.getBlock_size() * 2;
                 right = left + dim.getBlock_size() * 2;
