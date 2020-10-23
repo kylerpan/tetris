@@ -54,21 +54,36 @@ public class tetrimino{
     public void update(boolean plus, int dimApp_height, int dimApp_width, int index) {
         dim.otherUpdate(dimApp_height, dimApp_width);
         gridCheck.otherUpdate(dimApp_height, dimApp_width);
-        int left = dim.getSide_width() + dim.getPlaying_width();
-        int top = dim.getTop_height() + dim.getPlaying_height();
-        System.out.printf("%n--block %d--%n", index);
-        for (int i = 0; i < 4; i++) {
-            blocks[i].update(dimApp_height, dimApp_width);
-            System.out.println(columnNum.get(i));
-            if (columnNum.get(i) < left) left = columnNum.get(i);
-            if (rowNum.get(i) < top) top = rowNum.get(i);
+        if (moving) {
+            int left = dim.getSide_width() + dim.getPlaying_width();
+            int top = dim.getTop_height() + dim.getPlaying_height();
+            // System.out.printf("%n--block %d--%n", index);
+            for (int i = 0; i < 4; i++) {
+                blocks[i].update(dimApp_height, dimApp_width);
+                // System.out.println(columnNum.get(i));
+                if (columnNum.get(i) < left) left = columnNum.get(i);
+                if (rowNum.get(i) < top) top = rowNum.get(i);
+            }
+            // System.out.println(xyNum.get(0));
+            x = x + (plus ? xyNum.get(0) + 5 : -(xyNum.get(0) + 5));
+            y = y + (plus ? xyNum.get(1) + 2 : -(xyNum.get(1) + 2));
+            left = (left + 5) * dim.getBlock_size();
+            top = (top + 2) * dim.getBlock_size();
+            placing();
+        } else {
+            ArrayList<Integer> numbers = new ArrayList<Integer>();
+            for (int i = 0; i < 20; i++) {
+                numbers.add((2 + i) * dim.getBlock_size());
+            }
+            System.out.println(numbers);
+            for (int i = 0; i < 4; i++) {
+                blocks[i].update(dimApp_height, dimApp_width);
+                blocks[i].setX(blocks[i].getX() + (plus ? columnNum.get(i) + 5 : -(columnNum.get(i) + 5)));
+                blocks[i].setY(blocks[i].getY() + (plus ? rowNum.get(i) + 2 : -(rowNum.get(i) + 2)));
+                System.out.println(blocks[i].getY());
+            }
         }
-        System.out.println(xyNum.get(0));
-        x = x + (plus ? xyNum.get(0) + 5 : -(xyNum.get(0) + 5));
-        y = y + (plus ? xyNum.get(1) + 2 : -(xyNum.get(1) + 2));
-        left = (left + 5) * dim.getBlock_size();
-        top = (top + 2) * dim.getBlock_size();
-        placing();
+        
     }
 
     // public void nextUpdate(int dimApp_height, int dimApp_width, int index) {
@@ -705,6 +720,10 @@ public class tetrimino{
         for (int i = 0; i < 4; i++) {
             rowNum.set(i, rowNum.get(i) + change);
         }
+    }
+
+    public void setRowNumI(int index, int change) {
+        rowNum.set(index, rowNum.get(index) + change);
     }
 
     public void setFColumnNum(int index, int x) {

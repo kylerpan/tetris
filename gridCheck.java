@@ -163,6 +163,7 @@ public class gridCheck {
             for (int i = 0; i < 4; i++) {
                 if (tetrimino.getBlockY(i) < (row + 2) * dim.getBlock_size() && tetrimino.getBlockX(i) >= (dim.getSide_width() - dim.getBlock_size()) && tetrimino.getBlockX(i) <= (dim.getSide_width() + dim.playing_width)) {
                     tetrimino.setBlockY(i, tetrimino.getBlockY(i) + dim.getBlock_size());
+                    tetrimino.setRowNumI(i, 1);
                 }
             }
         }

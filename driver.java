@@ -150,12 +150,12 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		}
 
 		// predicted position
-		// for (tetrimino value : gridCheck.getMap().values()) {
-		// 	if (value.getMoving()) {
-		// 		Map<Integer, ArrayList<Integer>> blocks = gridCheck.predictedInstantDrop(value);
-		// 		gridCheck.draw(g, blocks);
-		// 	}
-		// }
+		for (tetrimino value : gridCheck.getMap().values()) {
+			if (value.getMoving()) {
+				Map<Integer, ArrayList<Integer>> blocks = gridCheck.predictedInstantDrop(value);
+				gridCheck.draw(g, blocks);
+			}
+		}
 		
 		// tetriminos
 		for (tetrimino value : gridCheck.getMap().values()) {
@@ -381,7 +381,7 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			for (tetrimino value : gridCheck.getMap().values()) {
 				if (value.getMoving()) {
 					int shift = gridCheck.lowestPositionOffset(value) / dim.block_size;
-					System.out.println(shift);
+					// System.out.println(shift);
 					gridCheck.instantDrop(value);
 					value.setMoving(false);
 					hold = false;
