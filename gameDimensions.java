@@ -1,6 +1,5 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.Collection;
 
 public class gameDimensions {
 
@@ -19,14 +18,14 @@ public class gameDimensions {
 
     public gameDimensions(){
         screen_height = screenSize.height;
-        block_size = screen_height * 2 / 69; // 40
-        app_height = block_size * 24; // 930
-        app_width = block_size * 22; // 900
-        playing_height = block_size * 20; // 800
-        playing_width = block_size * 10; // 400
+        block_size = screen_height * 2 / 69;
+        app_height = block_size * 24;
+        app_width = block_size * 22;
+        playing_height = block_size * 20;
+        playing_width = block_size * 10;
         side_width = block_size * 6;
         top_height = block_size * 2; 
-        hold_next_side = block_size * 4; // 160
+        hold_next_side = block_size * 4;
     }
 
     public void update(boolean plus){

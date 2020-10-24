@@ -40,10 +40,6 @@ public class block{
         return dim;
     }
 
-    // public int getSize() {
-    //     return size;
-    // }
-
     public void setX(int newx) {
         x = newx;
     }
@@ -51,8 +47,4 @@ public class block{
     public void setY(int newy) {
         y = newy;
     }
-
-    // public void setSize(int newSize) {
-    //     size = newSize;
-    // }
 }

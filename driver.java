@@ -449,7 +449,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			for (tetrimino tetrimino : gridCheck.getMap().values()) {
 				tetrimino.update(false, dim.app_height, dim.app_width, index);
 				index++;
-				// System.out.println(tetrimino.getBlock_size());
 			}
 			repaint();
 			f.setSize(dim.getApp_width(), dim.getApp_height());
@@ -463,7 +462,6 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			for (tetrimino tetrimino : gridCheck.getMap().values()) {
 				tetrimino.update(true, dim.app_height, dim.app_width, index);
 				index++;
-				// System.out.println(tetrimino.getBlock_size());
 			}
 			repaint();
 			f.setSize(dim.getApp_width(), dim.getApp_height());
