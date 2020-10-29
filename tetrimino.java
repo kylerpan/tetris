@@ -48,7 +48,7 @@ public class tetrimino{
             xyNum.add(4);
             xyNum.add(0);
         }
-    }
+    } 
 
     public void update(boolean plus, int dimApp_height, int dimApp_width, int index) {
         dim.otherUpdate(dimApp_height, dimApp_width);
@@ -75,12 +75,24 @@ public class tetrimino{
                 numbers.add((2 + i) * dim.getBlock_size());
             }
             System.out.println(numbers);
+            // int left = dim.getSide_width() + dim.getPlaying_width();
+            // int top = dim.getTop_height() + dim.getPlaying_height();
             for (int i = 0; i < 4; i++) {
                 blocks[i].update(dimApp_height, dimApp_width);
                 blocks[i].setX(blocks[i].getX() + (plus ? columnNum.get(i) + 5 : -(columnNum.get(i) + 5)));
                 blocks[i].setY(blocks[i].getY() + (plus ? rowNum.get(i) + 2 : -(rowNum.get(i) + 2)));
+                // if (columnNum.get(i) < left) left = columnNum.get(i);
+                // if (rowNum.get(i) < top) top = rowNum.get(i);
+                
                 System.out.println(blocks[i].getY());
             }
+            // x = x + (plus ? xyNum.get(0) + 5 : -(xyNum.get(0) + 5));
+            // y = y + (plus ? xyNum.get(1) + 2 : -(xyNum.get(1) + 2));
+            // left = x;
+            // top = y;
+            // placing();
+            // left = (left + 5) * dim.getBlock_size();
+            // top = (top + 2) * dim.getBlock_size();
         }
         
     }

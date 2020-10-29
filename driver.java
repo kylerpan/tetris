@@ -178,33 +178,33 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 			g.setColor(new Color(0, 0, 0, 57));
 			g.fillRect(0, 0, dim.app_width, dim.app_height);
 
-			g.setColor(new Color(240, 240, 240));
-			g.fillRoundRect(dim.getBlock_size() * 13 / 2, dim.getBlock_size() * 7 / 2, dim.getBlock_size() * 9, dim.getBlock_size() * 17, 15, 15);
-			g1.drawRoundRect(dim.getBlock_size() * 13 / 2, dim.getBlock_size() * 7 / 2, dim.getBlock_size() * 9, dim.getBlock_size() * 17, 15, 15);
+			// g.setColor(new Color(240, 240, 240));
+			// g.fillRoundRect(dim.getBlock_size() * 13 / 2, dim.getBlock_size() * 7 / 2, dim.getBlock_size() * 9, dim.getBlock_size() * 17, 15, 15);
+			// g1.drawRoundRect(dim.getBlock_size() * 13 / 2, dim.getBlock_size() * 7 / 2, dim.getBlock_size() * 9, dim.getBlock_size() * 17, 15, 15);
 
-			g1.setStroke(new java.awt.BasicStroke(2));
-			g1.setColor(Color.black);
-			g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 10, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 10, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
-			g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
-			g.fillRoundRect(dim.getBlock_size() * 25 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.getBlock_size() * 25 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
-			g.setColor(new Color(43, 127, 25));
-			g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 6, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
-			g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 6, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g1.setStroke(new java.awt.BasicStroke(2));
+			// g1.setColor(Color.black);
+			// g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 10, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 10, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g.fillRoundRect(dim.getBlock_size() * 25 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g1.drawRoundRect(dim.getBlock_size() * 25 / 2, dim.getBlock_size() * 8, dim.getBlock_size() * 2, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g.setColor(new Color(43, 127, 25));
+			// g.fillRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 6, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
+			// g1.drawRoundRect(dim.getBlock_size() * 15 / 2, dim.getBlock_size() * 6, dim.getBlock_size() * 7, dim.getBlock_size() * 5 / 4, 15, 15);
 
-			g.setColor(Color.black);
-        	g.setFont(new Font ("Arya", 1, 25));
-			g.drawString("esc - resume", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("esc - resume")/2, dim.getBlock_size() * 27 / 4);
-			g.drawString("-", dim.getBlock_size() * 17 / 2 - g.getFontMetrics().stringWidth("-")/2, dim.getBlock_size() * 35 / 4);
-			g.drawString("size", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("size")/2, dim.getBlock_size() * 35 / 4);
-			g.drawString("+", dim.getBlock_size() * 27 / 2 - g.getFontMetrics().stringWidth("+")/2, dim.getBlock_size() * 35 / 4);
-			g.drawString("q - restart", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("q - restart")/2, dim.getBlock_size() * 43 / 4);
+			// g.setColor(Color.black);
+        	// g.setFont(new Font ("Arya", 1, 25));
+			// g.drawString("esc - resume", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("esc - resume")/2, dim.getBlock_size() * 27 / 4);
+			// g.drawString("-", dim.getBlock_size() * 17 / 2 - g.getFontMetrics().stringWidth("-")/2, dim.getBlock_size() * 35 / 4);
+			// g.drawString("size", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("size")/2, dim.getBlock_size() * 35 / 4);
+			// g.drawString("+", dim.getBlock_size() * 27 / 2 - g.getFontMetrics().stringWidth("+")/2, dim.getBlock_size() * 35 / 4);
+			// g.drawString("q - restart", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("q - restart")/2, dim.getBlock_size() * 43 / 4);
 
-			g.setFont(new Font ("Arya", 1, 40));
-			g.setColor(Color.black);
-			g.drawString("PAUSED", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.getBlock_size() * 5);
+			// g.setFont(new Font ("Arya", 1, 40));
+			// g.setColor(Color.black);
+			g.drawString("PAUSED", dim.getBlock_size() * 11 - g.getFontMetrics().stringWidth("PAUSED")/2, dim.getBlock_size() * 10);
 
 		}
 
@@ -442,30 +442,30 @@ public class driver extends JPanel implements ActionListener, KeyListener {
 		} 
 
 		// minus
-		if (arg0.getKeyCode() == 45 && pause) { 
-			dim.update(false);
-			gridCheck.update(false);
-			int index = 0;
-			for (tetrimino tetrimino : gridCheck.getMap().values()) {
-				tetrimino.update(false, dim.app_height, dim.app_width, index);
-				index++;
-			}
-			repaint();
-			f.setSize(dim.getApp_width(), dim.getApp_height());
-		}
+		// if (arg0.getKeyCode() == 45 && pause) { 
+		// 	dim.update(false);
+		// 	gridCheck.update(false);
+		// 	int index = 0;
+		// 	for (tetrimino tetrimino : gridCheck.getMap().values()) {
+		// 		tetrimino.update(false, dim.app_height, dim.app_width, index);
+		// 		index++;
+		// 	}
+		// 	repaint();
+		// 	f.setSize(dim.getApp_width(), dim.getApp_height());
+		// }
 
 		// plus
-		if (arg0.getKeyCode() == 61 && pause) { 
-			dim.update(true);
-			gridCheck.update(true);
-			int index = 0;
-			for (tetrimino tetrimino : gridCheck.getMap().values()) {
-				tetrimino.update(true, dim.app_height, dim.app_width, index);
-				index++;
-			}
-			repaint();
-			f.setSize(dim.getApp_width(), dim.getApp_height());
-		}
+		// if (arg0.getKeyCode() == 61 && pause) { 
+		// 	dim.update(true);
+		// 	gridCheck.update(true);
+		// 	int index = 0;
+		// 	for (tetrimino tetrimino : gridCheck.getMap().values()) {
+		// 		tetrimino.update(true, dim.app_height, dim.app_width, index);
+		// 		index++;
+		// 	}
+		// 	repaint();
+		// 	f.setSize(dim.getApp_width(), dim.getApp_height());
+		// }
 	}
 
 	@Override
